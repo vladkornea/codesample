@@ -1,0 +1,35 @@
+# Set HTTP status code handlers
+ErrorDocument 400 /pages/errors/400.php
+ErrorDocument 401 /pages/errors/401.php
+ErrorDocument 403 /pages/errors/403.php
+ErrorDocument 404 /pages/errors/404.php
+ErrorDocument 500 /pages/errors/500.php
+
+# Hide irrelevant files from the web
+Redirect 404 /includes
+#RedirectMatch 404 /\.
+
+# Remap legacy TypeTango URLs
+redirect permanent /account.php /account
+redirect permanent /create-new-account.php /create-account
+redirect permanent /free-people-search.php /search
+redirect permanent /help.php /help
+redirect permanent /keyword_suggest.php /keyword-suggestions
+redirect permanent /match-maker.php /search
+redirect permanent /personal-profile.php /profile
+redirect permanent /testimonials.php /help
+redirect permanent /statistics.php /keyword-suggestions
+
+# Enable the RewriteCond/RewriteRule statements below
+RewriteEngine On
+
+# /pagename => /pages/pagename/index.php
+RewriteCond %{DOCUMENT_ROOT}/pages%{REQUEST_URI}/index.php -f
+RewriteRule .* pages%{REQUEST_URI}/index.php [L]
+
+# make the .php extension optional
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^ %{REQUEST_URI}.php [L]
+

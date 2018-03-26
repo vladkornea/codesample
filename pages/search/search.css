@@ -1,0 +1,59 @@
+body.wait, body.wait a, body.wait input
+	{cursor:progress !important;}
+
+#search-form-container
+	{display:inline-block; vertical-align:top; margin:0 13px 27px 0;}
+#search-form
+	{display:inline-block; background-color:lemonchiffon; text-align:left;}
+#search-form-submit-button
+	{margin-top:10px;}
+
+#personality-types-table
+	{display:inline-block;}
+#personality-types-table > tbody > tr > td
+	{padding-right:5px;}
+
+#search-results-container
+	{text-align:center; position:relative; vertical-align:top; margin:0; padding:5px 14px; border:1px solid saddlebrown; background-color:papayawhip; display:inline-block; border-radius:6px; min-width:514px;}
+#search-results-container h3
+	{font-size:21px; text-align:left; margin:10px 5px; color:black; line-height:30px;}
+#search-results-list
+	{text-align:left; position:relative; list-style-type:none; margin:0 0 4px 0; padding:0; border:1px solid saddlebrown;}
+#search-results-list li
+	{border-bottom:1px solid saddlebrown;}
+#search-results-list li:last-child
+	{border-bottom-style:none;}
+#search-results-list a
+	{padding:5px 5px; position:relative; display:block; white-space:pre; color:black; background-color:linen;}
+#search-results-list a:hover
+	{text-decoration:none; color:black; background-color:peachpuff;}
+#search-results-list a > *
+	{display:inline-block; vertical-align:middle;}
+#search-results-list a .thumbnail-container
+	{text-align:center; width:80px; height:80px; line-height:76px;}
+#search-results-list a .user-description-container
+	{display:inline-block; margin-left:8px;}
+#search-results-list a .thumbnail-container img
+	{vertical-align:middle;}
+
+#pagination-container
+	{text-align:left; font-size:14px; padding:0px; line-height:18px;}
+#pagination-container > *
+	{margin:0 3px; padding:2px; display:inline-block; vertical-align:middle;}
+#pagination-container > #next-page-link
+	{font-size:20px;}
+
+#current-page-link
+	{color:chocolate;}
+
+.username
+	{font-weight:bold; padding:2px;}
+
+
+#match-shared-negatives-explanation, #toggle-type-checkboxes
+	{color:midnightblue; font-size:11px; margin-left:15px; user-select:none; -moz-user-select:none; -ms-user-select:none;}
+#match-shared-negatives-explanation:hover
+	{cursor:help;}
+#toggle-type-checkboxes:hover
+	{cursor:pointer;}
+

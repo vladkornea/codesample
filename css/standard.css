@@ -1,0 +1,30 @@
+/* page structure colors */
+#page-structure
+	{height:100%; width:100%; border-collapse:separate; border-spacing:0; border-style:none; padding:0; margin:0;}
+#page-structure > tbody > tr > td:nth-child(1)
+	{padding:10px; vertical-align:top; text-align:right; background-color:LightSkyBlue;}
+#page-structure > tbody > tr > td:nth-child(2)
+	{background-color:lemonchiffon; border:1px solid #026aa7; border-top-style:none; border-right-style:none; vertical-align:top;
+	padding:0 30px 30px 30px; text-align:left; font-size:13px; color:black; width:100%;}
+#page-structure > tfoot
+	{}
+#page-structure > tfoot > tr
+	{background-color:LightSkyBlue; height:23px;}
+#page-structure > tfoot > tr > td
+	{font-size:10px; text-align:center; font-style:italic;}
+
+/* misc */
+.error
+	{color:orangered;}
+
+/* navbar */
+#navbar
+	{display:inline-block; margin:60px 30px; padding:0; list-style-type:none; box-shadow:black 5px 5px 20px -3px;
+	border:4px outset SaddleBrown; font-weight:bold; font-family:"Comic Sans MS",sans-serif; font-size:15px;}
+#navbar a
+	{padding:1px 20px; display:block; text-align:center; white-space:pre; border-bottom:1px solid burlywood; background-color:SaddleBrown; color:burlywood;}
+#navbar a:hover
+	{color:DarkOliveGreen; text-decoration:none; background-color:burlywood;}
+#navbar a:last-child
+	{border-bottom-style:none;}
+

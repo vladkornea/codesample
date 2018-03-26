@@ -1,0 +1,104 @@
+/*  */
+html, body
+	{width:100%; height:100%; padding:0; margin:0; border-style:none; position:relative/*stops margins collapsing off the page*/;
+	font-size:13px; font-family:"Verdana","Open Sans",sans-serif;}
+a
+	{color:MidnightBlue;}
+a:hover
+	{text-decoration:underline;}
+a:not(:hover)
+	{text-decoration:none;}
+img
+	{border-style:none;}
+
+/* .structural */
+.structural
+,table.structural > * > tr > *
+,table.structural > tr > *
+	{margin:0; padding:0; border-style:none; vertical-align:top;}
+table.structural
+	{border-spacing:0;}
+ul.structural
+	{list-style-type:none;}
+
+/** forms and their elements **/
+form
+	{display:inline-block; text-align:left; line-height:24px;}
+/* input element borders */
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=button],
+input[type=submit],
+select,
+textarea
+	{border:1px solid grey;}
+/* button gradients */
+input[type=button],
+input[type=submit]
+	{background:linear-gradient(#F2F2F2, #CFCFCF); }
+input[type=button]:hover:active:not(:disabled),
+input[type=submit]:hover:active:not(:disabled)
+	{background:linear-gradient(#CFCFCF, #F2F2F2);}
+/* element heights */
+input[type=text],
+input[type=email],
+input[type=password]
+	{height:20px/*IE doesn't respond to line-height. height doesn't include padding and borders.*/;}
+input[type=button],
+input[type=submit],
+select
+	{padding-top:1px; padding-bottom:1px; height:24px/*select doesn't respond to line-height. height includes border and padding.*/;}
+/* vertical element alignment */
+input,
+select,
+label,
+.label
+	{vertical-align:top;}
+.block-label
+	{display:block; line-height:136%; color:#111; margin-top:3px; text-align:left; width:270px;}
+/* horizontal padding varies for selects, textboxes, and buttons */
+input[type=text],
+input[type=email],
+input[type=password]
+	{padding-left:5px;}
+select
+	{padding-left:3px; padding-right:1px;}
+input[type=button],
+input[type=submit]
+	{padding-left:15px; padding-right:15px;}
+/* font for input elements */
+input[type=text],
+input[type=password],
+input[type=email],
+select
+	{font-family:"Verdana","Open Sans",sans-serif;}
+input[type=button],
+input[type=submit]
+	{font-family:"Comic Sans MS",sans-serif; font-size:11px;}
+/* checkboxes and radio heights */
+input[type=checkbox],
+input[type=radio]
+	{margin-top:6px; margin-bottom:5px; margin-right:6px;}
+/* textarea */
+textarea
+	{padding:4px; display:block;}
+
+/**** .form-table ****/
+.form-table > * > tr > th:first-child,
+.form-table > tr > th:first-child
+	{text-align:right; font-weight:normal; color:grey; vertical-align:top;}
+.form-table > * > tr > th:first-child .label,
+.form-table > tr > th:first-child .label
+	{white-space:nowrap;}
+.form-table td.form-label
+	{vertical-align:top;}
+.form-table textarea
+	{display:block;}
+.form-table .field-note
+	{color:dimgrey; font-size:9px; line-height:19px;}
+.form-table .field-block-note
+	{color:dimgrey; font-size:9px; line-height:19px; display:block;}
+
+.text
+	{white-space:pre-wrap;}

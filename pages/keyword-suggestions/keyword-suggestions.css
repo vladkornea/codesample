@@ -1,0 +1,16 @@
+table.keywords-table
+	{display:inline-block; border-spacing:0; border:1px solid chocolate; font-size:11px; margin-right:20px; font-family:Arial, Helvetica, sans-serif;}
+table.keywords-table > * > tr > *
+	{padding:3px 8px;}
+table.keywords-table > thead > tr
+	{background-color:saddlebrown; color:lemonchiffon;}
+table.keywords-table > thead > tr > th
+	{text-align:left; font-weight:bold;}
+table.keywords-table > tbody > tr:nth-child(odd)
+	{background-color:papayawhip;}
+table.keywords-table > tbody > tr:nth-child(even)
+	{background-color:blanchedalmond;}
+table.keywords-table > tbody > tr > td:first-child
+	{text-align:right;}
+table.keywords-table > tbody > tr > td:nth-child(2)
+	{font-family:"Comic Sans MS",sans-serif;}

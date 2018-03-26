@@ -1,0 +1,16 @@
+.user-tile
+	{border:1px solid chocolate; background-color:blanchedalmond; padding:10px; margin:10px; display:inline-block; text-align:center;}
+.user-link
+	{display:block;}
+.username
+	{display:block;}
+
+#contacts-page-tabs-container
+	{position:relative; padding-left:20px;}
+#contacts-page-tabs-container a
+	{display:inline-block; border:1px solid chocolate; border-bottom:none; padding:7px 14px; margin:7px 7px 0 10px; border-top-left-radius:12px; border-top-right-radius:12px; vertical-align:bottom;}
+#contacts-page-tabs-container a.selected
+	{background-color:papayawhip; padding:10px 20px; position:relative; top:1px;}
+#tab-content-container
+	{background-color:papayawhip; border:1px solid chocolate; border-radius:12px; padding:10px 27px;}
+

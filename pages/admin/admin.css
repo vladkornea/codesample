@@ -1,0 +1,64 @@
+/* Page structure */
+#non-footer {/* Footer goes in the non-footer's negative margin. */
+	min-height:100%; margin-bottom:-25px;}
+#header-placeholder {/* Have the fixed header overlap a placeholder on top of the document. */
+	clear:both; visibility:hidden; height:27px;}
+#header-container {/* Can't combine position:fixed width:100% with margins or padding; thus this container. */
+	position:fixed; top:0; width:100%; z-index:100;}
+#header {
+	margin:0 0 0 10px; padding:0 16px 0 16px; height:26px; border-bottom:1px solid #888; border-top:0 none transparent; background-color:#ccc; color:#333; border-bottom-left-radius:16px; line-height:25px; text-align:center; position:relative;}
+#main-container {
+	position:relative; text-align:center;}
+#main {
+	display:inline-block; text-align:left; padding:10px; width:1000px;}
+#footer-placeholder {/* Have the non-footer's negative margins overlap a placeholder. */
+	display:block; clear:both; visibility:hidden; height:24px;}
+#footer {
+	line-height:18px; height:18px; margin:0; padding:3px 16px; text-align:center; border-top:1px solid dimgrey; font-size:9px; font-weight:normal; color:#333; background-color:#ccc;}
+
+/* Header layout: */
+#header-left
+	{float:left; display:inline-block; position:absolute; left:0; margin-left:15px; font-size:11px;}
+#header-left a
+	{text-decoration:none; color:MenuText;}
+#header-center
+	{display:inline-block; margin-left:auto; margin-right:auto;}
+#header-right
+	{float:right; display:inline-block; position:absolute; right:0; margin-right:10px; font-size:11px;}
+
+/* Header styles: */
+#homepage-anchor
+	{font-size:16px; margin:0; text-decoration:none; white-space:nowrap; display:inline-block; position:absolute; left:16px;}
+a#homepage-anchor:hover
+	{text-decoration:none;}
+#page-title
+	{font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:16px; margin:0;}
+
+/* footer element styles */
+#copyright-notice
+	{display:block; font-size:12px; font-style:italic;}
+
+/* Navigation */
+#left-panel
+	{border-right:1px solid black; text-transform:uppercase;}
+#center-panel
+	{width:100%; padding:27px;}
+#navbar
+	{position:absolute; right:0; top:35px; width:172px; margin:20px 30px; border:5px outset lightyellow; padding:0; list-style-type:none; box-shadow:black 5px 5px 20px -3px;}
+#navbar li
+	{border-bottom:1px solid grey;}
+#navbar a
+	{padding:5px 10px; display:block; text-align:center; background-color:lightyellow;}
+#navbar a:hover
+	{background-color:royalblue; color:white;}
+#current-page-link
+	{color:#b5b58f;}
+ul#breadcrumbs > li
+	{display:inline-block; margin:0 0.5em;}
+
+/* misc */
+.link
+	{color:MidnightBlue;}
+.link:hover
+	{cursor:pointer;}
+

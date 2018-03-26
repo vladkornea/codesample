@@ -1,0 +1,13 @@
+#account-creation-form
+	{background-color:papayawhip; border:1px solid chocolate; padding:10px; text-align:left;}
+
+#account-creation-form-table
+	{text-align:left; display:inline-block;}
+
+#motive-field-container label
+	{display:block;}
+
+#gender-field-container label,
+#orientation-field-container label
+	{display:inline-block; margin-right:10px;}
+

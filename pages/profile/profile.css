@@ -1,0 +1,136 @@
+#profile-form
+	{background-color:papayawhip; padding:10px; border:1px solid chocolate; display:inline-block; text-align:left; vertical-align:top; margin:0 15px 15px 0;}
+#profile-form-table
+	{text-align:left; display:inline-block;}
+
+#motive-field-container label
+	{display:block;}
+
+#gender-field-container label,
+#orientation-field-container label
+	{display:inline-block; margin-right:10px;}
+
+#profile-info-table
+	{border:1px solid chocolate; padding:5px; background-color:papayawhip; margin-top:10px;}
+
+#descriptions
+	{text-align:left; white-space:pre-wrap; margin:15px 0 0 -15px; border-spacing:15px 3px;}
+#descriptions > *
+	{margin:20px 0; padding:0; vertical-align:top;}
+#descriptions > thead > tr > th
+	{font-weight:normal; text-align:left; vertical-align:bottom; padding-bottom:0; font-size:12px; min-width:215px;}
+#self_described-text, #lover_described-text, #virtrades-text
+	{border:1px solid chocolate; background-color:papayawhip; padding:7px; max-width:7.5in;}
+#self_described-question, #lover_described-question, #virtrades-question
+	{color:#484848;}
+
+#keywords-forms-container
+	{display:inline-block; vertical-align:top;}
+#keywords-forms-container > *
+	{vertical-align:top;}
+#keywords-forms-container > form
+	{background-color:papayawhip; border:1px solid chocolate; padding:5px; margin-right:15px;}
+#keywords-forms-container > form thead
+	{font-size:11px;}
+
+#keywords-info-table
+	{padding:0px; border-collapse:separate; border-spacing:15px 3px; margin:10px 0 0 -15px;}
+#keywords-info-table > thead > tr > th
+	{color:#484848; font-weight:normal; white-space:nowrap; padding-bottom:0; line-height:12px; font-size:12px; text-align:left;}
+#positive-keywords, #negative-keywords
+	{background-color:papayawhip; border:1px solid chocolate; padding:5px; margin:0; vertical-align:top;}
+#positive-keywords > .keyword, #negative-keywords > .keyword
+	{white-space:pre; display:inline-block; border-radius:10px; padding:4px 6px; margin:2px 3px; color:black; border:1px solid chocolate; background-color:blanchedalmond;}
+#positive-keywords > .positive-keyword, #negative-keywords > .negative-keyword
+	{background-color:springgreen; color:black;}
+#positive-keywords > .negative-keyword, #negative-keywords > .positive-keyword
+	{background-color:Tomato; color:white;}
+#keywords-separator
+	{width:9px;}
+#positive-keywords-form input,
+#negative-keywords-form input
+	{font-size:11px;}
+
+/* contact form and conversation */
+#contact-form
+	{background-color:papayawhip; border:1px solid chocolate; padding:10px; margin:10px 0 10px 0;}
+#contact-form input[type="submit"]
+	{margin:5px 0;}
+table#conversation
+	{border-collapse:collapse; margin:10px 0; width:100%; background-color:blanchedalmond;}
+table#conversation tr.user-message
+	{vertical-align:top; border:1px solid silver; white-space:pre-wrap; font-size:12px;}
+table#conversation tr.user-message *
+	{border-collapse:collapse; margin-top:10px; padding:5px;}
+table#conversation tr.user-message td.message-text
+	{width:100%;}
+
+td.sender-username
+	{color:grey; font-size:10px; padding-right:10px;}
+
+#block-and-report-buttons-container > input:first-child
+	{margin-right:10px;}
+
+#cannot-message-notice
+	{margin:20px 0; font-weight:bold; color:FireBrick; font-size:18px;}
+
+/***************************/
+
+#photo-carousel-widget-container
+	{margin-bottom:15px;}
+#photo-carousel-widget
+	{display:inline-block; position:relative; max-width:1000px; padding:10px; border:1px solid chocolate; background-color:papayawhip;}
+#photo-carousel-widget.dragging-happening * /* todo consider better ways */
+	{cursor:none !important;}
+
+#carousel-thumbnail-area
+	{margin:0px; padding:0px;}
+#carousel-thumbnail-area         .photo-carousel-thumbnail-link
+	{display:inline-block; padding:0px; width:80px; height:80px; text-align:center; line-height:80px; font-size:0px; margin:3px; position:relative; vertical-align:top;}
+#photo-carousel-widget.edit-mode .photo-carousel-thumbnail-link:hover
+	{cursor:grab;}
+#photo-carousel-widget.edit-mode .photo-carousel-thumbnail-link:hover:active
+	{cursor:grabbing;}
+#carousel-thumbnail-area         .photo-carousel-thumbnail-link.selected
+	{z-index:1;}
+#carousel-thumbnail-area         .photo-carousel-thumbnail-link.being-moved
+	{z-index:2;}
+#carousel-thumbnail-area         .photo-carousel-thumbnail-link.selected:not(.being-moved)
+	{box-shadow:0px 0px 6px 3px chocolate;}
+#carousel-thumbnail-area         .photo-carousel-thumbnail-link             .photo-carousel-thumbnail
+	{vertical-align:middle; border-style:none;}
+#carousel-thumbnail-area         .photo-carousel-thumbnail-link.being-moved .photo-carousel-thumbnail
+	{/* must not mess with border width when .being-moved, since then: users clicks border, mousedown
+	event triggers, element gets class .being-moved added, border changes, user releases mouse, click
+	event fails to trigger because the border is no longer under the mouse pointer.
+	also, note that there is a potential conflict when the selected thumbnail link is being moved. */
+	box-shadow:0px 0px 22px 3px black;}
+
+#selected-photo-orbit
+	{display:inline-block; float:left; text-align:center; padding:6px 10px; margin:0px 10px 5px 0px; border:1px solid chocolate; border-radius:4px; background-color:blanchedalmond; user-select:none; -moz-user-select:none; -ms-user-select:none;}
+#selected-photo-container
+	{display:block; text-align:center; padding:0; margin:6px; line-height:404px; position:relative;}
+#selected-photo-container       #selected-photo-controls-container
+	{display:none; position:absolute; line-height:1em; width:100%; top:20px;}
+#selected-photo-container:hover #selected-photo-controls-container
+	{display:block;}
+#delete-photo-button
+	{margin-left:60px;}
+
+#selected-carousel-photo
+	{display:inline-block; vertical-align:middle;}
+.view-mode #selected-photo-current-caption
+	{max-width:420px; white-space:pre-wrap; text-align:left;}
+.edit-mode #selected-photo-current-caption
+	{margin-bottom:5px;}
+
+#photo-upload-form
+	{display:inline-block; padding:10px; border:1px solid chocolate; border-radius:4px; background-color:BlanchedAlmond; margin:10px 0 0 12px;}
+#photo-file-input
+	{max-width:216px; overflow:visible;}
+
+#share_keywords-help
+	{color:midnightblue;}
+#share_keywords-help:hover
+	{cursor:help;}
+

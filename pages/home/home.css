@@ -1,0 +1,53 @@
+#main > *
+	{vertical-align:top;}
+
+#site-description
+	{text-align:left; font-size:20px; line-height:1.62; font-family:"Times New Roman",serif; margin:0 0 20px 0;}
+#site-description > p
+	{margin:0;}
+
+#type-distribution
+	{border-collapse:separate; display:inline-block; margin:10px 10px 10px 10px;}
+#type-distribution > thead > tr > th
+	{text-align:center; font-weight:normal; font-family:Arial,Helvetica,sans-serif; font-size:13px; color:black;}
+#type-distribution > tbody > tr > td
+	{width:100px; text-align:center; border:1px solid black;}
+
+#country-statistics
+	{font-size:11px; overflow:auto; display:inline-block; white-space:pre; height:478px; text-align:right; width:200px;}
+#country-statistics table
+	{display:inline-block; border-spacing:0; border:1px solid saddlebrown; border-right-style:none;}
+#country-statistics > table > thead
+	{background-color:saddlebrown; color:lemonchiffon; font-family:Arial,Helvetica,sans-serif;}
+#country-statistics > table > tbody > tr:nth-child(odd)
+	{background-color:papayawhip;}
+#country-statistics > table > tbody > tr:nth-child(even)
+	{background-color:blanchedalmond;}
+#country-statistics > table > tbody > tr > td
+	{padding:2px 5px;}
+#country-statistics > table > thead > tr > th
+	{padding:2px 5px;}
+#country-statistics table td:first-child
+,#country-statistics table th:first-child
+	{text-align:right;}
+
+#country-statistics table td:nth-child(2)
+,#country-statistics table th:nth-child(2)
+	{text-align:left;}
+
+/* tabs */
+#demographic-tabs
+	{display:inline-block; min-width:550px; margin-top:10px;}
+#demographic-tabs #tab-row
+	{}
+#demographic-tabs #tab-row > .tab
+	{padding:7px 20px; display:inline-block; background-color:saddlebrown; color:lemonchiffon; border-top-left-radius:10px; border-top-right-radius:10px; margin:0 1px;}
+#demographic-tabs #tab-row > .tab.selected
+	{padding-top:10px; color:white;}
+#demographic-tabs #tab-row > .tab.selected:hover
+	{text-decoration:none; cursor:default;}
+#demographic-tabs #tab-row > .tab:first-child
+	{margin-left:10px;}
+#demographic-tabs #demographic-tab-content
+	{display:block; text-align:center; padding:20px 10px; border-radius:10px; background-color:lemonchiffon; box-shadow:0px 8px 22px -8px saddlebrown; border:1px solid saddlebrown;}
+
