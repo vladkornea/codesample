@@ -12,5 +12,5 @@ A typical `index.php` file does the following:
 5. JavaScript page files typically use AJAX calls to interact with their own page-specific `ajax.php` files.
    They use hash fragment navigation where appropriate.
 
-`/facade` contains classes such as `DB`, `Session`, and `Email` that serve as facades.
+`/includes/facade` contains classes such as `DB`, `Session`, and `Email` that serve as facades.
 
