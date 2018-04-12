@@ -1,10 +1,14 @@
 <?php
 
 interface GlobalSettingsInterface {
-	static function setSetting (string $setting_name, $setting_value): void;
 	static function getSetting (string $setting_name): ?string;
-	static function setSettings (array $new_settings): void;
 	static function getSettings (array $settings = null): array;
+	static function setSetting (string $setting_name, $setting_value): void;
+	static function setSettings (array $new_settings): void;
+
+	static function feedbackQueueProcessing (bool $whether = null): bool;
+	static function inboundQueueProcessing (bool $whether = null): bool;
+	static function queuedEmailSending (bool $whether = null): bool;
 } // GlobalSettingsInterface
 
 class GlobalSettings implements GlobalSettingsInterface {
