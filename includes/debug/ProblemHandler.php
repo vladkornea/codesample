@@ -202,40 +202,53 @@ abstract class ProblemHandler {
 
 
 	protected function getUserFriendlyBacktrace (): string {
-		$all_lines = [];
-		$backtrace_lines = [];
-		foreach ($this->backtrace as $current_entry) {
-			$absolute_filename = $current_entry['file'] ?? null;
+		$backtrace_paragraphs = [];
+		foreach ($this->backtrace as $current_step) {
+			$absolute_filename = $current_step['file'] ?? null;
 			if (!$absolute_filename) {
+				$backtrace_paragraphs[] = "Unknown file.";
+				continue;
+			}
+			if (!file_exists($absolute_filename)) {
+				$backtrace_paragraphs[] = $absolute_filename;
 				continue;
 			}
 			$relative_filename = str_replace(realpath($_SERVER['DOCUMENT_ROOT']), '', realpath($absolute_filename));
-			$line_number = $current_entry['line'];
-			$code_line = ($absolute_filename and $line_number) ? static::getLineFromFile($absolute_filename, $line_number) : '';
-			$backtrace_line = "$relative_filename:$line_number\n$code_line";
-			$backtrace_lines[] = $backtrace_line;
+			$step_paragraph = $relative_filename;
+			$line_number = $current_step['line'] ?? null;
+			if ($line_number) {
+				$step_paragraph .= ":$line_number";
+				$code_line = static::getLineFromFile($absolute_filename, $line_number);
+				if ($code_line) {
+					$step_paragraph .= "\n$code_line";
+				}
+			}
+			$backtrace_paragraphs[] = $step_paragraph;
 		}
-		$all_lines[] = implode("\n", $backtrace_lines);
-		$backtrace_string = implode("\n", $all_lines);
-		return $backtrace_string;
+		$backtrace_text = implode("\n\n", $backtrace_paragraphs);
+		return $backtrace_text;
 	} // getUserFriendlyBacktrace
 
 
-	protected static function getLineFromFile (string $file, int $line_number): string {
-		if (!file_exists($file)) {
-			throw new Exception("File $file does not exist.");
+	protected static function getLineFromFile (?string $file, ?int $line_number): ?string {
+		if (!$file or !file_exists($file)) {
+			return null;
+		}
+		if (!$line_number) {
+			return null;
 		}
 		$handle = fopen($file, 'r');
 		if (false === $handle) {
-			throw new Exception("Error opening $file");
+			trigger_error("Error opening $file", E_USER_WARNING);
+			return null;
 		}
-		$line = '';
 		for ($i = 0; $i < $line_number; $i++) {
 			$line = fgets($handle);
 		}
-		$max_line_length = 250;
-		if (strlen($line) > $max_line_length) {
-			$line = "\t(line is longer than $max_line_length characters)\n";
+		$line = rtrim($line, "\n\r");
+		$line_length = strlen($line);
+		if ($line_length > 300) {
+			$line = "\t(line is $line_length characters long)\n";
 		}
 		return $line;
 	} // getLineFromFile

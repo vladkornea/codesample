@@ -44,7 +44,7 @@ class ExceptionHandler extends LocalProblemHandler {
 			$error_line = $this->errorLine;
 			$code_string = ($this->errorFile and $this->errorLine) ? static::getLineFromFile($this->errorFile, $this->errorLine) : '';
 			$this_trace = "$relative_path:$error_line\n$code_string";
-			$backtrace_string = $backtrace_string ? "$this_trace\n$backtrace_string" : $this_trace;
+			$backtrace_string = $backtrace_string ? "$this_trace\n\n$backtrace_string" : $this_trace;
 		}
 		return $backtrace_string;
 	} // getUserFriendlyBacktrace
