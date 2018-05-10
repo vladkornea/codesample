@@ -669,7 +669,7 @@ function printProfilePageInterface () {
 					+'</tr><tr id="location-row">'
 					+'</tr><tr id="coordinates-row">'
 						+'<th><label for="latitude">Latitude</label>, <label for="longitude">Longitude</label></th>'
-						+'<td><input id="latitude" type="text" name="latitude" size="10">, <input id="longitude" type="text" name="longitude" size="10"> <span class="field-note">(not shown to others)</span><div class="field-block-note"><a href="https://www.google.com/maps/place/Statue+of+Liberty+National+Monument/@40.6892494,-74.0466891" target="_blank">The Statue of Liberty is at 40.689247, -74.044502</a></div></td>'
+						+'<td><input id="latitude" type="text" name="latitude" size="10">, <input id="longitude" type="text" name="longitude" size="10"> <span class="field-note">(not shown to others)</span><div class="field-block-note"><a href="https://www.google.com/maps/place/Statue+of+Liberty+National+Monument/@40.6892494,-74.0466891,17z" target="_blank">The Statue of Liberty is at 40.689247, -74.044502</a></div></td>'
 					+'</tr><tr>'
 						+'<th><label for="would_relocate-select">Would Relocate</label></th>'
 						+'<td><select id="would_relocate-select" name="would_relocate"></select></td>'
