@@ -10,6 +10,8 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 
+HttpPageShell::requireSessionLogin();
+
 $form_data = [];
 
 // boolean search criteria
