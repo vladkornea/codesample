@@ -7,7 +7,8 @@ ErrorDocument 500 /pages/errors/500.php
 
 # Hide irrelevant files from the web
 Redirect 404 /includes
-#RedirectMatch 404 /\.
+Redirect 404 /README.md
+Redirect 404 /.gitignore
 
 # Remap legacy TypeTango URLs
 redirect permanent /account.php /account
