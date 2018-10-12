@@ -7,14 +7,14 @@ function loadLoginWidget () {
 	var $loginWidget = $(
 		'<div id="login-widget">'
 			+'<div id="login-links-container">'
-				+(userId ? '' :
+				+(userId ? '' : // not logged  in
 					'<a id="home-link" href="/">TypeTango</a>'
 					+'<a id="create-account-link" href="/create-account">Create Account</a>'
 					+'<a id="keyword-suggestions-link" href="/keyword-suggestions">Keyword Suggestions</a>'
 					+'<a id="create-account-link" href="/help">Help</a>'
-					+'<a id="login-link" href="javascript:">Log In</a>'
+					+'<a id="login-link" href="/login">Log In</a>'
 				)
-				+(!userId ? '' :
+				+(!userId ? '' : // logged in
 					'<a id="home-link" href="/">TypeTango</a>'
 					+'<a id="edit-profile-link" href="/profile">Edit Profile</a>'
 					+'<a id="view-profile-link" href="/profile?user_id=' +userId +'">View Profile</a>'
@@ -64,16 +64,23 @@ function loadLoginWidget () {
 	$loginWidget.find('#login-form-container').hide()
 	$loginWidget.find('#forgot-password-button').click(handleForgotPasswordClick)
 	$loginWidget.appendTo($localContainer)
+
+	if (window.location.pathname === '/login') { // this is the login page
+		openLoginForm()
+	}
 	return // functions below
-	function collapseMenus () {
-		$loginWidget.find('#login-links-container').find('.expanded').removeClass('expanded')
-		$loginWidget.find('#login-form-container').hide()
-	} // collapseMenus
+	function openLoginForm () {
+		$('#login-form-container').show().find('input').first().focus()
+	} // openLoginForm
+
+	function closeLoginForm () {
+		$('#login-form-container').hide()
+	} // closeLoginForm
 
 	function handleDocumentClick (event) {
 		var leftMouseButtonClicked = event.which == 1
 		if (leftMouseButtonClicked) {
-			collapseMenus()
+			closeLoginForm()
 		}
 	} // handleDocumentClick
 
@@ -82,20 +89,9 @@ function loadLoginWidget () {
 	} // handleWidgetClick
 
 	function handleLoginLinkClick (event) {
-		handleMenuLinkClick(event, '#login-form-container')
+		event.preventDefault()
+		openLoginForm()
 	} // handleLoginLinkClick
-
-	function handleMenuLinkClick (event, formContainer) {
-		var $formContainer = $(formContainer)
-		var formWasOpen = $formContainer.is(':visible')
-		collapseMenus()
-		if (formWasOpen) {
-			return
-		}
-		$(event.currentTarget).addClass('expanded')
-		$formContainer.show()
-		$formContainer.find('input').first().focus()
-	} // handleMenuLinkClick
 
 	function handleLogoutLinkClick (event) {
 		event.preventDefault()
@@ -137,19 +133,21 @@ function loadLoginWidget () {
 
 	function handleLoginFormSubmit (event) {
 		event.preventDefault()
-		var $loginForm = $(event.currentTarget)
-		removeOldErrorMessages($loginForm[0])
-		var $user = $loginForm.find('#login-user-input')
-		if (!$user.val()) {
-			displayFormTableErrorMessage($user, "Enter your username or email address.")
-			return
+		var loginForm = event.currentTarget
+		{ // check for obvious errors
+			removeOldErrorMessages(loginForm)
+			var userField = document.getElementById('login-user-input')
+			if (!userField.value) {
+				displayFormTableErrorMessage(userField, "Enter your username or email address.")
+				return
+			}
+			var passwordField = document.getElementById('login-password-input')
+			if (!passwordField.value) {
+				displayFormTableErrorMessage(passwordField, "Enter your password.")
+				return
+			}
 		}
-		var $password = $loginForm.find('#login-password-input')
-		if (!$password.val()) {
-			displayFormTableErrorMessage($password, "Enter your password.")
-			return
-		}
-		submitFormViaAjax(event.currentTarget, handleLoginResponse, getClientInfo())
+		submitFormViaAjax(loginForm, handleLoginResponse, getClientInfo())
 		return // functions below
 		function handleLoginResponse (response) {
 			removeOldErrorMessages($loginWidget[0])
