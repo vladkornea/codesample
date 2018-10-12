@@ -23,7 +23,7 @@ function loadLoginWidget () {
 					+'<a id="account-link" href="/account">My Account</a>'
 					+'<a id="keyword-suggestions-link" href="/keyword-suggestions">Keyword Suggestions</a>'
 					+'<a id="create-account-link" href="/help">Help</a>'
-					+'<a id="logout-link" href="javascript:">Log Out</span>'
+					+'<a id="logout-link" href="/logout">Log Out</span>'
 				)
 			+'</div>'
 			+'<div id="login-widget-forms-container">'
