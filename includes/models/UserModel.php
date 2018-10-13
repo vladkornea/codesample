@@ -1009,8 +1009,8 @@ EMAIL_TEXT;
 			}
 		}
 		$where = DB::where($where);
-		$our_positive_keywords = DB::getColumn("select lower(keyword) from positive_keywords where $where");
-		$our_negative_keywords = DB::getColumn("select lower(keyword) from negative_keywords where $where");
+		$our_positive_keywords = DB::getColumn("select lower(trim(keyword)) from positive_keywords where $where");
+		$our_negative_keywords = DB::getColumn("select lower(trim(keyword)) from negative_keywords where $where");
 
 		// our positives with their weights
 		$our_positives_with_their_weights = [];
