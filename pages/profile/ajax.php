@@ -79,7 +79,7 @@ function handle_update_positive_keyword (): void {
 	$old_keyword = $_POST['old_keyword'] ?? null;
 	$new_keyword = $_POST['new_keyword'] ?? null;
 	$new_weight  = (int)($_POST['new_keyword_weight'] ?? 1);
-	$error_message = Session::getUserModel()->updateKeyword('positive', $old_keyword, $new_keyword, $new_weight);
+	$error_message = Session::getUserModel()->saveKeyword('positive', $old_keyword, $new_keyword, $new_weight);
 	if ($error_message) {
 		$pageShell->error($error_message);
 	}
@@ -91,7 +91,7 @@ function handle_update_negative_keyword (): void {
 	$old_keyword = $_POST['old_keyword'] ?? null;
 	$new_keyword = $_POST['new_keyword'] ?? null;
 	$new_weight  = (int)($_POST['new_keyword_weight'] ?? 1);
-	$error_message = Session::getUserModel()->updateKeyword('negative', $old_keyword, $new_keyword, $new_weight);
+	$error_message = Session::getUserModel()->saveKeyword('negative', $old_keyword, $new_keyword, $new_weight);
 	if ($error_message) {
 		$pageShell->error($error_message);
 	}

@@ -76,6 +76,7 @@ class UserModel extends LoggedModel implements UserModelInterface {
 	/** @var SearchCriteriaModel $searchCriteriaModel call ->getSearchCriteriaModel() */
 	protected $searchCriteriaModel = null;
 
+	const MAX_KEYWORD_WEIGHT = 250;
 
 	public static function create (array $form_data, string $event_synopsis = ''): array {
 		$next_allowed_account_creation_time_of_ip_address = LoginFinder::getNextAllowedAccountCreationTimeOfIpAddress($_SERVER['REMOTE_ADDR']);
@@ -946,29 +947,23 @@ EMAIL_TEXT;
 	 */
 	public function setKeywords (string $positive_or_negative, array $keywords_with_weights): void {
 		$table_name = $positive_or_negative == 'positive' ? 'positive_keywords' : 'negative_keywords';
-
-		// if no new keywords, delete existing keywords and return
 		if (!$keywords_with_weights) {
-			DB::query("delete from $table_name where " .DB::where(['user_id'=>$this->getId()]));
+			$delete_all_keywords_query = "delete from $table_name where " .DB::where(['user_id'=>$this->getId()]);
+			DB::query($delete_all_keywords_query);
 			return;
 		}
-
-		// delete existing keywords not present among new keywords
-		$new_keywords_list = [];
-		foreach ($keywords_with_weights as $keyword_data) {
-			$new_keywords_list[] = $keyword_data['keyword'];
-		}
-		DB::query("delete from $table_name where " .DB::where(['keyword' =>DB::not($new_keywords_list), 'user_id' =>$this->getId()]));
-
-		// save new keywords with weights
+		$saved_keywords = [];
 		foreach ($keywords_with_weights as $current_keyword_with_weight) {
 			$keyword = trim($current_keyword_with_weight['keyword']);
 			if (!$keyword) {
 				continue;
 			}
 			$weight = $current_keyword_with_weight['weight'];
-			$this->updateKeyword($positive_or_negative, null, $keyword, $weight);
+			$this->saveKeyword($positive_or_negative, null, $keyword, $weight);
+			$saved_keywords[] = $keyword;
 		}
+		$delete_keywords_not_saved_now_query = "delete from $table_name where " .DB::where(['keyword' =>DB::not($saved_keywords), 'user_id' =>$this->getId()]);
+		DB::query($delete_keywords_not_saved_now_query);
 	} // setKeywords
 
 	public function getAllKeywordsWithSignedWeights (): array {
@@ -1030,31 +1025,30 @@ EMAIL_TEXT;
 		return $keywords;
 	} // getKeywordsAsOther
 
-	public function updateKeyword (string $positive_or_negative, ?string $old_keyword, ?string $new_keyword, ?int $new_weight): ?string {
+	/**
+	 * For cases such as the user correcting a typo in a keyword, pass $old_keyword so we know which keyword to replace.
+	 * If the new keyword is already in the database, its weight will be updated (no duplicates get inserted).
+	 */
+	public function saveKeyword (string $positive_or_negative, ?string $old_keyword, ?string $new_keyword, ?int $new_weight): ?string {
 		$table = $positive_or_negative == 'negative' ? 'negative_keywords' : 'positive_keywords';
-		if (!$new_keyword) {
-			DB::query("delete from $table where " .DB::where(['user_id'=>$this->getId(), 'keyword'=>$old_keyword]));
-			return null;
+		$new_keyword = trim($new_keyword);
+		if ($new_weight < 0) { // Maybe some user reckons that negative keywords should have negative values.
+			$new_weight = abs($new_weight);
 		}
-		if ($new_weight === null) {
-			return "Error saving $positive_or_negative keyword: missing keyword weight.";
+		if ($new_weight > static::MAX_KEYWORD_WEIGHT) {
+			$new_weight = static::MAX_KEYWORD_WEIGHT;
 		}
-		$minimum_weight = 0;
-		if ($new_weight < $minimum_weight) {
-			return "Error saving $positive_or_negative keyword: weight $new_weight is less than minimum ($minimum_weight).";
+		$old_keyword_provided_and_different_from_new = $old_keyword and $old_keyword != $new_keyword;
+		if ($old_keyword_provided_and_different_from_new) {
+			// Updating would fail if the new value would be a duplicate, simpler to delete then insert/replace.
+			$delete_old_keyword_query = "delete from $table where " .DB::where(['user_id'=>$this->getId(), 'keyword'=>$old_keyword]);
+			DB::query($delete_old_keyword_query);
 		}
-		$maximum_weight = 250;
-		if ($new_weight > $maximum_weight) {
-			return "Error saving $positive_or_negative keyword: weight $new_weight is greater than maximum ($maximum_weight).";
+		if ($new_keyword) {
+			DB::insert($table, ['user_id'=>$this->getId(), 'keyword'=>$new_keyword, 'weight'=>$new_weight], true);
 		}
-		if ($new_keyword == $old_keyword) {
-			DB::update($table, ['weight'=>$new_weight], ['user_id'=>$this->getId(), 'keyword'=>$old_keyword]);
-			return null;
-		}
-		DB::query("delete from $table where " .DB::where(['user_id'=>$this->getId(), 'keyword'=>$old_keyword]));
-		DB::insert($table, ['user_id'=>$this->getId(), 'keyword'=>$new_keyword, 'weight'=>$new_weight], true);
 		return null;
-	} // updateKeyword
+	} // saveKeyword
 
 	public function getPhotoCarouselData (): array {
 		$photo_carousel_data = [
