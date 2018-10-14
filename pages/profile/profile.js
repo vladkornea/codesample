@@ -995,6 +995,10 @@ function printPhotoCarouselWidget (photoCarouselData) {
 	function handleDocumentKeydown (event) {
 		var $targetElement = $(event.target)
 		;(function tryNavigating () {
+			var isSpecialKeyPressed = event.shiftKey || event.ctrlKey || event.altKey || event.metaKey
+			if (isSpecialKeyPressed) {
+				return
+			}
 			var elementHasFormAmongItsAncestors = $targetElement.parents('form').length > 0
 			if (elementHasFormAmongItsAncestors) {
 				return
