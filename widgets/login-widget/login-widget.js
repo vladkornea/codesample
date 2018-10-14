@@ -12,6 +12,7 @@ function loadLoginWidget () {
 					+'<a id="create-account-link" href="/create-account">Create Account</a>'
 					+'<a id="keyword-suggestions-link" href="/keyword-suggestions">Keyword Suggestions</a>'
 					+'<a id="create-account-link" href="/help">Help</a>'
+					+'<a id="privacy-policy-link" href="/privacy-policy">Privacy</a>'
 					+'<a id="login-link" href="/login">Log In</a>'
 				)
 				+(!userId ? '' : // logged in

@@ -76,7 +76,7 @@ HEREDOC;
 		</td>
 	</tr>
 </tbody><tfoot>
-	<tr><td colspan="2" id="footer">Myers-Briggs®, MBTI®, and Myers-Briggs Type Indicator® are trademarks of CPP, Inc. TypeTango is not affiliated with CPP, Inc. © <a href="https://www.kornea.com/resume" target="_blank">Vladimir Kornea</a></td></tr>
+	<tr><td colspan="2" id="footer">Myers-Briggs®, MBTI®, and Myers-Briggs Type Indicator® are trademarks of CPP, Inc. TypeTango is not affiliated with CPP, Inc. © <a href="https://www.kornea.com/resume" target="_blank">Vladimir Kornea</a><a id="privacy-policy-page-footer-link" href="/privacy-policy">Privacy Policy</a></td></tr>
 </tfoot></table>
 <?php
 	} // printStandardPageMarkup

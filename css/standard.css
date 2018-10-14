@@ -16,6 +16,8 @@
 /* misc */
 .error
 	{color:orangered;}
+#privacy-policy-page-footer-link
+	{position:absolute; right:20px;}
 
 /* navbar */
 #navbar
