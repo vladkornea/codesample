@@ -180,7 +180,7 @@ class SearchCriteriaModel extends LoggedModel implements SearchCriteriaModelInte
 
 
 	// excludes current user from search results
-	public function getSearchResults (int $current_page = 1, int $page_size = 10): array {
+	public function getSearchResults (int $current_page = 1, int $page_size = 7): array {
 		$userFinder = new UserFinder;
 		$userFinder->setPageNumber($current_page);
 		$userFinder->setPageSize($page_size);
