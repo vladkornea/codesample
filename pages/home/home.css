@@ -14,7 +14,7 @@
 	{width:100px; text-align:center; border:1px solid black;}
 
 #country-statistics
-	{font-size:11px; overflow:auto; display:inline-block; white-space:pre; height:478px; text-align:right; width:200px;}
+	{font-size:11px; overflow:auto; display:inline-block; white-space:pre; height:478px; text-align:center; width:100%;}
 #country-statistics table
 	{display:inline-block; border-spacing:0; border:1px solid saddlebrown; border-right-style:none;}
 #country-statistics > table > thead
