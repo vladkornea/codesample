@@ -19,18 +19,14 @@ abstract class BaseModel implements BaseModelInterface {
 	} // __construct
 
 	/**
-	 * Loads record's data from database into member properties.
-	 * @param string $where To replace default where clause (which select by primary key).
+	 * Loads DB row into this object's $record property.
 	 * @throws Exception Thrown if no records found.
 	 */
-	protected function loadRecord ($where = null): void {
-		if ($where === null) {
-			$where = DB::where([static::$primaryKeyName => $this->id]);
-		}
+	protected function loadRecord (): void {
 		$query = '
 			select ' .implode(', ', static::$columnNames) .'
 			from ' .static::$tableName .'
-			where ' .$where;
+			where ' .DB::where([static::$primaryKeyName => $this->id]);
 		$this->record = DB::getRow($query);
 		if (!$this->record) {
 			throw new Exception("Error loading model record: Query returned empty result: $query");
@@ -38,9 +34,8 @@ abstract class BaseModel implements BaseModelInterface {
 	} // loadRecord
 
 	/**
-	 * Inserts row into database and returns its insert ID. Extending
-	 * classes should make this method public and return either an array
-	 * of error messages or the insert ID returned by parent::create()
+	 * Inserts row into database and returns its insert ID. Extending classes should return
+	 * either an array of error messages or the insert ID returned by parent::create()
 	 * @param array $form_data Associative array of fields to insert.
 	 * @return int ID of inserted row.
 	 * @throws InvalidArgumentException Thrown if the primary key field is set in the provided data.

@@ -496,7 +496,7 @@ class UserModel extends LoggedModel implements UserModelInterface {
 
 	public function unblockUser (int $user_id): void {
 		DB::query('delete from blocked_users where ' .DB::where(['blocked_user_id'=>$user_id, 'blocked_by_user_id'=>$this->getId()]));
-	} // blockUser
+	} // unblockUser
 
 
 	public function reportUser (int $user_id): void {
@@ -506,7 +506,7 @@ class UserModel extends LoggedModel implements UserModelInterface {
 
 	public function unreportUser (int $user_id): void {
 		DB::query('delete from reported_users where ' .DB::where(['reported_user_id'=>$user_id, 'reported_by_user_id'=>$this->getId()]));
-	} // blockUser
+	} // unreportUser
 
 
 	public function logIn (string $login_method, bool $remember_me = false): ?array {
@@ -919,7 +919,7 @@ EMAIL_TEXT;
 
 	public function getLongitude (): ?float {
 		return (float)$this->commonGet('longitude');
-	} // getLatitude
+	} // getLongitude
 
 	public function getNegativeKeywords (): array {
 		$query = '

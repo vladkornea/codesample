@@ -125,7 +125,7 @@ function get_mimetype_from_filename (string $filename): string {
 		,'wmv'  => 'video/x-ms-wmv'
 		,'avi'  => 'video/x-msvideo'
 	][$file_extension] ?? 'application/octet-stream';
-} // get_mimetype_for_common_extension
+} // get_mimetype_from_filename
 
 
 // $birth_date is in 2017-11-18 format
@@ -151,5 +151,5 @@ function get_age_from_birth_date (string $birth_date): ?int {
 		}
 	}
 	return $age;
-} // get_age_from_birthday
+} // get_age_from_birth_date
 

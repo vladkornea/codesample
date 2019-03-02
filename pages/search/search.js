@@ -2,7 +2,6 @@ $(printSearchPageInterface)
 function printSearchPageInterface () {
 	var $localContainer = $('#main')
 	var pageData = window['pageData']
-	var preloadedFirstPageSearchResults = pageData['firstPageSearchResults']
 	if (!pageData) {
 		$('<p class="error">Missing pageData</p>').appendTo($localContainer)
 		return
@@ -16,13 +15,13 @@ function printSearchPageInterface () {
 	processHashParams()
 	return // functions below
 	function processHashParams () {
+		var preloadedFirstPageSearchResults = pageData['firstPageSearchResults']
 		var page = getHashParams()['page'] || 1
 		if (page == 1 && preloadedFirstPageSearchResults) {
 			printSearchResults(preloadedFirstPageSearchResults)
 		} else {
 			requestSearchResults(page)
 		}
-		preloadedFirstPageSearchResults = null
 	} // processHashParams
 
 	function requestSearchResults (page) {

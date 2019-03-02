@@ -66,7 +66,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 		foreach ($js_files as $js_file) {
 			$this->addJsFile($js_file);
 		}
-	} // addJsFile
+	} // addJsFiles
 
 	public function addJsVar (string $var_name, $var_value): void {
 		$this->jsVars[$var_name] = $var_value;
@@ -83,7 +83,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 	/** Tells robots not to index this page. */
 	public function setDiscourageIndexing (): void {
 		$this->appendToHead('<meta name="robots" content="noindex, follow">');
-	} // setDiscourageIndexing(
+	} // setDiscourageIndexing
 
 	public function setKeywords (string $keywords): void {
 		$this->keywords = $keywords;
