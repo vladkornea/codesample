@@ -83,11 +83,11 @@
 	var errorsReportedCount = 0
 	$(document).ajaxError(
 		function handleGlobalAjaxError(event, jqxhr, settings, httpErrorMessage) {
-			alert(httpErrorMessage)
 			if (errorsReportedCount >= MAX_ERRORS_REPORTED) {
 				return
 			}
 			errorsReportedCount++
+			alert(httpErrorMessage)
 			;(function reportAjaxError () {
 				var errorReport = {
 					'page_url':            window.location.href

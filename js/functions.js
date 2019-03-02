@@ -182,7 +182,6 @@ function getNamedFormData (form) {
 		}
 
 		formData[inputName] = inputValue // haven't considered file inputs yet
-		continue
 	}
 	return formData
 } // getNamedFormData
@@ -328,7 +327,7 @@ function smoothScrollViewport (newTop, options) {
 		window.stopScrollingViewport = function (event) {
 			if (event.isDefaultPrevented()) {
 				/**
-				 * If we attempt to scroll programatically in response to a keydown event, the event would eventually
+				 * If we attempt to scroll programmatically in response to a keydown event, the event would eventually
 				 * propagate to window, and the scroll would be stopped by this function right after being started.
 				 * We could deal with this by calling event.stopPropagation() before the event has propagated to window,
 				 * but we'd have no reason to know that. Fortunately, since in such cases we would usually be calling
