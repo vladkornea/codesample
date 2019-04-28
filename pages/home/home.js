@@ -41,7 +41,7 @@ function printHomePageInterface () {
 			'<div id="demographic-tabs">'
 				+'<div id="tab-row">'
 					+'<a id="type-distribution-tab" class="tab" href="#tab=types">Type Distribution</a>'
-					+'<a id="age-distribution-tab" class="tab" href="#tab=ages">Age Distribution</a>'
+					//+'<a id="age-distribution-tab" class="tab" href="#tab=ages">Age Distribution</a>'
 					+'<a id="country-distribution-tab" class="tab" href="#tab=countries">Country Distribution</a>'
 				+'</div>'
 				+'<div id="demographic-tab-content"></div>'
