@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 User-agent: *
 Disallow: /admin
 Disallow: /api
+Disallow: /ajax
 Disallow: */ajax
 Disallow: <?=PROFILE_PHOTOS_REMOTE_DIR?>
 
