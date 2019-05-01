@@ -22,7 +22,7 @@ class ErrorHandler extends LocalProblemHandler {
 	/** Get a backtrace array with references to this class removed. */
 	protected static function getBacktrace(): array {
 		$reduced_backtrace = []; // return value
-		$full_backtrace = debug_backtrace();
+		$full_backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS | ~DEBUG_BACKTRACE_PROVIDE_OBJECT);
 		foreach ($full_backtrace as $loop_backtrace) {
 			if (isset($loop_backtrace['class']) and $loop_backtrace['class'] === __CLASS__) {
 				continue;
