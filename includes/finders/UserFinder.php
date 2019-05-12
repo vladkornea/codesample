@@ -606,7 +606,8 @@ class UserFinder extends BaseFinder implements UserFinderInterface {
 	} // getAgeDistribution
 
 
-	public static function getAgeDistributionGoogleChartData (): array {
+	public static function getAgeDistributionGoogleChartData (): ?array {
+		return null; // TODO UPDATE CHART API CALL https://developers.google.com/chart/image/ -> https://developers.google.com/chart/
 		$data = ['width'=>400, 'height'=>196];
 		$age_distribution_chart_image_local_relative_path = '/images/age-distribution-chart.png';
 		$local_image_location = $_SERVER['DOCUMENT_ROOT'] .$age_distribution_chart_image_local_relative_path;

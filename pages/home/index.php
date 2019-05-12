@@ -9,7 +9,7 @@ $pageShell->addJsFile('/pages/home/home.js');
 $type_distribution = UserFinder::getTypeDistribution();
 $pageShell->addJsVar('typeDistribution', $type_distribution);
 $pageShell->addJsVar('totalUsers', array_sum($type_distribution));
-$pageShell->addJsVar('ageDistributionChartData', UserFinder::getAgeDistributionGoogleChartData());
+//$pageShell->addJsVar('ageDistributionChartData', UserFinder::getAgeDistributionGoogleChartData());
 $pageShell->addJsVar('countryStatistics', UserFinder::getCountryStatistics());
 
 ?>
