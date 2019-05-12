@@ -57,7 +57,8 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 
 	/** @param string $js_file Path relative to document root, starting with slash. */
 	public function addJsFile (string $js_file): void {
-		$filemtime = filemtime($_SERVER['DOCUMENT_ROOT'] .$js_file);
+		$requested_filename = $_SERVER['DOCUMENT_ROOT'] .$js_file;
+		$filemtime = file_exists($requested_filename) ? filemtime($requested_filename) : filemtime("$requested_filename.php");
 		$this->appendToHead('<script src="' ."$js_file?filemtime=$filemtime" .'"></script>');
 	} // addJsFile
 
