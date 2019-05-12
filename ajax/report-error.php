@@ -22,11 +22,11 @@ return; // functions below
 function handle_report_javascript_error (): void {
 	global $pageShell;
 	$error_details = [ // bots access this URL without providing arguments
-		'error_message'   => @$_POST['error_message']
-		,'error_page'     => @$_POST['page_url']
-		,'error_file_url' => @$_POST['error_file_url']
-		,'line_number'    => @$_POST['line_number']
-		,'stack_trace'    => @$_POST['stack_trace']
+		'error_message'   => $_POST['error_message'] ?? null
+		,'error_page'     => $_POST['page_url'] ?? null
+		,'error_file_url' => $_POST['error_file_url'] ?? null
+		,'line_number'    => $_POST['line_number'] ?? null
+		,'stack_trace'    => $_POST['stack_trace'] ?? null
 	];
 	new JavascriptErrorHandler($error_details);
 	$pageShell->success();
@@ -36,11 +36,11 @@ function handle_report_javascript_error (): void {
 function handle_report_ajax_error (): void {
 	global $pageShell;
 	$error_details = [ // bots access this URL without providing arguments
-		'error_page'          => @$_POST['page_url']
-		,'ajax_request_url'   => @$_POST['ajax_request_url']
-		,'http_error_message' => @$_POST['http_error_message']
-		,'error_functions'    => @$_POST['error_functions']
-		,'error_message'      => @$_POST['error_message']
+		'error_page'          => $_POST['page_url'] ?? null
+		,'ajax_request_url'   => $_POST['ajax_request_url'] ?? null
+		,'http_error_message' => $_POST['http_error_message'] ?? null
+		,'error_functions'    => $_POST['error_functions'] ?? null
+		,'error_message'      => $_POST['error_message'] ?? null
 	];
 	new AjaxErrorHandler($error_details);
 	$pageShell->success();
