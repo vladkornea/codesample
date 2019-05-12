@@ -18,12 +18,12 @@ return; // functions below
 
 function handle_set_password (): void {
 	global $pageShell;
-	$verification_code = @$_POST['verification_code'];
+	$verification_code = $_POST['verification_code'] ?? null;
 	$user_id = UserFinder::getIdFromVerificationCode($verification_code);
 	if (!$user_id) {
 		$pageShell->error("Invalid verification code (perhaps it expired or was used).");
 	}
-	$new_password = @$_POST['new_password'];
+	$new_password = $_POST['new_password'] ?? null;
 	$userModel = new UserModel($user_id);
 	$error_messages = $userModel->setPassword($new_password);
 	if ($error_messages) {

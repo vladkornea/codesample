@@ -18,7 +18,7 @@ return; // functions below
 
 function handle_verify_email (): void {
 	global $pageShell;
-	$verification_code = @$_POST['verification_code'];
+	$verification_code = $_POST['verification_code'] ?? null;
 	if (!$verification_code) {
 		$pageShell->error(['verification_code' => "Empty verification code."]);
 	}

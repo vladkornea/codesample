@@ -20,21 +20,21 @@ function handle_create_account (): void {
 	global $pageShell;
 
 	$user_data = [
-		 'username'         => @$_POST['username']
-		,'unverified_email' => @$_POST['email']
-		,'password'         => @$_POST['password']
-		,'mbti_type'        => @$_POST['mbti_type']
-		,'gender'           => @$_POST['gender']
-		,'orientation'      => @$_POST['orientation']
-		,'birth_month'      => @$_POST['birth_month']
-		,'birth_day'        => @$_POST['birth_day']
-		,'birth_year'       => @$_POST['birth_year']
-		,'country'          => @$_POST['country']
-		,'city'             => @$_POST['city']
-		,'state'            => @$_POST['state']
-		,'zip_code'         => @$_POST['zip_code']
-		,'latitude'         => @$_POST['latitude']
-		,'longitude'        => @$_POST['longitude']
+		 'username'         => $_POST['username'] ?? null
+		,'unverified_email' => $_POST['email'] ?? null
+		,'password'         => $_POST['password'] ?? null
+		,'mbti_type'        => $_POST['mbti_type'] ?? null
+		,'gender'           => $_POST['gender'] ?? null
+		,'orientation'      => $_POST['orientation'] ?? null
+		,'birth_month'      => $_POST['birth_month'] ?? null
+		,'birth_day'        => $_POST['birth_day'] ?? null
+		,'birth_year'       => $_POST['birth_year'] ?? null
+		,'country'          => $_POST['country'] ?? null
+		,'city'             => $_POST['city'] ?? null
+		,'state'            => $_POST['state'] ?? null
+		,'zip_code'         => $_POST['zip_code'] ?? null
+		,'latitude'         => $_POST['latitude'] ?? null
+		,'longitude'        => $_POST['longitude'] ?? null
 	];
 	['user_id'=>$user_id, 'error_messages'=>$error_messages] = UserModel::create($user_data);
 	if ($error_messages) {
