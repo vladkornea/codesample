@@ -143,12 +143,13 @@ function printAccountPageInterface () {
 						if (fieldFound) {
 							displayFormTableErrorMessage($input, errorMessage)
 						} else {
-							displayFormTableErrorMessage($submitButton, errorMessage)
+							if (fieldName === 'unverified_email') {
+								displayFormTableErrorMessage('#email-input', errorMessage)
+							} else {
+								displayFormTableErrorMessage($submitButton, errorMessage)
+							}
 						}
 					}) // each
-					if (response['error_messages']['unverified_email']) {
-						displayFormTableErrorMessage('#email-input', response['error_messages']['unverified_email'])
-					}
 				}
 			}
 		} // handleUpdateAccountResponse
