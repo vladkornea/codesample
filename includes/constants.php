@@ -23,6 +23,7 @@
 	define('EMAIL_DOMAIN', getenv('EMAIL_DOMAIN'));
 	define('DEFAULT_FROM',       'webserver@'.EMAIL_DOMAIN);
 	define('DEFAULT_REPLY_TO',       'owner@'.EMAIL_DOMAIN);
+	define('NO_REPLY_EMAIL',       'noreply@'.EMAIL_DOMAIN);
 	define('ENVELOPE_MAIL_FROM', 'mail-from@'.EMAIL_DOMAIN);
 
 	// Misc
