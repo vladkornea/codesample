@@ -106,7 +106,7 @@ abstract class ProblemHandler {
 			}
 		}
 		if ($this->backtrace) {
-			$attachment = print_r($this->backtrace, true);
+			$attachment = is_string($this->backtrace) ? $this->backtrace : print_r($this->backtrace, true);
 			$attachment_size = strlen($attachment);
 			if ($attachment_size > self::MAX_ATTACHMENT_SIZE) {
 				$attachment = 'Omitting attachment content because its size is ' .number_format($attachment_size) .' bytes.';
@@ -202,6 +202,9 @@ abstract class ProblemHandler {
 
 
 	protected function getUserFriendlyBacktrace (): string {
+		if (is_string($this->backtrace)) {
+			return $this->backtrace;
+		}
 		$backtrace_paragraphs = [];
 		foreach ($this->backtrace as $current_step) {
 			$absolute_filename = $current_step['file'] ?? null;

@@ -30,7 +30,7 @@ class ExceptionHandler extends LocalProblemHandler {
 		$this->errorFile    = $exception_or_error->getFile();
 		$this->errorLine    = $exception_or_error->getLine();
 		$this->errorPage    = static::getRequestUrl();
-		$this->backtrace    = $exception_or_error->getTrace();
+		$this->backtrace    = $exception_or_error->getTraceAsString();
 		$this->errorCode    = $exception_or_error->getCode();
 		$this->reportError();
 		die;
