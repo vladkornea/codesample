@@ -24,8 +24,12 @@ class ExceptionHandler extends LocalProblemHandler {
 
 
 	function __construct (throwable $exception_or_error) {
+		$exception_class = get_class($exception_or_error);
+		if ( $exception_class == 'EmailException' ) {
+			$this->problemIsInEmailClass = true;
+		}
 		parent::__construct();
-		$this->problemType  = 'Uncaught ' .get_class($exception_or_error);
+		$this->problemType  = "Uncaught $exception_class";
 		$this->errorMessage = $this->getMessage($exception_or_error);
 		$this->errorFile    = $exception_or_error->getFile();
 		$this->errorLine    = $exception_or_error->getLine();

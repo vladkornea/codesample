@@ -19,19 +19,6 @@ class ErrorHandler extends LocalProblemHandler {
 		new self($error_level, $error_message, $error_file, $error_line);
 	} // handleError
 
-	/** Get a backtrace array with references to this class removed. */
-	protected static function getBacktrace(): array {
-		$reduced_backtrace = []; // return value
-		$full_backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS | ~DEBUG_BACKTRACE_PROVIDE_OBJECT);
-		foreach ($full_backtrace as $loop_backtrace) {
-			if (isset($loop_backtrace['class']) and $loop_backtrace['class'] === __CLASS__) {
-				continue;
-			}
-			$reduced_backtrace[] = $loop_backtrace;
-		}
-		return $reduced_backtrace;
-	} // getBacktrace
-
 	// Converts a PHP error level to a user-friendly string.
 	public static function getProblemType (int $error_level): string {
 		switch($error_level) {
@@ -89,9 +76,24 @@ class ErrorHandler extends LocalProblemHandler {
 		$this->errorFile    = $error_file;
 		$this->errorLine    = $error_line;
 		$this->errorPage    = static::getRequestUrl();
-		$this->backtrace    = static::getBacktrace();
+
+		(function(array $full_backtrace): void { // process backtrace
+			foreach ($full_backtrace as $stack_frame) {
+				if ( isset($stack_frame['class']) ) {
+					if ( $stack_frame['class'] === __CLASS__ ) {
+						continue;
+					}
+					if ( $stack_frame['class'] === 'Email' ) {
+						$this->problemIsInEmailClass = true;
+					}
+				}
+				$this->backtrace[] = $stack_frame;
+			}
+		})( debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS | ~DEBUG_BACKTRACE_PROVIDE_OBJECT, 50) );
+
 		$this->reportError();
-		if ($this->problemType === 'Fatal Error' or $this->problemType === 'PHP Fatal error') {
+
+		if ( $this->problemType === 'Fatal Error' or $this->problemType === 'PHP Fatal error' ) {
 			die;
 		}
 	} // __construct

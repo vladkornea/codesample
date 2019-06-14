@@ -10,14 +10,15 @@ abstract class ProblemHandler {
 	protected $errorPage    = ''; // calculated differently for JS errors
 	protected $errorFile    = '';
 	protected $errorLine    = null;
-	protected $errorFunctions = '';
 	protected $errorCode    = null;
-	protected $ajaxRequestUrl = '';
-	protected $httpErrorMessage = '';
-	protected $backtrace    = []; // JS errors don't have backtraces
 	protected $memoryUsed   = null; // ->measureMemoryUsage()
+	protected $backtrace    = []; // JS errors don't have backtraces
 	protected $omitRequestArguments = false; // $_POST, $_GET, and $_FILES
 	protected $errorLoggedAlready = false; // Shutdown errors always get logged by PHP so we don't need to log them again
+	protected $problemIsInEmailClass = false;
+	protected $ajaxRequestUrl = '';
+	protected $httpErrorMessage = '';
+	protected $errorFunctions = '';
 
 	function __construct() {} // __construct
 
@@ -67,7 +68,7 @@ abstract class ProblemHandler {
 
 	/** Send problem notification email. */
 	protected function notifyErrorRecipient (): void {
-		if ($this->isProblemInEmailClass()) {
+		if ($this->problemIsInEmailClass) {
 			return;
 		}
 		$email_params = [
@@ -120,16 +121,6 @@ abstract class ProblemHandler {
 		}
 		Email::sendEmailToDeveloperViaSendmail($email_params);
 	} // notifyErrorRecipient
-
-
-	protected function isProblemInEmailClass (): bool {
-		foreach ($this->backtrace as $loop_trace) {
-			if (isset($loop_trace['class']) and $loop_trace['class'] === 'EmailModel') {
-				return true;
-			}
-		}
-		return false;
-	} // isProblemInEmailClass
 
 
 	protected function getEmailSubject (): string {
@@ -234,26 +225,25 @@ abstract class ProblemHandler {
 
 
 	protected static function getLineFromFile (?string $file, ?int $line_number): ?string {
-		if (!$file or !file_exists($file)) {
+		if ( !$line_number || !$file ) {
 			return null;
 		}
-		if (!$line_number) {
-			return null;
+		if ( !file_exists($file) ) {
+			return "( File does not exist )";
 		}
 		$handle = fopen($file, 'r');
 		if (false === $handle) {
-			trigger_error("Error opening $file", E_USER_WARNING);
-			return null;
+			return "( Error opening file $file )";
 		}
-		for ($i = 0; $i < $line_number; $i++) {
-			$line = fgets($handle);
+		for ($i = 1; $i < $line_number; $i++) {
+			fgets($handle);
 		}
-		$line = rtrim($line, "\n\r");
+		$line = fgets($handle);
 		$line_length = strlen($line);
-		if ($line_length > 300) {
-			$line = "\t(line is $line_length characters long)\n";
+		if ($line_length > 500) {
+			return "( Line is $line_length characters long )";
 		}
-		return $line;
+		return rtrim($line, "\r\n");
 	} // getLineFromFile
 
 
