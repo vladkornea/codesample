@@ -8,44 +8,53 @@ interface EmailInterface {
 	static function getRelaySender (string $original_from_header, string $sender_email): string;
 } // EmailInterface
 
+class EmailException extends Exception {
+	/* We can't send error notification emails if the problem is in the email class. */
+} // EmailException
+
 class Email implements EmailInterface {
 	/**
 	 * This method may not accept all the $email_params as Email::sendEmailToDeveloperViaSendmail(), for example 'cc' and 'bcc' are not currently supported via SES.
 	 * $email_params keys: 'reply-to', 'list-unsubscribe', 'list-owner', 'resent-from', ('raw_email_body', 'content-type'), ('text', 'html', 'files')
 	 * @param array $email_params
 	 * @return null|string error message
+	 * @throws EmailException
 	 * @see Email::getRawEmail(), Email::sendEmailToDeveloperViaSendmail()
 	 */
 	public static function sendEmailToClientViaAmazonSES (array $email_params): ?string {
-		$subject = $email_params['subject'] ?? $_SERVER['HTTP_HOST'];
-		$to_email_address = $email_params['to'] ?? ERROR_RECIPIENT;
-		$from_header_value = $email_params['from'] ?? 'TypeTango <'.DEFAULT_FROM.'>';
+		try {
+			$subject = $email_params['subject'] ?? $_SERVER['HTTP_HOST'];
+			$to_email_address = $email_params['to'] ?? ERROR_RECIPIENT;
+			$from_header_value = $email_params['from'] ?? 'TypeTango <'.DEFAULT_FROM.'>';
 
-		if (SERVER_ROLE != 'live') {
-			$to_email_address = ERROR_RECIPIENT;
-		}
-		if (is_array($from_header_value)) {
-			foreach ($from_header_value as $from_email => $from_name) {
-				$from_header_value = "$from_name <$from_email>";
-				break;
+			if (SERVER_ROLE != 'live') {
+				$to_email_address = ERROR_RECIPIENT;
 			}
+			if (is_array($from_header_value)) {
+				foreach ($from_header_value as $from_email => $from_name) {
+					$from_header_value = "$from_name <$from_email>";
+					break;
+				}
+			}
+			$raw_message = static::getRawEmail($subject, $to_email_address, $from_header_value, $email_params);
+			$email_model_row = [
+				'to_email'     => $to_email_address
+				,'from_string' => $from_header_value
+				,'subject'     => $subject
+				,'raw_source'  => $raw_message
+			];
+			$ses_email_model_id = EmailModel::create($email_model_row, "$to_email_address: Queued email for sending via SES: $subject");
+			if (!is_numeric($ses_email_model_id)) {
+				$error_message = $ses_email_model_id;
+				trigger_error($error_message, E_USER_WARNING);
+				return $error_message;
+			}
+			new EmailModel($ses_email_model_id);
+			EmailModel::sendQueuedEmails();
+			return null;
+		} catch (Exception $exception) {
+			throw( new EmailException($exception->getMessage(), $exception->getCode(), $exception) );
 		}
-		$raw_message = static::getRawEmail($subject, $to_email_address, $from_header_value, $email_params);
-		$email_model_row = [
-			'to_email'     => $to_email_address
-			,'from_string' => $from_header_value
-			,'subject'     => $subject
-			,'raw_source'  => $raw_message
-		];
-		$ses_email_model_id = EmailModel::create($email_model_row, "$to_email_address: Queued email for sending via SES: $subject");
-		if (!is_numeric($ses_email_model_id)) {
-			$error_message = $ses_email_model_id;
-			trigger_error($error_message, E_USER_WARNING);
-			return $error_message;
-		}
-		new EmailModel($ses_email_model_id);
-		EmailModel::sendQueuedEmails();
-		return null;
 	} // sendEmailToClientViaAmazonSES
 
 
@@ -184,142 +193,146 @@ class Email implements EmailInterface {
 	 * @throws Exception
 	 */
 	public static function sendEmailToDeveloperViaSendmail (array $email_params): void {
-		// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html
-		require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail-1.4.1/Mail/mail.php';
+		try {
+			// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html
+			require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail-1.4.1/Mail/mail.php';
 
-		// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/_Mail_Mime-1.10.1---Mail---mime.php.html
-		require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail_Mime-1.10.1/Mail/mime.php';
+			// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/_Mail_Mime-1.10.1---Mail---mime.php.html
+			require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail_Mime-1.10.1/Mail/mime.php';
 
-		// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#var$build_params
-		$build_params = [
-			 'head_charset'  => 'utf8'
-			,'head_encoding' => 'base64'
-			,'text_charset'  => 'utf8'
-			,'text_encoding' => 'base64'
-			,'html_charset'  => 'utf8'
-			,'html_encoding' => 'base64'
-		];
+			// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#var$build_params
+			$build_params = [
+				 'head_charset'  => 'utf8'
+				,'head_encoding' => 'base64'
+				,'text_charset'  => 'utf8'
+				,'text_encoding' => 'base64'
+				,'html_charset'  => 'utf8'
+				,'html_encoding' => 'base64'
+			];
 
-		// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#method__construct
-		$mailMime = new Mail_mime($build_params);
+			// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#method__construct
+			$mailMime = new Mail_mime($build_params);
 
-		// Subject:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodsetSubject
-		$mailMime->setSubject($email_params['subject'] ?? $_SERVER['HTTP_HOST']);
+			// Subject:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodsetSubject
+			$mailMime->setSubject($email_params['subject'] ?? $_SERVER['HTTP_HOST']);
 
-		// From:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodsetFrom
-		$mailMime->setFrom((function($from) :string{
-			if (is_string($from)) {
-				return $from;
-			} elseif (is_array($from)) {
-				$from_email = key($from);
-				$from_name = $from[$from_email];
-				return "$from_name <$from_email>";
-			} else {
-				throw new InvalidArgumentException();
-			}
-		})($email_params['from'] ?? DEFAULT_FROM));
+			// From:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodsetFrom
+			$mailMime->setFrom((function($from) :string{
+				if (is_string($from)) {
+					return $from;
+				} elseif (is_array($from)) {
+					$from_email = key($from);
+					$from_name = $from[$from_email];
+					return "$from_name <$from_email>";
+				} else {
+					throw new InvalidArgumentException();
+				}
+			})($email_params['from'] ?? DEFAULT_FROM));
 
-		// To:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodaddTo
-		(function($to) use($mailMime) :void{
-			if (is_string($to)) {
-				$to_header_value = $to;
-				$mailMime->addTo($to_header_value);
-			} elseif (is_array($to)) {
-				$array_is_numeric = array_key_exists(0, $to);
-				if ($array_is_numeric) {
-					foreach ($to as $to_header_value) {
-						$mailMime->addTo($to_header_value);
+			// To:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodaddTo
+			(function($to) use($mailMime) :void{
+				if (is_string($to)) {
+					$to_header_value = $to;
+					$mailMime->addTo($to_header_value);
+				} elseif (is_array($to)) {
+					$array_is_numeric = array_key_exists(0, $to);
+					if ($array_is_numeric) {
+						foreach ($to as $to_header_value) {
+							$mailMime->addTo($to_header_value);
+						}
+					} else {
+						foreach ($to as $to_email => $to_name) {
+							$to_header_value = "$to_name <$to_email>";
+							$mailMime->addTo($to_header_value);
+						}
 					}
 				} else {
-					foreach ($to as $to_email => $to_name) {
-						$to_header_value = "$to_name <$to_email>";
-						$mailMime->addTo($to_header_value);
-					}
+					throw new InvalidArgumentException();
 				}
-			} else {
-				throw new InvalidArgumentException();
+			})($email_params['to'] ?? ERROR_RECIPIENT);
+
+			// Plaintext Body:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodsetTXTBody
+			if (array_key_exists('text', $email_params)) {
+				$mailMime->setTXTBody($email_params['text']);
 			}
-		})($email_params['to'] ?? ERROR_RECIPIENT);
 
-		// Plaintext Body:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodsetTXTBody
-		if (array_key_exists('text', $email_params)) {
-			$mailMime->setTXTBody($email_params['text']);
-		}
+			// HTML Body:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodsetHTMLBody
+			if (array_key_exists('html', $email_params)) {
+				$mailMime->setHTMLBody($email_params['html']);
+			}
 
-		// HTML Body:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodsetHTMLBody
-		if (array_key_exists('html', $email_params)) {
-			$mailMime->setHTMLBody($email_params['html']);
-		}
-
-		// Attachments:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodaddAttachment
-		if (array_key_exists('attachments', $email_params)) {
-			(function($attachments) use($mailMime) :void{
-				foreach ($attachments  as $attachment) {
-					if (array_key_exists('file_location', $attachment)) {
-						$file_location = $attachment['file_location'];
-						$file_name     = $attachment['file_name'] ?? basename($file_location);
-						$content_type  = mime_content_type($file_location);
-						$mailMime->addAttachment($file_location, $content_type, $file_name, true);
-					} elseif (array_key_exists('file_content', $attachment)) {
-						$file_content = $attachment['file_content'];
-						$file_name    = $attachment['file_name'];
-						$content_type = get_mimetype_from_filename($file_name);
-						$mailMime->addAttachment($file_content, $content_type, $file_name, false);
-					} elseif (array_key_exists('file_stream', $attachment)) {
-						$file_stream   = $attachment['file_stream'];
-						$file_content  = fread($file_stream, 0);
-						$file_name     = $attachment['file_name'];
-						$content_type  = get_mimetype_from_filename($file_name);
-						$mailMime->addAttachment($file_content, $content_type, $file_name, false);
-					} else {
-						throw new InvalidArgumentException();
+			// Attachments:  http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodaddAttachment
+			if (array_key_exists('attachments', $email_params)) {
+				(function($attachments) use($mailMime) :void{
+					foreach ($attachments  as $attachment) {
+						if (array_key_exists('file_location', $attachment)) {
+							$file_location = $attachment['file_location'];
+							$file_name     = $attachment['file_name'] ?? basename($file_location);
+							$content_type  = mime_content_type($file_location);
+							$mailMime->addAttachment($file_location, $content_type, $file_name, true);
+						} elseif (array_key_exists('file_content', $attachment)) {
+							$file_content = $attachment['file_content'];
+							$file_name    = $attachment['file_name'];
+							$content_type = get_mimetype_from_filename($file_name);
+							$mailMime->addAttachment($file_content, $content_type, $file_name, false);
+						} elseif (array_key_exists('file_stream', $attachment)) {
+							$file_stream   = $attachment['file_stream'];
+							$file_content  = fread($file_stream, 0);
+							$file_name     = $attachment['file_name'];
+							$content_type  = get_mimetype_from_filename($file_name);
+							$mailMime->addAttachment($file_content, $content_type, $file_name, false);
+						} else {
+							throw new InvalidArgumentException();
+						}
 					}
+				})($email_params['attachments']);
+			} // attachments
+
+			// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodheaders
+			$extra_headers = [];
+			if (isset($email_params['reply-to'])) {
+				$extra_headers['Reply-To'] = $email_params['reply-to'];
+			}
+			$headers = $mailMime->headers($extra_headers);
+
+			// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodget
+			$body = $mailMime->get();
+
+			// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html#methodsend
+			$recipients = (function() use($headers) :string{
+				$recipient_lists = [];
+				if (isset($headers['To'])) {
+					$recipient_lists[] = $headers['To'];
 				}
-			})($email_params['attachments']);
-		} // attachments
+				if (isset($headers['Cc'])) {
+					$recipient_lists[] = $headers['Cc'];
+				}
+				if (isset($headers['Bcc'])) {
+					$recipient_lists[] = $headers['Bcc'];
+				}
+				return implode(', ', $recipient_lists);
+			})();
 
-		// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodheaders
-		$extra_headers = [];
-		if (isset($email_params['reply-to'])) {
-			$extra_headers['Reply-To'] = $email_params['reply-to'];
-		}
-		$headers = $mailMime->headers($extra_headers);
+			// http://php.net/manual/en/function.mail.php
+			$sendmail_command_line_option_for_envelope_sender = '-f'.ENVELOPE_MAIL_FROM;
 
-		// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#methodget
-		$body = $mailMime->get();
+			// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html#method__construct
+			$mail = new Mail_mail($sendmail_command_line_option_for_envelope_sender);
 
-		// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html#methodsend
-		$recipients = (function() use($headers) :string{
-			$recipient_lists = [];
-			if (isset($headers['To'])) {
-				$recipient_lists[] = $headers['To'];
+			// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html#methodsend
+			$outcome = $mail->send($recipients, $headers, $body);
+			$success = $outcome === true ? true : false;
+			if ($success) {
+				return;
 			}
-			if (isset($headers['Cc'])) {
-				$recipient_lists[] = $headers['Cc'];
+			$pearError = gettype($outcome) == 'PEAR_Error' ? $outcome : null;
+			if ($pearError) {
+				throw new Exception($pearError->getMessage(), $pearError->getCode());
 			}
-			if (isset($headers['Bcc'])) {
-				$recipient_lists[] = $headers['Bcc'];
-			}
-			return implode(', ', $recipient_lists);
-		})();
-
-		// http://php.net/manual/en/function.mail.php
-		$sendmail_command_line_option_for_envelope_sender = '-f'.ENVELOPE_MAIL_FROM;
-
-		// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html#method__construct
-		$mail = new Mail_mail($sendmail_command_line_option_for_envelope_sender);
-
-		// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html#methodsend
-		$outcome = $mail->send($recipients, $headers, $body);
-		$success = $outcome === true ? true : false;
-		if ($success) {
-			return;
+			throw new Exception("Unexpected mail send outcome: " .print_r($outcome, true));
+		} catch (Exception $exception) {
+			throw( new EmailException($exception->getMessage(), $exception->getCode(), $exception) );
 		}
-		$pearError = gettype($outcome) == 'PEAR_Error' ? $outcome : null;
-		if ($pearError) {
-			throw new Exception($pearError->getMessage(), $pearError->getCode());
-		}
-		throw new Exception("Unexpected mail send outcome: " .print_r($outcome, true));
 	} // sendEmailToDeveloperViaSendmail
 
 
