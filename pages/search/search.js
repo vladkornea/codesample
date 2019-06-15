@@ -92,6 +92,11 @@ function printSearchPageInterface () {
 					}
 				}
 			})()
+			var matchCount = searchResults['total_users']
+			if (matchCount.toLocaleString) {
+				matchCount = matchCount.toLocaleString()
+			}
+			$('<div id="number-of-matches"></div>').text(matchCount +' matches').appendTo($paginationContainer)
 		} // printPagination
 	} // printSearchResults
 

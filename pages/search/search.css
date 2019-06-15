@@ -57,3 +57,6 @@ body.wait, body.wait a, body.wait input
 #toggle-type-checkboxes:hover
 	{cursor:pointer;}
 
+#number-of-matches
+	{float:right; font-size:x-small;}
+
