@@ -52,6 +52,8 @@ body.wait, body.wait a, body.wait input
 
 #match-shared-negatives-explanation, #toggle-type-checkboxes
 	{color:midnightblue; font-size:11px; margin-left:15px; user-select:none; -moz-user-select:none; -ms-user-select:none;}
+#toggle-type-checkboxes
+	{margin:0 0 0 2em; vertical-align:top;}
 #match-shared-negatives-explanation:hover
 	{cursor:help;}
 #toggle-type-checkboxes:hover
@@ -60,3 +62,5 @@ body.wait, body.wait a, body.wait input
 #number-of-matches
 	{float:right; font-size:x-small;}
 
+fieldset
+	{border:1px solid #bbb; margin:0.5em 0;}
