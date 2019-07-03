@@ -103,7 +103,7 @@ function printProfilePageInterface () {
 		var $form = $(
 			'<form id="contact-form" action="/pages/profile/ajax?action=send_message" method="post">'
 				+'<div id="contact-form-instructions"></div>'
-				+'<textarea name="message_text" cols="64" rows="6"></textarea>'
+				+'<textarea name="message_text" cols="64" rows="6" placeholder="Write a Message (limit 65,000 characters)"></textarea>'
 				+'<input type="hidden" name="to_user_id">'
 				+'<input type="submit" value="Send Message">'
 				+'<table id="conversation"></table>'
