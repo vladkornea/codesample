@@ -50,7 +50,7 @@ $user_message_data = ['message_text'=>'test message', 'from_user_id'=>1, 'to_use
 $userMessageModel = new UserMessageModel($user_message_id);
 $error_message = $userMessageModel->send();
 if ($error_message) {
-	echo '<p class="error-message">'.$error_message.'</p>';
+	echo '<p class="error-message">', $error_message, '</p>';
 } else {
 	echo '<p>Message from user to user sent.</p>';
 }

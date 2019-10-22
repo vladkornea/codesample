@@ -24,7 +24,7 @@ class HttpPageShell implements HttpPageShellInterface {
 	public static function forbid (string $message = "Forbidden (HTTP 403)"): void {
 		ob_clean();
 		header("{$_SERVER['SERVER_PROTOCOL']} 403 Forbidden");
-		echo '<p>' .htmlspecialchars($message) .'</p>';
+		echo '<p>', htmlspecialchars($message), '</p>';
 		exit;
 	} // forbid
 
@@ -97,7 +97,7 @@ class HttpPageShell implements HttpPageShellInterface {
 	public static function unauthorized (string $message = "Basic Auth Needed (HTTP 401)"): void {
 		header('WWW-Authenticate: Basic');
 		header("{$_SERVER['SERVER_PROTOCOL']} 401 Unauthorized");
-		echo "<p>" .htmlspecialchars($message) ."</p>";
+		echo "<p>", htmlspecialchars($message), "</p>";
 		exit;
 	} // unauthorized
 

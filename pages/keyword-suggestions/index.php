@@ -27,7 +27,7 @@ $query = '
 		group by keyword
 		having total_tables = 2) as keyword_appearing_in_both_tables
 	)
-	where min_keywords >= 8
+	where min_keywords >= 20
 	order by min_keywords desc, keyword
 	limit 100';
 $markup .= get_html_table_markup(DB::getTable($query));

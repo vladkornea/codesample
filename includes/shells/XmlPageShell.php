@@ -14,7 +14,7 @@ class XmlPageShell extends HttpPageShell implements XmlPageShellInterface {
 	function __destruct () {
 		header("Content-Type: application/xml; charset=UTF-8");
 		$ob_content = ob_get_end();
-		echo '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>' ."\n";
+		echo '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>', "\n";
 		echo $ob_content;
 		parent::__destruct();
 	} // __destruct

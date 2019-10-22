@@ -15,7 +15,7 @@ if (!empty($_POST['submitted'])) {
 	DbUpgrades::performUpgrades();
 }
 
-echo '<form method="post" action="'.htmlspecialchars($_SERVER['SCRIPT_NAME']).'"><input type="hidden" name="submitted" value="1"><input type="submit" value="Run Upgrades"></form>';
+echo '<form method="post" action="', htmlspecialchars($_SERVER['SCRIPT_NAME']), '"><input type="hidden" name="submitted" value="1"><input type="submit" value="Run Upgrades"></form>';
 
 echo get_html_table_markup(DbUpgrades::getUpgradesSummary());
 
