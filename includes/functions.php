@@ -1,12 +1,5 @@
 <?php
 
-function get_current_page_url (): string {
-	$protocol = !empty($_SERVER['HTTPS']) ? 'https' : 'http';
-	$page_url = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	return $page_url;
-} // get_current_page_url
-
-
 function get_random_string (int $length = 26, string $allowed_characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'): string {
 	$random_string = ''; // return value
 	$max_array_index = strlen($allowed_characters) - 1;
@@ -16,13 +9,6 @@ function get_random_string (int $length = 26, string $allowed_characters = 'ABCD
 	}
 	return $random_string;
 } // get_random_string
-
-
-function ob_get_end (): string {
-	$ob_contents = ob_get_contents();
-	ob_end_clean();
-	return $ob_contents;
-} // ob_get_end
 
 
 function get_html_table_markup (array $table): string {

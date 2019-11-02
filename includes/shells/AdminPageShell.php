@@ -23,7 +23,7 @@ class AdminPageShell extends HtmlPageShell implements AdminPageShellInterface {
 
 	/** The destructor compiles the final page. */
 	function __destruct () {
-		$ob_contents = ob_get_end();
+		$ob_contents = ob_get_clean();
 		?>
 <div id="non-footer">
 	<div id="header-placeholder"></div>

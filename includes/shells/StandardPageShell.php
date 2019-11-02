@@ -64,7 +64,7 @@ HEREDOC;
 
 
 	protected function printStandardPageMarkup () {
-		$ob_content = ob_get_end(); ?>
+		$ob_content = ob_get_clean(); ?>
 <table id="page-structure"><tbody>
 	<tr>
 		<td id="left-panel"><div id="navbar"></div></td>

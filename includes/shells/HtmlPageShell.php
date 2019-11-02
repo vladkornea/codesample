@@ -111,27 +111,29 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 
 	/** The destructor compiles the final page. */
 	function __destruct () {
+		$ob_content = ob_get_clean();
 		$this->addJsCode("window.pageData = " .json_encode($this->jsVars, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-		if ($this->pageTitle) {
-			$this->appendToHead('<title>' .htmlspecialchars($this->pageTitle) .'</title>');
-		}
-		if ($this->metaDescription) {
-			$this->appendToHead('<meta name="description" content="' .htmlspecialchars($this->metaDescription) .'">');
-		}
-		if ($this->keywords) {
-			$this->appendToHead('<meta name="keywords" content="' .htmlspecialchars($this->keywords) .'">');
-		}
-		if ($this->author) {
-			$this->appendToHead('<meta name="author" content="' .htmlspecialchars($this->author) .'">');
-		}
-		$ob_content = ob_get_end();
 		?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/favicon.ico">
+<?php
+		if ($this->pageTitle) {
+			echo '<title>', htmlspecialchars($this->pageTitle), '</title>', "\n";
+		}
+		if ($this->metaDescription) {
+			echo '<meta name="description" content="', htmlspecialchars($this->metaDescription), '">', "\n";
+		}
+		if ($this->author) {
+			echo '<meta name="author" content="', htmlspecialchars($this->author), '">', "\n";
+		}
+		if ($this->keywords) {
+			echo '<meta name="keywords" content="', htmlspecialchars($this->keywords), '">', "\n";
+		}
+?>
 <?=$this->appendToHead?>
+<link rel="icon" href="/favicon.ico">
 </head>
 <body>
 <?=$this->getConfirmationMessageMarkupOnce()?>
