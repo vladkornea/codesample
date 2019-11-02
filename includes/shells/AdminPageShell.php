@@ -13,7 +13,7 @@ class AdminPageShell extends HtmlPageShell implements AdminPageShellInterface {
 		parent::__construct($page_title);
 		static::requireAdminAccess();
 		$this->addCssFile('/css/generic.css');
-		$this->addJsFile('/js/lib/jquery/jquery-3.2.1.min.js');
+		$this->addJsFile('/js/lib/jquery/jquery-3.4.1.min.js');
 		$this->addJsFile('/js/functions.js');
 		JavascriptErrorHandler::register($this);
 		$this->addCssFile('/pages/admin/admin.css');

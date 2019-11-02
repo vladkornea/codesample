@@ -44,7 +44,7 @@ function handle_update_account (): void {
 			$current_unverified_email = $userModel->getUnverifiedEmail();
 			$email_address_changed = ($current_unverified_email and ($current_unverified_email != $original_unverified_email));
 			if ($email_address_changed) {
-				$userModel->sendEmailVerificationEmail();
+				$userModel->sendChangedEmailVerification();
 				$success_data = ['alert' => "Email verification message has been sent to your new email address."];
 			}
 		}

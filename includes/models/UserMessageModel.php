@@ -84,7 +84,7 @@ class UserMessageModel extends BaseModel implements UserMessageModelInterface {
 		$email_params['reply-to'] = NO_REPLY_EMAIL;
 		$email_params['to'] = $toUserModel->getEmail();
 		$email_params['subject'] = "New message from $from_username";
-		$email_params['text'] = "$to_username,\n\nYou have received a new TypeTango message from $from_username ($basics). To view $from_possessive_pronoun profile and reply to the message, go to the following URL:\n\n$from_user_profile_url\n\nHere is the message:\n\n$message_text";
+		$email_params['text'] = "Hello $to_username,\n\nYou have received a new TypeTango message from $from_username ($basics). To view $from_possessive_pronoun profile and reply to the message, go to the following URL:\n\n$from_user_profile_url\n\nHere is the message:\n\n$message_text";
 		Email::sendEmailToClientViaAmazonSES($email_params);
 		return null;
 	} // send

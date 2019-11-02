@@ -41,8 +41,10 @@ DB::test();
 }
 
 $userModel = new UserModel(1);
-$userModel->sendEmailVerificationEmail();
-echo '<p>Email verification email sent.</p>';
+$userModel->sendRegistrationVerificationEmail();
+echo '<p>Registration verification email sent.</p>';
+$userModel->sendChangedEmailVerification();
+echo '<p>Changed email verification sent.</p>';
 $userModel->sendForgotPasswordEmail();
 echo '<p>Forgot password email sent.</p>';
 $user_message_data = ['message_text'=>'test message', 'from_user_id'=>1, 'to_user_id'=>1];

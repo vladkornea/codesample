@@ -51,7 +51,7 @@ function handle_create_account (): void {
 
 	$userModel = new UserModel($user_id);
 	$userModel->logIn('create');
-	$userModel->sendEmailVerificationEmail();
+	$userModel->sendRegistrationVerificationEmail();
 	$pageShell->success(['verification_email_sent' => true]);
 } // handle_create_account
 

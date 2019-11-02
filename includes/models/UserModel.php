@@ -46,7 +46,8 @@ interface UserModelInterface extends LoggedModelInterface {
 	function getWhyCannotViewUsers (): ?string;
 	function logIn (string $login_method, bool $remember_me = false): ?array;
 	function reportUser (int $user_id): void;
-	function sendEmailVerificationEmail (): void;
+	function sendRegistrationVerificationEmail (): void;
+	function sendChangedEmailVerification (): void;
 	function sendForgotPasswordEmail (): void;
 	function setIsBouncing (bool $is_bouncing = true): void;
 	function setIsSpammer (bool $whether = true): void;
@@ -514,9 +515,9 @@ class UserModel extends LoggedModel implements UserModelInterface {
 	} // logIn
 
 
-	public function sendEmailVerificationEmail (): void {
+	public function sendRegistrationVerificationEmail (): void {
 		$email_body = <<<EMAIL_TEXT
-{$this->getUsername()},
+Hello {$this->getUsername()},
 
 Someone (presumably you) submitted the Create Account form at https://{$_SERVER['HTTP_HOST']}
 
@@ -532,12 +533,31 @@ EMAIL_TEXT;
 			,'subject'  => "TypeTango Email Verification"
 			,'text'     => $email_body
 		]);
-	} // sendEmailVerificationEmail
+	} // sendRegistrationVerificationEmail
+
+
+	public function sendChangedEmailVerification (): void {
+		$email_body = <<<EMAIL_TEXT
+Hello {$this->getUsername()},
+
+To verify your email address, go to the following URL:
+
+{$this->getEmailVerificationUrl()}
+
+TypeTango Jungian Myers-Briggs/Keirsey Personality Theory Dating
+EMAIL_TEXT;
+		Email::sendEmailToClientViaAmazonSES([
+			 'reply-to' => DEFAULT_REPLY_TO
+			,'to'       => $this->getUnverifiedEmail()
+			,'subject'  => "TypeTango Email Verification"
+			,'text'     => $email_body
+		]);
+	} // sendChangedEmailVerification
 
 
 	public function sendForgotPasswordEmail (): void {
 		$email_body = <<<EMAIL_TEXT
-{$this->getUsername()},
+Hello {$this->getUsername()},
 
 Someone (presumably you) submitted the Forgot Password form at https://{$_SERVER['HTTP_HOST']}
 
