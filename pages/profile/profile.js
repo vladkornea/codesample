@@ -1203,9 +1203,10 @@ function printPhotoCarouselWidget (photoCarouselData) {
 				,'height': selectedPhotoData['standard_height']
 				,'src':    selectedPhotoData['standard_url']
 			}).css( 'transform', 'rotate(' +photoRotateAngle +'deg)' )
+
 			$selectedPhotoContainer.appendTo($selectedPhotoOrbit)
 			if ( 'edit' === carouselMode ) {
-				$selectedPhotoContainer.attr('title', "Click to rotate")
+				$selectedPhotoContainer.attr('title', "click to rotate")
 				$selectedCarouselPhoto.on('click', handleSelectedCarouselPhotoClick)
 				var $editSelectedPhotoForm = $(
 					'<form id="edit-selected-photo-form" action="/pages/profile/ajax?action=edit_photo" method="post">'
@@ -1223,6 +1224,9 @@ function printPhotoCarouselWidget (photoCarouselData) {
 				$editSelectedPhotoForm.on('submit', handleSelectedPhotoFormSubmit)
 				$editSelectedPhotoForm.appendTo($selectedPhotoOrbit)
 			} else {
+				if ( selectedPhotoData['uploaded'] ) {
+					$selectedCarouselPhoto.attr( 'title', "added " +selectedPhotoData['uploaded'] )
+				}
 				var $selectedPhotoCurrentCaption = $('<div id="selected-photo-caption"></div>').text(photoCaption)
 				$selectedPhotoCurrentCaption.appendTo($selectedPhotoOrbit)
 				$selectedPhotoContainer.on('click', handleViewModeSelectedCarouselPhotoContainerClick)

@@ -33,10 +33,11 @@ class PhotoFinder extends BaseFinder implements PhotoFinderInterface {
 	} // setIdOrder
 
 	protected static function getAdHocFields () {
-		$available_fields = [];
-		$available_fields['standard_url']  = "concat('" .PROFILE_PHOTOS_REMOTE_DIR ."/', photos.user_id, '/', photos.photo_id, '/standard.jpeg')";
-		$available_fields['thumbnail_url'] = "concat('" .PROFILE_PHOTOS_REMOTE_DIR ."/', photos.user_id, '/', photos.photo_id, '/thumbnail.jpeg')";
-		return $available_fields;
+		$ad_hoc_fields = [];
+		$ad_hoc_fields['standard_url']  = "concat('" .PROFILE_PHOTOS_REMOTE_DIR ."/', photos.user_id, '/', photos.photo_id, '/standard.jpeg')";
+		$ad_hoc_fields['thumbnail_url'] = "concat('" .PROFILE_PHOTOS_REMOTE_DIR ."/', photos.user_id, '/', photos.photo_id, '/thumbnail.jpeg')";
+		$ad_hoc_fields['uploaded']      = 'if( photos.inserted, date_format(photos.inserted, "%M %Y"), "before 2018" )';
+		return $ad_hoc_fields;
 	} // getAdHocFields
 
 	/**
@@ -51,7 +52,7 @@ class PhotoFinder extends BaseFinder implements PhotoFinderInterface {
 		$photoFinder = new self();
 		$photoFinder->setUserId($user_id);
 		$photoFinder->setIdOrder($ordered_ids);
-		$desired_fields = ['photo_id', 'caption', 'standard_url', 'standard_width', 'standard_height', 'thumbnail_url', 'thumbnail_width', 'thumbnail_height', 'rotate_angle'];
+		$desired_fields = ['photo_id', 'caption', 'standard_url', 'standard_width', 'standard_height', 'thumbnail_url', 'thumbnail_width', 'thumbnail_height', 'rotate_angle', 'uploaded'];
 		$result = $photoFinder->find($desired_fields);
 		$photo_carousel_photos_data = DB::getTable($result);
 		return $photo_carousel_photos_data;
