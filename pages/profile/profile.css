@@ -11,7 +11,10 @@
 	{display:inline-block; margin-right:10px;}
 
 #profile-info-table
-	{border:1px solid chocolate; padding:5px; background-color:papayawhip; margin-top:10px;}
+	{border:1px solid chocolate; padding:5px; background-color:papayawhip; margin-top:10px; font-size:14px; line-height:20px;}
+#profile-info-table > tr > th,
+#profile-info-table > * > tr > th
+	{font-size:13px; padding-right:5px;}
 
 #descriptions
 	{text-align:left; white-space:pre-wrap; margin:15px 0 0 -15px; border-spacing:15px 3px;}
@@ -19,6 +22,8 @@
 	{margin:20px 0; padding:0; vertical-align:top;}
 #descriptions > thead > tr > th
 	{font-weight:normal; text-align:left; vertical-align:bottom; padding-bottom:0; font-size:12px; min-width:215px;}
+#descriptions > tbody > tr > td
+	{font-size:14px; padding:8px 12px; line-height:22px;}
 #self_described-text, #lover_described-text, #virtrades-text
 	{border:1px solid chocolate; background-color:papayawhip; padding:7px; max-width:7.5in;}
 #self_described-question, #lover_described-question, #virtrades-question
