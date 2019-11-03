@@ -30,6 +30,7 @@ function printProfilePageInterface () {
 		return
 	}
 
+	var hasChildren = ['yes', 'part-time', 'away'].indexOf( profileData['have_children'] ) !== -1
 	var readableValues = {
 		'body_type': {
 			'':     ''
@@ -51,9 +52,9 @@ function printProfilePageInterface () {
 		}
 		,'want_children': {
 			'':    ""
-			,'no':        "I don't want (more) children"
-			,'yes':       "I want (more) children"
-			,'undecided': "Undecided about having (more) children"
+			,'no':        hasChildren ? "I don't want more children" : "I don't want children"
+			,'yes':       hasChildren ? "I want more children" : "I want children"
+			,'undecided': hasChildren ? "Undecided about having more children" : "Undecided about having children"
 		}
 		,'would_relocate': {
 			'':    ""
