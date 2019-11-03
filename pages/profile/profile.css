@@ -119,10 +119,12 @@ td.sender-username
 
 #selected-carousel-photo
 	{display:inline-block; vertical-align:middle;}
-.view-mode #selected-photo-current-caption
+#photo-carousel-widget.view-mode #selected-photo-caption
 	{max-width:420px; white-space:pre-wrap; text-align:left;}
-.edit-mode #selected-photo-current-caption
+#photo-carousel-widget.edit-mode #selected-photo-caption
 	{margin-bottom:5px;}
+#photo-carousel-widget.edit-mode #selected-carousel-photo:hover
+	{cursor:pointer;}
 
 #photo-upload-form
 	{display:inline-block; padding:10px; border:1px solid chocolate; border-radius:4px; background-color:BlanchedAlmond; margin:10px 0 0 12px;}

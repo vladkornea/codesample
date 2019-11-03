@@ -27,7 +27,7 @@ trait SearchCriteriaTraits {
 trait PhotoTraits {
 	protected static $tableName      = 'photos';
 	protected static $primaryKeyName = 'photo_id';
-	protected static $columnNames    = ['photo_id','user_id','caption','thumbnail_width','thumbnail_height','standard_width','standard_height','original_width','original_height','deleted','updated','inserted'];
+	protected static $columnNames    = ['photo_id', 'user_id', 'caption', 'thumbnail_width', 'thumbnail_height', 'standard_width', 'standard_height', 'original_width', 'original_height','rotate_angle', 'deleted', 'updated', 'inserted'];
 } // PhotoTraits
 
 trait UserMessageTraits {

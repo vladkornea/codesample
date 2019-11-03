@@ -914,30 +914,30 @@ function printPhotoCarouselWidget (photoCarouselData) {
 	var $carouselThumbnailArea = $('#carousel-thumbnail-area')
 
 	;(function printCarouselThumbnails() {
-		if (!carouselPhotos) {
+		if ( ! carouselPhotos ) {
 			return
 		}
-		for (var i = 0; i < carouselPhotos.length; i++) {
-			var photo = carouselPhotos[i]
-			var photoId = photo['photo_id']
+		for ( var i = 0; i < carouselPhotos.length; i++ ) {
+			var photoData = carouselPhotos[i]
+			var photoId = parseInt( photoData['photo_id'] )
+			var photoRotateAngle = photoData['rotate_angle'] || 0
 			var $photoCarouselThumbnailLink = $('<a class="photo-carousel-thumbnail-link"><img class="photo-carousel-thumbnail"></a>')
-			if (carouselMode == 'edit') {
-				$photoCarouselThumbnailLink.attr('draggable', 'false').find('.photo-carousel-thumbnail').attr('draggable', 'false')
-			}
 			var $photoCarouselThumbnail = $photoCarouselThumbnailLink.find('.photo-carousel-thumbnail')
-			$photoCarouselThumbnail.attr({
-				'src':     photo['thumbnail_url']
-				,'width':  photo['thumbnail_width']
-				,'height': photo['thumbnail_height']
-			})
-			if (carouselMode == 'edit') {
-				$photoCarouselThumbnailLink.on('mousedown', handleThumbnailLinkMouseDown)
-			}
 			$photoCarouselThumbnailLink
 				.data('photo_id', photoId)
 				.attr('href', '#photo_id='+photoId)
 				.on('click', handleThumbnailClick)
-				.appendTo($carouselThumbnailArea)
+			$photoCarouselThumbnail.attr({
+				'src':     photoData['thumbnail_url']
+				,'width':  photoData['thumbnail_width']
+				,'height': photoData['thumbnail_height']
+			}).css( 'transform', 'rotate(' +photoRotateAngle +'deg)' )
+			if ( 'edit' === carouselMode ) {
+				$photoCarouselThumbnailLink.attr('draggable', 'false')
+				$photoCarouselThumbnail.attr('draggable', 'false')
+				$photoCarouselThumbnailLink.on('mousedown', handleThumbnailLinkMouseDown)
+			}
+			$photoCarouselThumbnailLink.appendTo($carouselThumbnailArea)
 		}
 	})() // printCarouselThumbnails
 
@@ -976,21 +976,28 @@ function printPhotoCarouselWidget (photoCarouselData) {
 		if ($thumbnail.is('.selected')) {
 			return true
 		}
-		if (!confirmNavigation()) {
+		if (!confirmLocalNavigation()) {
 			return false
 		}
 	} // handleThumbnailClick
 
-	function confirmNavigation () {
-		if (carouselMode == 'view') {
+	function confirmLocalNavigation () {
+		if ( 'view' === carouselMode ) {
 			return true
 		}
-		var $caption = $('#selected-photo-current-caption')
-		if ($caption.val() != $caption.data('original_caption')) {
+		var $editSelectedPhotoForm = $('#edit-selected-photo-form')
+		var $captionTextarea = $('#selected-photo-caption')
+		var captionChanged = $captionTextarea.val() !== $captionTextarea.data('original_caption')
+		if ( captionChanged ) {
 			return confirm("You have unsaved changes to your photo caption. Lose them now?")
 		}
+		var $rotateAngleInput = $editSelectedPhotoForm.find('input[name=rotate_angle]')
+		var rotateAngleChanged = $rotateAngleInput.val() !== $rotateAngleInput.data('original_rotate_angle')
+		if ( rotateAngleChanged ) {
+			$editSelectedPhotoForm.submit()
+		}
 		return true
-	} // confirmNavigation
+	} // confirmLocalNavigation
 
 	function handleDocumentKeydown (event) {
 		var $targetElement = $(event.target)
@@ -1013,7 +1020,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 	} // handleDocumentKeydown
 
 	function navigateToPreviousThumbnail () {
-		if (!confirmNavigation()) {
+		if (!confirmLocalNavigation()) {
 			return
 		}
 		var $selectedThumbnail = $carouselThumbnailArea.find('.selected')
@@ -1024,7 +1031,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 	} // navigateToPreviousThumbnail
 
 	function navigateToNextThumbnail () {
-		if (!confirmNavigation()) {
+		if (!confirmLocalNavigation()) {
 			return
 		}
 		var $selectedThumbnail = $carouselThumbnailArea.find('.selected')
@@ -1167,89 +1174,86 @@ function printPhotoCarouselWidget (photoCarouselData) {
 	} // getSelectedPhotoId
 
 	function updatePhotosWidget () {
-		if (!carouselPhotos) {
+		if ( ! carouselPhotos ) {
 			return
 		}
 		var selectedPhotoId = getSelectedPhotoId()
-		var selectedPhotoData = getPhotoData(selectedPhotoId)
-		var $selectedPhotoOrbit = $('#selected-photo-orbit')
-		$selectedPhotoOrbit.empty()
-
-		;(function setSelectedThumbnail() {
-			var $thumbnailLink = $('[href="#photo_id='+selectedPhotoId+'"]')
-			$thumbnailLink.addClass('selected').siblings().removeClass('selected')
-		})() // setSelectedThumbnail
-
-		;(function showCurrentPhoto() {
-			var $selectedPhotoContainer = $('<span id="selected-photo-container"><img id="selected-carousel-photo"></span>')
-			$selectedPhotoContainer.appendTo($selectedPhotoOrbit)
-			$selectedPhotoContainer.css({'min-width': photoCarouselData['max_standard_width']+'px', 'min-height': photoCarouselData['max_standard_height']+'px'})
-			if (!selectedPhotoData) {
+		if ( ! selectedPhotoId ) {
+			return
+		}
+		;(function highlightSelectedThumbnail () {
+			var $selectedThumbnail = $( 'a[href="#photo_id=' +selectedPhotoId +'"]' )
+			$selectedThumbnail.addClass('selected').siblings().removeClass('selected')
+		})() // highlightSelectedThumbnail
+		;(function insertSelectedPhoto() {
+			var selectedPhotoData = getPhotoData( selectedPhotoId )
+			if ( ! selectedPhotoData ) {
 				return
 			}
-			var $selectedCarouselPhoto = $selectedPhotoContainer.find('#selected-carousel-photo')
+			var photoId                 = parseInt( selectedPhotoData['photo_id'] )
+			var photoCaption            = selectedPhotoData['caption'] || ''
+			var photoRotateAngle        = selectedPhotoData['rotate_angle'] || 0
+			var $selectedPhotoOrbit     = $('#selected-photo-orbit')
+			var $selectedPhotoContainer = $('<span id="selected-photo-container"><img id="selected-carousel-photo" alt="Selected Photo"></span>')
+			var $selectedCarouselPhoto  = $selectedPhotoContainer.find('#selected-carousel-photo')
+			$selectedPhotoOrbit.empty()
+			$selectedPhotoContainer.css({'min-width': photoCarouselData['max_standard_width']+'px', 'min-height': photoCarouselData['max_standard_height']+'px'})
 			$selectedCarouselPhoto.attr({
-				'width': selectedPhotoData['standard_width']
+				'width':   selectedPhotoData['standard_width']
 				,'height': selectedPhotoData['standard_height']
-				,'src': selectedPhotoData['standard_url']
-			})
-
-			;(function printNextAndPrevLinks () {
-				if (carouselMode != 'view') {
-					return
-				}
-				$selectedPhotoContainer.on('click', handlePhotoContainerClick)
-				return // functions below
-				function handlePhotoContainerClick (event) {
-					var containerLeftX = $selectedPhotoContainer.offset()['left']
-					var mouseX = event.pageX
-					var containerWidth = $selectedPhotoContainer.width()
-					var containerCenterX = parseInt(containerLeftX + (containerWidth / 2))
-					var isClickOnLeftSide = mouseX < containerCenterX
-
-					if (isClickOnLeftSide) {
-						navigateToPreviousThumbnail()
-					} else {
-						navigateToNextThumbnail()
-					}
-				} // handlePhotoContainerClick
-			})() // printNextAndPrevLinks
-
-			;(function insertSelectedPhotoCaption() {
-				var caption = selectedPhotoData['caption'] || ''
-				if (carouselMode == 'view') {
-					if (!caption) {
-						return
-					}
-					var $caption = $('<div id="selected-photo-current-caption"></div>')
-					$caption.text(caption)
-					$caption.insertAfter($selectedPhotoContainer)
-					return
-				}
-				if (carouselMode == 'edit') {
-					var $editSelectedPhotoForm = $(
-						'<form id="edit-selected-photo-form standard" action="/pages/profile/ajax?action=edit_photo" method="post">'
-							+'<label id="selected-photo-current-caption-label"><textarea id="selected-photo-current-caption" name="caption" rows="5" cols="45" placeholder="Photo Caption (limit 65,000 characters)" maxlength="65000"></textarea></label>'
-							+'<input id="save-caption-button" type="submit" value="Save">'
-							+'<input id="delete-photo-button" type="button" value="Delete Photo">'
-							+'<input type="hidden" name="photo_id">'
-						+'</form>'
-					)
-					$editSelectedPhotoForm.on('submit', handleSaveCaptionFormSubmit)
-					$editSelectedPhotoForm.find('[name=caption]')
-						.val(caption)
-						.data('original_caption', caption)
-
-					$editSelectedPhotoForm.find('[name=photo_id]').val(selectedPhotoData['photo_id'])
-					$editSelectedPhotoForm.appendTo($selectedPhotoOrbit)
-					var $deletePhotoButton = $('#delete-photo-button')
-					$deletePhotoButton.on('click', handleDeletePhotoButtonClick)
-				}
-			})() // insertSelectedPhotoCaption
-		})() // showCurrentPhoto
+				,'src':    selectedPhotoData['standard_url']
+			}).css( 'transform', 'rotate(' +photoRotateAngle +'deg)' )
+			$selectedPhotoContainer.appendTo($selectedPhotoOrbit)
+			if ( 'edit' === carouselMode ) {
+				$selectedPhotoContainer.attr('title', "Click to rotate")
+				$selectedCarouselPhoto.on('click', handleSelectedCarouselPhotoClick)
+				var $editSelectedPhotoForm = $(
+					'<form id="edit-selected-photo-form" action="/pages/profile/ajax?action=edit_photo" method="post">'
+						+'<label id="selected-photo-caption-label"><textarea id="selected-photo-caption" name="caption" rows="5" cols="45" placeholder="Photo Caption (limit 65,000 characters)" maxlength="65000"></textarea></label>'
+						+'<input id="save-caption-button" type="submit" value="Save">'
+						+'<input id="delete-photo-button" type="button" value="Delete Photo">'
+						+'<input type="hidden" name="photo_id">'
+						+'<input type="hidden" name="rotate_angle">'
+					+'</form>'
+				)
+				$editSelectedPhotoForm.find('[name=photo_id]').val(photoId)
+				$editSelectedPhotoForm.find('[name=rotate_angle]').data('original_rotate_angle', photoRotateAngle).val(photoRotateAngle)
+				$editSelectedPhotoForm.find('[name=caption]').data('original_caption', photoCaption).val(photoCaption)
+				$editSelectedPhotoForm.find('#delete-photo-button').on('click', handleDeletePhotoButtonClick)
+				$editSelectedPhotoForm.on('submit', handleSelectedPhotoFormSubmit)
+				$editSelectedPhotoForm.appendTo($selectedPhotoOrbit)
+			} else {
+				var $selectedPhotoCurrentCaption = $('<div id="selected-photo-caption"></div>').text(photoCaption)
+				$selectedPhotoCurrentCaption.appendTo($selectedPhotoOrbit)
+				$selectedPhotoContainer.on('click', handleViewModeSelectedCarouselPhotoContainerClick)
+			}
+		})() // insertSelectedPhoto
 	} // updatePhotosWidget
 
-	function handleSaveCaptionFormSubmit (event) {
+	function handleSelectedCarouselPhotoClick (event) {
+		var $selectedCarouselPhoto = $(event.currentTarget)
+		var $selectedPhotoRotateAngleInput = $('#edit-selected-photo-form').find('input[name=rotate_angle]')
+		var selectedPhotoRotateAngle = parseInt( $selectedPhotoRotateAngleInput.val() || 0 )
+		selectedPhotoRotateAngle = ( selectedPhotoRotateAngle + 90 ) % 360
+		$selectedPhotoRotateAngleInput.val( selectedPhotoRotateAngle )
+		$selectedCarouselPhoto.css( 'transform', 'rotate(' + selectedPhotoRotateAngle + 'deg)' )
+	} // handleSelectedCarouselPhotoClick
+
+	function handleViewModeSelectedCarouselPhotoContainerClick (event) {
+		var $selectedPhotoContainer = $(event.currentTarget)
+		var containerLeftX = $selectedPhotoContainer.offset()['left']
+		var mouseX = event.pageX
+		var containerWidth = $selectedPhotoContainer.width()
+		var containerCenterX = parseInt(containerLeftX + (containerWidth / 2))
+		var isClickOnLeftSide = mouseX < containerCenterX
+		if (isClickOnLeftSide) {
+			navigateToPreviousThumbnail()
+		} else {
+			navigateToNextThumbnail()
+		}
+	} // handleViewModeSelectedCarouselPhotoContainerClick
+
+	function handleSelectedPhotoFormSubmit (event) {
 		event.preventDefault()
 		submitFormViaAjax(event.currentTarget, handleSaveCaptionResponse)
 		return // functions below
@@ -1273,7 +1277,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 				}
 			}
 		} // handleSaveCaptionResponse
-	} // handleSaveCaptionFormSubmit
+	} // handleSelectedPhotoFormSubmit
 
 	function handleDeletePhotoButtonClick () {
 		if (!confirm("Are you sure you want to delete this photo?")) {

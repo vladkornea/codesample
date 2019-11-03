@@ -198,19 +198,23 @@ function handle_delete_photo (): void {
 
 function handle_edit_photo (): void {
 	global $pageShell;
-
-	$caption = $_POST['caption'];
-	$photo_id = (int)$_POST['photo_id'];
-	if (!$photo_id) {
-		$pageShell->error("Invalid photo_id");
+	$photo_id = (int) $_POST['photo_id'];
+	if ( ! $photo_id ) {
+		$pageShell->error( "Missing photo_id" );
 	}
-	$photoModel = new PhotoModel($photo_id);
+	$photoModel = new PhotoModel( $photo_id );
 	$photo_belongs_to_this_user = $photoModel->getUserId() == Session::getUserModel()->getId();
-	if (!$photo_belongs_to_this_user) {
-		$pageShell->error("Photo does not belong to this user.");
+	if ( ! $photo_belongs_to_this_user ) {
+		$error_message = "Photo does not belong to this user.";
+		$pageShell->error( $error_message );
 	}
-	$photoModel->setCaption($caption);
-	$pageShell->success(['photoCarouselData' => Session::getUserModel()->getPhotoCarouselData()]);
+	$photo_data = [
+		'caption'      => $_POST['caption'],
+		'rotate_angle' => $_POST['rotate_angle'],
+	];
+	$photoModel->update( $photo_data );
+	$output_data = [ 'photoCarouselData' => Session::getUserModel()->getPhotoCarouselData() ];
+	$pageShell->success( $output_data );
 } // handle_edit_photo
 
 function handle_upload_photo (): void {

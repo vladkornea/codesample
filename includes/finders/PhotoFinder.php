@@ -51,7 +51,7 @@ class PhotoFinder extends BaseFinder implements PhotoFinderInterface {
 		$photoFinder = new self();
 		$photoFinder->setUserId($user_id);
 		$photoFinder->setIdOrder($ordered_ids);
-		$desired_fields = ['photo_id', 'caption', 'standard_url', 'standard_width', 'standard_height', 'thumbnail_url', 'thumbnail_width', 'thumbnail_height'];
+		$desired_fields = ['photo_id', 'caption', 'standard_url', 'standard_width', 'standard_height', 'thumbnail_url', 'thumbnail_width', 'thumbnail_height', 'rotate_angle'];
 		$result = $photoFinder->find($desired_fields);
 		$photo_carousel_photos_data = DB::getTable($result);
 		return $photo_carousel_photos_data;

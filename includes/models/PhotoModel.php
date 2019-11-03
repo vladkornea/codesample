@@ -166,19 +166,36 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	} // create
 
 	/**
-	 * Editable fields: 'caption', 'deleted'
 	 * @param array $form_data
 	 * @param string $event_synopsis
 	 * @return number|array affected rows or error message keyed by field name
 	 */
-	public function update (array $form_data, string $event_synopsis = "") {
-		$editable_fields = ['caption', 'deleted'];
-		foreach ($form_data as $field_name => $field_value) {
-			if (!in_array($field_name, $editable_fields)) {
-				return [$field_name => "Field is not editable"];
+	public function update ( array $form_data, string $event_synopsis = "" ) {
+		$editable_fields = [ 'caption', 'deleted', 'rotate_angle' ];
+		$row_data = [];
+		foreach ( $form_data as $field_name => $form_field_value ) {
+			$field_is_editable = in_array( $field_name, $editable_fields );
+			if ( ! $field_is_editable ) {
+				$error_message = [ $field_name => "Photo field $field_name is not editable" ];
+				return $error_message;
 			}
+			switch ( $field_name ) {
+				case 'rotate_angle':
+					$row_field_value = $form_field_value % 360;
+					break;
+				case 'caption':
+					$row_field_value = trim( $form_field_value );
+					break;
+				case 'deleted':
+					$row_field_value = (bool) $form_field_value;
+					break;
+				default:
+					$row_field_value = $form_field_value;
+					break;
+			}
+			$row_data[$field_name] = $row_field_value;
 		}
-		return parent::update($form_data, $event_synopsis);
+		return parent::update( $row_data, $event_synopsis );
 	} // update
 
 	public function getUserId (): int {
@@ -232,15 +249,16 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	} // delete
 
 	public function getIsDeleted (): bool {
-		return (bool)$this->commonGet('deleted');
+		return $this->commonGet('deleted');
 	} // getIsDeleted
 
 	public function getThumbnailWidth (): int {
-		return (int)$this->commonGet('thumbnail_width');
+		return $this->commonGet('thumbnail_width');
 	} // getThumbnailWidth
 
 	public function getThumbnailHeight (): int {
-		return (int)$this->commonGet('thumbnail_height');
+		return $this->commonGet('thumbnail_height');
 	} // getThumbnailHeight
+
 } // PhotoModel
 
