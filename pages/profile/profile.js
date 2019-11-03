@@ -1199,9 +1199,20 @@ function printPhotoCarouselWidget (photoCarouselData) {
 			var $selectedCarouselPhoto  = $selectedPhotoContainer.find('#selected-carousel-photo')
 			$selectedPhotoOrbit.empty()
 			$selectedPhotoContainer.css({'min-width': photoCarouselData['max_standard_width']+'px', 'min-height': photoCarouselData['max_standard_height']+'px'})
+
+			var photoWidth  = selectedPhotoData['standard_width']
+			var photoHeight = selectedPhotoData['standard_height']
+			var desiredPhotoWidth  = photoCarouselData['max_standard_width']
+			var desiredPhotoHeight = photoCarouselData['max_standard_height']
+			var zoomIn = photoWidth < desiredPhotoWidth && photoHeight < desiredPhotoHeight
+			if ( zoomIn ) {
+				var zoomRatio = Math.max( photoWidth / desiredPhotoWidth, photoHeight / desiredPhotoHeight );
+				photoWidth  = Math.round( photoWidth / zoomRatio );
+				photoHeight = Math.round( photoHeight / zoomRatio );
+			}
 			$selectedCarouselPhoto.attr({
-				'width':   selectedPhotoData['standard_width']
-				,'height': selectedPhotoData['standard_height']
+				'width':   photoWidth
+				,'height': photoHeight
 				,'src':    selectedPhotoData['standard_url']
 			}).css( 'transform', 'rotate(' +photoRotateAngle +'deg)' )
 
