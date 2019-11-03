@@ -130,7 +130,7 @@ function get_age_from_birth_date (string $birth_date): ?int {
 	$age = $years_since;
 	if ($months_since < 0) {
 		$age--;
-	} elseif ($months_since = 0) {
+	} elseif ($months_since == 0) {
 		$days_since = $now_day - $birth_day;
 		if ($days_since < 0) {
 			$age--;
