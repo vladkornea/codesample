@@ -16,8 +16,8 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 
 	const THUMBNAIL_MAX_WIDTH = 80;
 	const THUMBNAIL_MAX_HEIGHT = 80;
-	const STANDARD_MAX_WIDTH = 420;
-	const STANDARD_MAX_HEIGHT = 420;
+	const STANDARD_MAX_WIDTH = 480;
+	const STANDARD_MAX_HEIGHT = 480;
 	const MAX_IMAGE_BYTES = 2000000;
 
 	/**
@@ -100,6 +100,11 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 		if (!$success) {
 			return ['file' => "Error resizing photo to standard size."];
 		}
+		$temp_standard_photo_path = tempnam(sys_get_temp_dir(), 'typetango_photo_');
+		$success = imagejpeg($standard_photo_resource, $temp_standard_photo_path);
+		if (!$success) {
+			return ['file' => "Error saving standard sized photo."];
+		}
 
 		// thumbnail
 		$thumbnail_width_ratio = $form_data['original_width'] / static::THUMBNAIL_MAX_WIDTH;
@@ -116,13 +121,6 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 		$success = imagecopyresampled($thumbnail_resource, $original_photo_resource, 0, 0, 0, 0, $form_data['thumbnail_width'], $form_data['thumbnail_height'], $form_data['original_width'], $form_data['original_height']);
 		if (!$success) {
 			return ['file' => "Error resizing photo to thumbnail size."];
-		}
-
-		// save photos
-		$temp_standard_photo_path = tempnam(sys_get_temp_dir(), 'typetango_photo_');
-		$success = imagejpeg($standard_photo_resource, $temp_standard_photo_path);
-		if (!$success) {
-			return ['file' => "Error saving standard sized photo."];
 		}
 		$temp_thumbnail_path = tempnam(sys_get_temp_dir(), 'typetango_photo_');
 		$success = imagejpeg($thumbnail_resource, $temp_thumbnail_path);
