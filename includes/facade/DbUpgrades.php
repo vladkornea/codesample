@@ -14,33 +14,34 @@ interface DbUpgradesInterface {
 
 class DbUpgrades implements DbUpgradesInterface {
 	protected static $upgradeMethods = [
-		'createDbUpgradesTable'
-		,'createHistoricEventsTable'
-		,'createUsersTable'
-		,'createLoginsTable'
-		,'createGlobalSettingsTable'
-		,'createSqsMessagesTable'
-		,'createEmailsTable'
-		,'createZipCodeCoordinatesTable'
-		,'createSearchCriteriaTable'
-		,'createPhotosTable'
-		,'createNegativeKeywordsTable'
-		,'createPositiveKeywordsTable'
-		,'createUserMessagesTable'
-		,'createBlockedUsersTable'
-		,'createReportedUsersTable'
-		,'makeUtcOffsetSigned'
-		,'addAdminNoteColumn'
-		,'addDeletedByAdminColumn'
-		,'changeLastVisitColumnTypeToTimestamp'
-		,'increaseSizeOfSqlQueryColumnInHistoricEventsTable'
-		,'dropLastInactivityWarningColumn'
-		,'addEmailAddressIndexToEmailsTable'
-		,'addLoggedInWithinDaysColumnToSearchCriteriaTable'
-		,'addCountryColumnToSearchCriteriaTable'
-		,'addDeletedColumnToUserMessagesTable'
-		,'createCountriesTable'
-		,'createUsaStatesTable'
+//		'createDbUpgradesTable',
+//		'createHistoricEventsTable',
+//		'createUsersTable',
+//		'createLoginsTable',
+//		'createGlobalSettingsTable',
+//		'createSqsMessagesTable',
+//		'createEmailsTable',
+//		'createZipCodeCoordinatesTable',
+//		'createSearchCriteriaTable',
+//		'createPhotosTable',
+//		'createNegativeKeywordsTable',
+//		'createPositiveKeywordsTable',
+//		'createUserMessagesTable',
+//		'createBlockedUsersTable',
+//		'createReportedUsersTable',
+//		'makeUtcOffsetSigned',
+//		'addAdminNoteColumn',
+//		'addDeletedByAdminColumn',
+//		'changeLastVisitColumnTypeToTimestamp',
+//		'increaseSizeOfSqlQueryColumnInHistoricEventsTable',
+//		'dropLastInactivityWarningColumn',
+//		'addEmailAddressIndexToEmailsTable',
+//		'addLoggedInWithinDaysColumnToSearchCriteriaTable',
+//		'addCountryColumnToSearchCriteriaTable',
+//		'addDeletedColumnToUserMessagesTable',
+//		'createCountriesTable',
+//		'createUsaStatesTable',
+		'addRotateAngleColumnToPhotosTable',
 	];
 
 	public static function isInstalled (): bool {
@@ -86,6 +87,12 @@ class DbUpgrades implements DbUpgradesInterface {
 	} // getUpgradesSummary
 
 	////////////// UPGRADE METHODS BELOW ////////////////////////////////
+
+	static function addRotateAngleColumnToPhotosTable (): void {
+		DB::query('
+			alter table photos add column rotate_angle smallint null default null after original_height'
+		); // unlike null, 0 means that the user chose the angle and it's therefore presumably correct
+	} // addRotateAngleColumnToPhotosTable
 
 	static function createDbUpgradesTable (): void {
 		DB::query('
