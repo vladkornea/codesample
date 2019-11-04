@@ -114,7 +114,7 @@ td.sender-username
 #selected-photo-orbit
 	{display:inline-block; float:left; text-align:center; padding:6px 10px; margin:0px 10px 5px 0px; border:1px solid chocolate; border-radius:4px; background-color:blanchedalmond; user-select:none; -moz-user-select:none; -ms-user-select:none;}
 #selected-photo-container
-	{display:block; text-align:center; padding:0; margin:6px; line-height:404px; position:relative;}
+	{display:block; text-align:center; padding:0; margin:6px; line-height:480px; position:relative;}
 #selected-photo-container       #selected-photo-controls-container
 	{display:none; position:absolute; line-height:1em; width:100%; top:20px;}
 #selected-photo-container:hover #selected-photo-controls-container
