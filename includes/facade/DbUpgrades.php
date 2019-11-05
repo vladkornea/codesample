@@ -42,8 +42,8 @@ class DbUpgrades implements DbUpgradesInterface {
 //		'createCountriesTable',
 //		'createUsaStatesTable',
 //		'addRotateAngleColumnToPhotosTable',
-		'addPrimaryThumbnailRotateAngleColumnToUsersTable',
-//		'updatePrimaryThumbnailRotateAnglesFromFirstPhotoRotateAngle',
+//		'addPrimaryThumbnailRotateAngleColumnToUsersTable',
+		'updatePrimaryThumbnailRotateAngleFromFirstPhotoRotateAngle',
 	];
 
 	public static function isInstalled (): bool {
@@ -431,7 +431,7 @@ class DbUpgrades implements DbUpgradesInterface {
 		); // unlike null, 0 means that the user chose the angle and it's therefore presumably correct
 	} // addPrimaryThumbnailRotateAngleColumnToUsersTable
 
-	static function updatePrimaryThumbnailRotateAnglesFromFirstPhotoRotateAngle (): void {
+	static function updatePrimaryThumbnailRotateAngleFromFirstPhotoRotateAngle (): void {
 		$users_resource = DB::query(
 			'select user_id, photo_order from users where primary_thumbnail_rotate_angle is null and photo_order != "" and last_visit > "2019-11-01"'
 		);
@@ -449,7 +449,7 @@ class DbUpgrades implements DbUpgradesInterface {
 				'update users set primary_thumbnail_rotate_angle = ' . (int) $first_photo_rotate_angle . ' where primary_thumbnail_rotate_angle is null and user_id = ' . (int) $user_id
 			);
 		}
-	} // updatePrimaryThumbnailRotateAnglesFromFirstPhotoRotateAngle
+	} // updatePrimaryThumbnailRotateAngleFromFirstPhotoRotateAngle
 
 } // DbUpgrades
 
