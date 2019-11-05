@@ -41,7 +41,9 @@ class DbUpgrades implements DbUpgradesInterface {
 //		'addDeletedColumnToUserMessagesTable',
 //		'createCountriesTable',
 //		'createUsaStatesTable',
-		'addRotateAngleColumnToPhotosTable',
+//		'addRotateAngleColumnToPhotosTable',
+		'addPrimaryThumbnailRotateAngleColumnToUsersTable',
+//		'updatePrimaryThumbnailRotateAnglesFromFirstPhotoRotateAngle',
 	];
 
 	public static function isInstalled (): bool {
@@ -87,12 +89,6 @@ class DbUpgrades implements DbUpgradesInterface {
 	} // getUpgradesSummary
 
 	////////////// UPGRADE METHODS BELOW ////////////////////////////////
-
-	static function addRotateAngleColumnToPhotosTable (): void {
-		DB::query('
-			alter table photos add column rotate_angle smallint null default null after original_height'
-		); // unlike null, 0 means that the user chose the angle and it's therefore presumably correct
-	} // addRotateAngleColumnToPhotosTable
 
 	static function createDbUpgradesTable (): void {
 		DB::query('
@@ -422,5 +418,38 @@ class DbUpgrades implements DbUpgradesInterface {
 			)'
 		);
 	} // createUsaStatesTable
+
+	static function addRotateAngleColumnToPhotosTable (): void {
+		DB::query('
+			alter table photos add column rotate_angle smallint null default null after original_height'
+		); // unlike null, 0 means that the user chose the angle and it's therefore presumably correct
+	} // addRotateAngleColumnToPhotosTable
+
+	static function addPrimaryThumbnailRotateAngleColumnToUsersTable (): void {
+		DB::query('
+			alter table users add column primary_thumbnail_rotate_angle smallint null default null after primary_thumbnail_height'
+		); // unlike null, 0 means that the user chose the angle and it's therefore presumably correct
+	} // addPrimaryThumbnailRotateAngleColumnToUsersTable
+
+	static function updatePrimaryThumbnailRotateAnglesFromFirstPhotoRotateAngle (): void {
+		$users_resource = DB::query(
+			'select user_id, photo_order from users where primary_thumbnail_rotate_angle is null and photo_order != "" and last_visit > "2019-11-01"'
+		);
+		while ( $user_row = DB::getRow( $users_resource ) ) {
+			$user_id        = $user_row['user_id'];
+			$photo_order    = $user_row['photo_order'];
+			$first_photo_id = (int) explode( ',', $photo_order )[0];
+			$first_photo_rotate_angle = DB::getCell(
+				'select rotate_angle from photos where photo_id = ' . (int) $first_photo_id
+			);
+			if ( null === $first_photo_rotate_angle ) {
+				continue;
+			}
+			DB::query(
+				'update users set primary_thumbnail_rotate_angle = ' . (int) $first_photo_rotate_angle . ' where primary_thumbnail_rotate_angle is null and user_id = ' . (int) $user_id
+			);
+		}
+	} // updatePrimaryThumbnailRotateAnglesFromFirstPhotoRotateAngle
+
 } // DbUpgrades
 
