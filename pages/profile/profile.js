@@ -30,6 +30,8 @@ function printProfilePageInterface () {
 		return
 	}
 
+	var profileMode = (getUrlParams()['user_id'] || getUrlParams()['username']) ? 'view' : 'edit'
+
 	var hasChildren = ['yes', 'part-time', 'away'].indexOf( profileData['have_children'] ) !== -1
 	var readableValues = {
 		'body_type': {
@@ -52,9 +54,9 @@ function printProfilePageInterface () {
 		}
 		,'want_children': {
 			'':    ""
-			,'no':        hasChildren ? "I don't want more children" : "I don't want children"
-			,'yes':       hasChildren ? "I want more children" : "I want children"
-			,'undecided': hasChildren ? "Undecided about having more children" : "Undecided about having children"
+			,'no':        'edit' === profileMode ? "I don't want (more) children" : hasChildren ? "I don't want more children" : "I don't want children"
+			,'yes':       'edit' === profileMode ? "I want (more) children." : hasChildren ? "I want more children" : "I want children"
+			,'undecided': 'edit' === profileMode ? "Undecided about having (more) children" : hasChildren ? "Undecided about having more children" : "Undecided about having children"
 		}
 		,'would_relocate': {
 			'':    ""
@@ -70,7 +72,6 @@ function printProfilePageInterface () {
 		,'lover_described': "What will you expect from people you meet through TypeTango?"
 	}
 
-	var profileMode = (getUrlParams()['user_id'] || getUrlParams()['username']) ? 'view' : 'edit'
 	if (profileMode == 'edit') {
 		printPhotoCarouselWidget(pageData['photoCarouselData'])
 		printProfileForm()
