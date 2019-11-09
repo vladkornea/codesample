@@ -1058,6 +1058,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 		var tileCenterY = parseInt(originalElementOffset.top + (elementHeight / 2))
 		var pointerDistanceToTileCenterX = tileCenterX - mouseDownPageX
 		var pointerDistanceToTileCenterY = tileCenterY - mouseDownPageY
+		$document.data( 'oldPhotoOrder', getPhotoOrder() )
 		$document
 			.one('mousemove', handleFirstMouseMove)
 			.on('mousemove', handleThumbnailLinkMouseMove)
@@ -1067,7 +1068,6 @@ function printPhotoCarouselWidget (photoCarouselData) {
 		function handleFirstMouseMove () {
 			$carouselWidget.addClass('dragging-happening')
 			$elementBeingMoved.addClass('being-moved')
-			$document.data( 'oldPhotoOrder', getPhotoOrder() )
 		} // handleFirstMouseMove
 
 		function handleThumbnailLinkMouseMove (event) {
