@@ -30,6 +30,7 @@ interface UserModelInterface extends LoggedModelInterface {
 	function getPhotoOrder (): string;
 	function getPositiveKeywords (): array;
 	function getPreviouslyContactedUsersIds (): array;
+	function getPrimaryPhotoId (): ?int;
 	function getReportedUsers (): array;
 	function getReportedUsersData (): array;
 	function getSearchCriteria (array $desired_fields): array;
@@ -55,6 +56,7 @@ interface UserModelInterface extends LoggedModelInterface {
 	function setLastVisit (): void;
 	function setPassword (string $password): ?array;
 	function setPhotoOrder ($photo_order): ?array;
+	function setPrimaryThumbnailRotateAngle (int $rotate_angle): void;
 	function setSearchCriteria (array $form_data): ?array;
 	function setUnverifiedEmail (string $email_address): ?array;
 	function setUserComplained (): void;
@@ -79,7 +81,7 @@ class UserModel extends LoggedModel implements UserModelInterface {
 
 	const MAX_KEYWORD_WEIGHT = 250;
 
-	public static function create (array $form_data, string $event_synopsis = ''): array {
+	public static function create (array $form_data, string $event_synopsis = '', bool $log_query = true): array {
 		$next_allowed_account_creation_time_of_ip_address = LoginFinder::getNextAllowedAccountCreationTimeOfIpAddress($_SERVER['REMOTE_ADDR']);
 		if ($next_allowed_account_creation_time_of_ip_address) {
 			$error_messages = ['permission' => "Cannot create another account from this IP address until $next_allowed_account_creation_time_of_ip_address."];
@@ -441,15 +443,35 @@ class UserModel extends LoggedModel implements UserModelInterface {
 		}
 
 		{ // photo_order
-			if (array_key_exists('photo_order', $form_data)) {
-				$row_data['photo_order'] = $form_data['photo_order'] ?: '';
+			if ( array_key_exists('photo_order', $form_data) ) {
+				$new_photo_order = $form_data['photo_order'] ?? '';
+				$row_data['photo_order'] = $new_photo_order;
+				if ( 'update' === $create_or_update ) {
+					$old_photo_order = $userModel->getPhotoOrder();
+					if ( $new_photo_order != $old_photo_order ) {
+						$new_primary_photo_id = $new_photo_order ? (int) explode(',', $new_photo_order)[0] : null;
+						$old_primary_photo_id = $old_photo_order ? (int) explode(',', $old_photo_order)[0] : null;
+						if ( $new_primary_photo_id != $old_primary_photo_id ) {
+							$newPrimaryPhotoModel = new PhotoModel( $new_primary_photo_id );
+							$row_data['primary_thumbnail_width'] = $newPrimaryPhotoModel->getThumbnailWidth();
+							$row_data['primary_thumbnail_height'] = $newPrimaryPhotoModel->getThumbnailHeight();
+							$row_data['primary_thumbnail_rotate_angle'] = $newPrimaryPhotoModel->getRotateAngle();
+						}
+					}
+				}
 			}
 		}
 
-		{ // primary_thumbnail_width
-			if (array_key_exists('primary_thumbnail_width', $form_data) and array_key_exists('primary_thumbnail_height', $form_data)) {
-				$row_data['primary_thumbnail_width'] = $form_data['primary_thumbnail_width'] ?: 0;
-				$row_data['primary_thumbnail_height'] = $form_data['primary_thumbnail_height'] ?: 0;
+		{ // primary_thumbnail_width, primary_thumbnail_height
+			if ( array_key_exists('primary_thumbnail_width', $form_data) and array_key_exists('primary_thumbnail_height', $form_data) ) {
+				$row_data['primary_thumbnail_width'] = (int) $form_data['primary_thumbnail_width'];
+				$row_data['primary_thumbnail_height'] = (int) $form_data['primary_thumbnail_height'];
+			}
+		}
+
+		{ // primary_thumbnail_rotate_angle
+			if ( array_key_exists('primary_thumbnail_rotate_angle', $form_data) ) {
+				$row_data['primary_thumbnail_rotate_angle'] = (int) $form_data['primary_thumbnail_rotate_angle'];
 			}
 		}
 
@@ -800,7 +822,7 @@ EMAIL_TEXT;
 		foreach ($this->getPreviouslyContactedUsersIds() as $loop_user_id) {
 			$userFinder = new UserFinder;
 			$userFinder->setUserId($loop_user_id);
-			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height']);
+			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle']);
 			if (!$user_data) { // deactivated user
 				continue;
 			}
@@ -815,7 +837,7 @@ EMAIL_TEXT;
 		foreach ($this->getBlockedUsers() as $loop_user_id) {
 			$userFinder = new UserFinder;
 			$userFinder->setUserId($loop_user_id);
-			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height']);
+			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle']);
 			if (!$user_data) { // deactivated user
 				continue;
 			}
@@ -830,7 +852,7 @@ EMAIL_TEXT;
 		foreach ($this->getReportedUsers() as $loop_user_id) {
 			$userFinder = new UserFinder;
 			$userFinder->setUserId($loop_user_id);
-			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height']);
+			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle']);
 			if (!$user_data) { // deactivated user
 				continue;
 			}
@@ -1048,6 +1070,11 @@ EMAIL_TEXT;
 	/**
 	 * For cases such as the user correcting a typo in a keyword, pass $old_keyword so we know which keyword to replace.
 	 * If the new keyword is already in the database, its weight will be updated (no duplicates get inserted).
+	 * @param string $positive_or_negative
+	 * @param string|null $old_keyword
+	 * @param string|null $new_keyword
+	 * @param int|null $new_weight
+	 * @return string|null
 	 */
 	public function saveKeyword (string $positive_or_negative, ?string $old_keyword, ?string $new_keyword, ?int $new_weight): ?string {
 		$table = $positive_or_negative == 'negative' ? 'negative_keywords' : 'positive_keywords';
@@ -1087,18 +1114,29 @@ EMAIL_TEXT;
 	} // getPhotoCarouselData
 
 	/**
-	 * @param string|array $photo_order comma separated string of photo_id
+	 * @param string|array|null $photo_order comma separated string of photo_id
 	 * @return array|number
 	 */
 	public function setPhotoOrder ($photo_order): ?array {
 		$update = [];
-		$photo_order_array = is_array($photo_order) ? $photo_order : explode(',', $photo_order);
-		$photo_order_string = is_array($photo_order) ? implode(',', $photo_order) : $photo_order;
+		if ( ! $photo_order ) {
+			$photo_order_string = '';
+			$photo_order_array = [];
+		} elseif ( is_string($photo_order) ) {
+			$photo_order_string = $photo_order;
+			$photo_order_array = explode(',', $photo_order_string);
+		} elseif ( is_array($photo_order) ) {
+			$photo_order_array = $photo_order;
+			$photo_order_string = implode(',', $photo_order_array);
+		} else {
+			throw new InvalidArgumentException("Expected string, array, or null but received " .gettype($photo_order));
+		}
 		$primary_photo_id = $photo_order_array ? $photo_order_array[0] : 0;
 		if ($primary_photo_id) {
 			$primaryPhotoModel = new PhotoModel($primary_photo_id);
 			$update['primary_thumbnail_width'] = $primaryPhotoModel->getThumbnailWidth();
 			$update['primary_thumbnail_height'] = $primaryPhotoModel->getThumbnailHeight();
+			$update['primary_thumbnail_rotate_angle'] = $primaryPhotoModel->getRotateAngle();
 		}
 		$update['photo_order'] = $photo_order_string;
 		return $this->update($update);
@@ -1238,5 +1276,18 @@ TypeTango Jungian Myers-Briggs/Keirsey dating site";
 		}
 		return null;
 	} // getWhyCannotViewUser
+
+	public function getPrimaryPhotoId (): ?int {
+		$photo_order = $this->getPhotoOrder();
+		if ( ! $photo_order ) {
+			return null;
+		}
+		$first_photo_id = explode(',', $photo_order)[0];
+		return $first_photo_id;
+	} // getPrimaryPhotoId
+
+	public function setPrimaryThumbnailRotateAngle ( int $rotate_angle ): void {
+		$this->update( ['primary_thumbnail_rotate_angle' => $rotate_angle] );
+	} // setPrimaryThumbnailRotateAngle
 } // UserModel
 

@@ -88,7 +88,7 @@ class UserFinder extends BaseFinder implements UserFinderInterface {
 	} // getUsuallyExcludedUsersConditions
 
 
-	public function find (array $resource_fields = ['birth_date', 'birth_day', 'birth_month', 'birth_year', 'body_type', 'city', 'country', 'country_namme', 'deactivated', 'gender', 'have_children', 'height_in_in', 'inserted', 'last_visit', 'latitude', 'longitude', 'lover_described', 'mbti_type', 'orientation', 'photo_order', 'primary_thumbnail_height', 'primary_thumbnail_width', 'self_described', 'share_keywords', 'state', 'updated', 'user_id', 'username', 'virtrades', 'want_children', 'weight_in_kg', 'would_relocate', 'zip_code']): mysqli_result {
+	public function find (array $resource_fields = ['birth_date', 'birth_day', 'birth_month', 'birth_year', 'body_type', 'city', 'country', 'country_namme', 'deactivated', 'gender', 'have_children', 'height_in_in', 'inserted', 'last_visit', 'latitude', 'longitude', 'lover_described', 'mbti_type', 'orientation', 'photo_order', 'primary_thumbnail_height', 'primary_thumbnail_width', 'primary_thumbnail_rotate_angle', 'self_described', 'share_keywords', 'state', 'updated', 'user_id', 'username', 'virtrades', 'want_children', 'weight_in_kg', 'would_relocate', 'zip_code']): mysqli_result {
 		$valid_desired_fields = $this->getValidDesiredFields($resource_fields ?: [static::$primaryKeyName]);
 
 		$from = static::$tableName;
@@ -219,7 +219,7 @@ class UserFinder extends BaseFinder implements UserFinderInterface {
 
 
 	// this adds post hoc fields that ->find() doesn't fetch from the database, such as 'description' and 'thumbnail_url'
-	public function getSearchResults (array $desired_fields = ['birth_date', 'birth_day', 'birth_month', 'birth_year', 'body_type', 'city', 'country', 'country_namme', 'deactivated', 'gender', 'have_children', 'height_in_in', 'inserted', 'last_visit', 'latitude', 'longitude', 'lover_described', 'mbti_type', 'orientation', 'photo_order', 'primary_thumbnail_height', 'primary_thumbnail_width', 'self_described', 'share_keywords', 'state', 'updated', 'user_id', 'username', 'virtrades', 'want_children', 'weight_in_kg', 'would_relocate', 'zip_code', 'description', 'thumbnail_url', 'positive_keywords', 'negative_keywords', 'email_bouncing']): array {
+	public function getSearchResults (array $desired_fields = ['birth_date', 'birth_day', 'birth_month', 'birth_year', 'body_type', 'city', 'country', 'country_namme', 'deactivated', 'gender', 'have_children', 'height_in_in', 'inserted', 'last_visit', 'latitude', 'longitude', 'lover_described', 'mbti_type', 'orientation', 'photo_order', 'primary_thumbnail_height', 'primary_thumbnail_width', 'primary_thumbnail_rotate_angle', 'self_described', 'share_keywords', 'state', 'updated', 'user_id', 'username', 'virtrades', 'want_children', 'weight_in_kg', 'would_relocate', 'zip_code', 'description', 'thumbnail_url', 'positive_keywords', 'negative_keywords', 'email_bouncing']): array {
 		$post_hoc_field_dependencies = [
 			 'description' => ['birth_date', 'orientation', 'mbti_type', 'gender', 'city', 'state', 'country', 'country_name']
 			,'thumbnail_url' => ['photo_order', 'user_id']

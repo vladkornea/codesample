@@ -15,7 +15,7 @@ trait HistoricEventTraits {
 trait UserTraits {
 	protected static $tableName      = 'users';
 	protected static $primaryKeyName = 'user_id';
-	protected static $columnNames    = ['user_id', 'username', 'verified_email', 'unverified_email', 'email_bouncing', 'spammer', 'last_visit', 'verification_code', 'password_hash', 'mbti_type', 'gender', 'orientation', 'birth_date', 'body_type', 'height_in_in', 'weight_in_kg', 'country', 'city', 'state', 'zip_code', 'latitude', 'longitude', 'share_keywords', 'self_described', 'lover_described', 'virtrades', 'have_children', 'want_children', 'would_relocate', 'photo_order', 'primary_thumbnail_width', 'primary_thumbnail_height', 'deactivated', 'deleted_by_admin', 'admin_note', 'updated', 'inserted'];
+	protected static $columnNames    = ['user_id', 'username', 'verified_email', 'unverified_email', 'email_bouncing', 'spammer', 'last_visit', 'verification_code', 'password_hash', 'mbti_type', 'gender', 'orientation', 'birth_date', 'body_type', 'height_in_in', 'weight_in_kg', 'country', 'city', 'state', 'zip_code', 'latitude', 'longitude', 'share_keywords', 'self_described', 'lover_described', 'virtrades', 'have_children', 'want_children', 'would_relocate', 'photo_order', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle', 'deactivated', 'deleted_by_admin', 'admin_note', 'updated', 'inserted'];
 } //  UserTraits
 
 trait SearchCriteriaTraits {

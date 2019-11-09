@@ -1066,6 +1066,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 		function handleFirstMouseMove () {
 			$carouselWidget.addClass('dragging-happening')
 			$elementBeingMoved.addClass('being-moved')
+			$document.data( 'oldPhotoOrder', getPhotoOrder() )
 		} // handleFirstMouseMove
 
 		function handleThumbnailLinkMouseMove (event) {
@@ -1097,6 +1098,17 @@ function printPhotoCarouselWidget (photoCarouselData) {
 			})() // setElementOffset
 		} // handleThumbnailLinkMouseMove
 
+		function getPhotoOrder () {
+			var $thumbnailLinks = $('.photo-carousel-thumbnail-link')
+			var photoIds = []
+			$thumbnailLinks.each(function(i, thumbnailLinkElement){
+				var $thumbnailLink = $(thumbnailLinkElement)
+				var photoId = $thumbnailLink.data('photo_id')
+				photoIds.push(photoId)
+			})
+			return photoIds.join(',')
+		} // getPhotoOrder
+
 		function markAsNoLongerBeingMoved () {
 			$document
 				.off('mousemove', handleFirstMouseMove)
@@ -1104,18 +1116,11 @@ function printPhotoCarouselWidget (photoCarouselData) {
 				.off('selectstart', handleSelectStart)
 			$elementBeingMoved.removeClass('being-moved')
 			$elementBeingMoved.css({'top':'', 'left':'', 'z-index':''})
-			var photoOrder = (function getPhotoOrder(){
-				var $thumbnailLinks = $('.photo-carousel-thumbnail-link')
-				var photoIds = []
-				$thumbnailLinks.each(function(i, thumbnailLinkElement){
-					var $thumbnailLink = $(thumbnailLinkElement)
-					var photoId = $thumbnailLink.data('photo_id')
-					photoIds.push(photoId)
-				})
-				return photoIds.join(',')
-			})() // getPhotoOrder
 			$carouselWidget.removeClass('dragging-happening')
-			apiCall('/pages/profile/ajax?action=set_photo_order', null, {'photo_order': photoOrder})
+			var photoOrder = getPhotoOrder()
+			if ( $document.data('oldPhotoOrder') != photoOrder ) {
+				apiCall('/pages/profile/ajax?action=set_photo_order', null, {'photo_order': photoOrder})
+			}
 		} // markAsNoLongerBeingMoved
 
 		function handleSelectStart () {

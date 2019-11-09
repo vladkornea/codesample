@@ -53,7 +53,7 @@ function printContactsPageInterface () {
 		}
 		for (var i = 0; i < contactedUsers.length; i++) {
 			var loopUser = contactedUsers[i]
-			var $userTile = $('<div class="user-tile"><a class="user-link"><span class="username"></span></a></div>')
+			var $userTile = $('<div class="user-tile"><a class="user-link"><span class="thumbnail-container"></span><span class="username"></span></a></div>')
 			$userTile.find('.username').text(loopUser['username'])
 			var linkUrl = '/profile?username=' +loopUser['username']
 			$userTile.find('.user-link').attr({'href': linkUrl})
@@ -61,8 +61,18 @@ function printContactsPageInterface () {
 			if (thumbnailUrl) {
 				var primaryThumbnailWidth = loopUser['primary_thumbnail_width']
 				var primaryThumbnailHeight = loopUser['primary_thumbnail_height']
+				var primaryThumbnailRotateAngle = loopUser['primary_thumbnail_rotate_angle']
 				var $thumbnail = $('<img>').attr({'src': thumbnailUrl, 'width':primaryThumbnailWidth, 'height':primaryThumbnailHeight})
-				$thumbnail.prependTo($userTile.find('a'));
+				var $thumbnailContainer = $userTile.find('.thumbnail-container')
+				if ( primaryThumbnailRotateAngle ) {
+					$thumbnail.css( 'transform', 'rotate(' +primaryThumbnailRotateAngle +'deg)' )
+					if ( primaryThumbnailWidth > primaryThumbnailHeight ) {
+						if ( primaryThumbnailRotateAngle == 90 || primaryThumbnailRotateAngle == 270 ) {
+							$thumbnailContainer.css('writing-mode', 'tb')
+						}
+					}
+				}
+				$thumbnail.prependTo($userTile.find('.thumbnail-container'));
 			}
 			$userTile.appendTo($tabContentContainer)
 		}
@@ -78,7 +88,7 @@ function printContactsPageInterface () {
 		}
 		for (var i = 0; i < blockedUsers.length; i++) {
 			var loopUser = blockedUsers[i]
-			var $userTile = $('<div class="user-tile"><a class="user-link"><span class="username"></span></a></div>')
+			var $userTile = $('<div class="user-tile"><a class="user-link"><span class="thumbnail-container"></span><span class="username"></span></a></div>')
 			$userTile.find('.username').text(loopUser['username'])
 			var linkUrl = '/profile?username=' +loopUser['username']
 			$userTile.find('.user-link').attr({'href': linkUrl})
@@ -86,8 +96,18 @@ function printContactsPageInterface () {
 			if (thumbnailUrl) {
 				var primaryThumbnailWidth = loopUser['primary_thumbnail_width']
 				var primaryThumbnailHeight = loopUser['primary_thumbnail_height']
-				var $thumbnail = $('<img>').attr({'src': thumbnailUrl, 'width':primaryThumbnailWidth, 'height':primaryThumbnailHeight})
-				$thumbnail.prependTo($userTile.find('a'));
+				var primaryThumbnailRotateAngle = loopUser['primary_thumbnail_rotate_angle']
+				var $thumbnail = $('<img class="thumbnail">').attr({'src': thumbnailUrl, 'width':primaryThumbnailWidth, 'height':primaryThumbnailHeight})
+				var $thumbnailContainer = $userTile.find('.thumbnail-container')
+				if ( primaryThumbnailRotateAngle ) {
+					$thumbnail.css( 'transform', 'rotate(' +primaryThumbnailRotateAngle +'deg)' )
+					if ( primaryThumbnailWidth > primaryThumbnailHeight ) {
+						if ( primaryThumbnailRotateAngle == 90 || primaryThumbnailRotateAngle == 270 ) {
+							$thumbnailContainer.css('writing-mode', 'tb')
+						}
+					}
+				}
+				$thumbnail.appendTo( $userTile.find('.thumbnail-container') );
 			}
 			$userTile.appendTo($tabContentContainer)
 		}
@@ -103,7 +123,7 @@ function printContactsPageInterface () {
 		}
 		for (var i = 0; i < reportedUsers.length; i++) {
 			var loopUser = reportedUsers[i]
-			var $userTile = $('<div class="user-tile"><a class="user-link"><span class="username"></span></a></div>')
+			var $userTile = $('<div class="user-tile"><a class="user-link"><span class="thumbnail-container"></span><span class="username"></span></a></div>')
 			$userTile.find('.username').text(loopUser['username'])
 			var linkUrl = '/profile?username=' +loopUser['username']
 			$userTile.find('.user-link').attr({'href': linkUrl})
@@ -111,8 +131,18 @@ function printContactsPageInterface () {
 			if (thumbnailUrl) {
 				var primaryThumbnailWidth = loopUser['primary_thumbnail_width']
 				var primaryThumbnailHeight = loopUser['primary_thumbnail_height']
+				var primaryThumbnailRotateAngle = loopUser['primary_thumbnail_rotate_angle']
 				var $thumbnail = $('<img>').attr({'src': thumbnailUrl, 'width':primaryThumbnailWidth, 'height':primaryThumbnailHeight})
-				$thumbnail.prependTo($userTile.find('a'));
+				var $thumbnailContainer = $userTile.find('.thumbnail-container')
+				if ( primaryThumbnailRotateAngle ) {
+					$thumbnail.css( 'transform', 'rotate(' +primaryThumbnailRotateAngle +'deg)' )
+					if ( primaryThumbnailWidth > primaryThumbnailHeight ) {
+						if ( primaryThumbnailRotateAngle == 90 || primaryThumbnailRotateAngle == 270 ) {
+							$thumbnailContainer.css('writing-mode', 'tb')
+						}
+					}
+				}
+				$thumbnail.prependTo( $thumbnailContainer );
 			}
 			$userTile.appendTo($tabContentContainer)
 		}

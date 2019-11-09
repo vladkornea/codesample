@@ -237,7 +237,7 @@ class SearchCriteriaModel extends LoggedModel implements SearchCriteriaModelInte
 			$userFinder->setMatchSharedNegatives();
 		}
 		$userFinder->setSortByMatchWithUserId($this->getUserId());
-		$desired_fields = ['user_id', 'username', 'primary_thumbnail_width', 'primary_thumbnail_height', 'description', 'thumbnail_url', 'match_score'];
+		$desired_fields = ['user_id', 'username', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle', 'description', 'thumbnail_url', 'match_score'];
 		$search_results_array = $userFinder->getSearchResults($desired_fields);
 		return $search_results_array;
 	} // getSearchResults

@@ -5,6 +5,7 @@ require_once 'LoggedModel.php';
 interface PhotoModelInterface extends LoggedModelInterface {
 	function setCaption (string $caption): void;
 	function getIsDeleted (): bool;
+	function getRotateAngle (): ?int;
 	function getUserId (): int;
 	function getThumbnailWidth (): int;
 	function getThumbnailHeight (): int;
@@ -20,12 +21,15 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	const STANDARD_MAX_HEIGHT = 480;
 	const MAX_IMAGE_BYTES = 2000000;
 
+	protected $userModel = null;
+
 	/**
 	 * @param array $form_data can have ad hoc fields 'file' and 'original_filename'
 	 * @param string $event_synopsis
+	 * @param bool $log_query
 	 * @return array|int
 	 */
-	static public function create (array $form_data, string $event_synopsis = '') {
+	static public function create (array $form_data, string $event_synopsis = '', bool $log_query = true) {
 		// refute invalid arguments
 		if (empty($form_data['user_id'])) {
 			return ['user_id' => "Empty `user_id` argument."];
@@ -150,13 +154,15 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 		// update `photo_order` in `users` table
 		$user_update = [];
 		$userModel = new UserModel($user_id);
-		$photo_order = $userModel->getPhotoOrder();
-		if ($photo_order) {
-			$user_update['photo_order'] = "$photo_order,$photo_id";
+		$old_photo_order = $userModel->getPhotoOrder();
+		if ( $old_photo_order ) {
+			$user_update['photo_order'] = "$old_photo_order,$photo_id";
 		} else {
+			$photoModel = new PhotoModel($photo_id);
 			$user_update['photo_order'] = $photo_id;
-			$user_update['primary_thumbnail_width']  = $form_data['thumbnail_width'];
-			$user_update['primary_thumbnail_height'] = $form_data['thumbnail_height'];
+			$user_update['primary_thumbnail_width']        = $form_data['thumbnail_width'] ?? 0;
+			$user_update['primary_thumbnail_height']       = $form_data['thumbnail_height'] ?? 0;
+			$user_update['primary_thumbnail_rotate_angle'] = $form_data['rotate_angle'] ?? 0;
 		}
 		$userModel->update($user_update);
 
@@ -179,7 +185,14 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			}
 			switch ( $field_name ) {
 				case 'rotate_angle':
-					$row_field_value = $form_field_value % 360;
+					$rotate_angle = $form_field_value % 360;
+					$row_field_value = $rotate_angle;
+					$primary_photo_id = $this->getUserModel()->getPrimaryPhotoId();
+					if ( $this->getId() == $primary_photo_id ) {
+						if ( $this->getRotateAngle() != $rotate_angle ) {
+							$this->getUserModel()->setPrimaryThumbnailRotateAngle($rotate_angle);
+						}
+					}
 					break;
 				case 'caption':
 					$row_field_value = trim( $form_field_value );
@@ -199,6 +212,13 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	public function getUserId (): int {
 		return (int)$this->commonGet('user_id');
 	} // getUserId
+
+	public function getUserModel (): UserModel {
+		if ( ! $this->userModel ) {
+			$this->userModel = new UserModel( $this->getUserId() );
+		}
+		return $this->userModel;
+	} // getUserModel
 
 	public function setCaption (string $caption): void {
 		$this->update(['caption' => $caption]);
@@ -257,6 +277,10 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	public function getThumbnailHeight (): int {
 		return $this->commonGet('thumbnail_height');
 	} // getThumbnailHeight
+
+	public function getRotateAngle (): ?int {
+		return $this->commonGet('rotate_angle');
+	} // getRotateAngle
 
 } // PhotoModel
 

@@ -14,3 +14,6 @@
 #tab-content-container
 	{background-color:papayawhip; border:1px solid chocolate; border-radius:12px; padding:10px 27px;}
 
+.thumbnail-container
+	{min-height:80px; min-width:80px;}
+

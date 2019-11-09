@@ -50,12 +50,16 @@ function printSearchPageInterface () {
 					+'</a></li>'
 				)
 				if (userData['thumbnail_url']) {
-					$('<img>').attr({
+					var $thumbnail = $('<img>').attr({
 						 'src':    userData['thumbnail_url']
 						,'width':  userData['primary_thumbnail_width']
 						,'height': userData['primary_thumbnail_height']
 						,'alt':    userData['username']
-					}).appendTo($listItem.find('.thumbnail-container'))
+					})
+					if ( userData['primary_thumbnail_rotate_angle'] ) {
+						$thumbnail.css( 'transform', 'rotate(' +userData['primary_thumbnail_rotate_angle'] +'deg)' )
+					}
+					$thumbnail.appendTo( $listItem.find('.thumbnail-container') )
 				}
 				$listItem.find('a.profile-link').attr('href', '/profile?username=' +encodeURIComponent(userData['username']))
 				$listItem.find('.username').text(userData['username'])
