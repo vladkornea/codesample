@@ -445,17 +445,39 @@ class UserModel extends LoggedModel implements UserModelInterface {
 		{ // photo_order
 			if ( array_key_exists('photo_order', $form_data) ) {
 				$new_photo_order = $form_data['photo_order'] ?? '';
-				$row_data['photo_order'] = $new_photo_order;
-				if ( 'update' === $create_or_update ) {
+				if ( 'create' === $create_or_update ) {
+					if ( $new_photo_order ) {
+						$row_data['photo_order'] = $new_photo_order;
+						$new_primary_photo_id = (int) explode(',', $new_photo_order)[0];
+						$newPrimaryPhotoModel = new PhotoModel( $new_primary_photo_id );
+						$row_data['primary_thumbnail_width']        = $newPrimaryPhotoModel->getThumbnailWidth();
+						$row_data['primary_thumbnail_height']       = $newPrimaryPhotoModel->getThumbnailHeight();
+						$row_data['primary_thumbnail_rotate_angle'] = $newPrimaryPhotoModel->getRotateAngle();
+					}
+				} else {
 					$old_photo_order = $userModel->getPhotoOrder();
-					if ( $new_photo_order != $old_photo_order ) {
-						$new_primary_photo_id = $new_photo_order ? (int) explode(',', $new_photo_order)[0] : null;
-						$old_primary_photo_id = $old_photo_order ? (int) explode(',', $old_photo_order)[0] : null;
-						if ( $new_primary_photo_id != $old_primary_photo_id ) {
-							$newPrimaryPhotoModel = new PhotoModel( $new_primary_photo_id );
-							$row_data['primary_thumbnail_width'] = $newPrimaryPhotoModel->getThumbnailWidth();
-							$row_data['primary_thumbnail_height'] = $newPrimaryPhotoModel->getThumbnailHeight();
-							$row_data['primary_thumbnail_rotate_angle'] = $newPrimaryPhotoModel->getRotateAngle();
+					if ( $old_photo_order !== $new_photo_order ) {
+						$row_data['photo_order'] = $new_photo_order;
+						if ( ! $new_photo_order ) {
+							$row_data['primary_thumbnail_width']        = 0;
+							$row_data['primary_thumbnail_height']       = 0;
+							$row_data['primary_thumbnail_rotate_angle'] = null;
+						} else {
+							$new_primary_photo_id = (int) explode(',', $new_photo_order)[0];
+							if ( ! $old_photo_order ) {
+								$newPrimaryPhotoModel = new PhotoModel( $new_primary_photo_id );
+								$row_data['primary_thumbnail_width']        = $newPrimaryPhotoModel->getThumbnailWidth();
+								$row_data['primary_thumbnail_height']       = $newPrimaryPhotoModel->getThumbnailHeight();
+								$row_data['primary_thumbnail_rotate_angle'] = $newPrimaryPhotoModel->getRotateAngle();
+							} else {
+								$old_primary_photo_id = (int) explode(',', $old_photo_order)[0];
+								if ( $old_primary_photo_id !== $new_primary_photo_id ) {
+									$newPrimaryPhotoModel = new PhotoModel( $new_primary_photo_id );
+									$row_data['primary_thumbnail_width']        = $newPrimaryPhotoModel->getThumbnailWidth();
+									$row_data['primary_thumbnail_height']       = $newPrimaryPhotoModel->getThumbnailHeight();
+									$row_data['primary_thumbnail_rotate_angle'] = $newPrimaryPhotoModel->getRotateAngle();
+								}
+							}
 						}
 					}
 				}
