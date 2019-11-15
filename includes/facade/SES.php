@@ -4,7 +4,7 @@
  * Developer Guide: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-api.html
  * Authentication: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/query-interface-authentication.html
  *
- * Requires constants: AWS_SES_SECRET_KEY, AWS_SES_ACCESS_KEY_ID, AWS_SES_ENDPOINT
+ * Search for calls to the getenv() function to see which environment variables need to be set to use this class.
  *
  * Class SES interacts with Amazon SES (Simple Email Service). This class should be used only by
  * the Email class; application code should use the Email class.
@@ -34,6 +34,7 @@ class SES implements SesInterface {
 	 * @link http://docs.aws.amazon.com/ses/latest/APIReference/API_RawMessage.html
 	 * @param string $raw_message
 	 * @return array with keys: 'message_id', 'request_id', 'error_message'
+	 * @throws Exception
 	 */
 	public function sendRawEmail (string $raw_message): array {
 		$return_values = [
