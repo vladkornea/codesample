@@ -31,10 +31,10 @@ class Email implements EmailInterface {
 				$to_email_address = ERROR_RECIPIENT;
 			}
 			if (is_array($from_header_value)) {
-				foreach ($from_header_value as $from_email => $from_name) {
-					$from_header_value = "$from_name <$from_email>";
-					break;
-				}
+				$from_array = $from_header_value;
+				$from_email = key($from_array);
+				$from_name = $from_array[$from_email];
+				$from_header_value = "$from_name <$from_email>";
 			}
 			$raw_message = static::getRawEmail($subject, $to_email_address, $from_header_value, $email_params);
 			$email_model_row = [
