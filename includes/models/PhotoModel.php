@@ -241,9 +241,10 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			$other_photos_exist = count($original_photo_order_array) > 1 ? true : false;
 			if (!$other_photos_exist) {
 				$user_update = [
-					'photo_order'       => ''
-					,'thumbnail_width'  => 0
-					,'thumbnail_height' => 0
+					'photo_order' => ''
+					,'primary_thumbnail_width'  => 0
+					,'primary_thumbnail_height' => 0
+					,'primary_thumbnail_rotate_angle' => null
 				];
 				$userModel->update($user_update);
 			}
@@ -260,6 +261,7 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 					$newFirstPhotoModel = new PhotoModel($new_first_photo_id);
 					$user_update['primary_thumbnail_width']  = $newFirstPhotoModel->getThumbnailWidth();
 					$user_update['primary_thumbnail_height'] = $newFirstPhotoModel->getThumbnailHeight();
+					$user_update['primary_thumbnail_rotate_angle'] = $newFirstPhotoModel->getRotateAngle();
 				}
 				$userModel->update($user_update);
 			}
