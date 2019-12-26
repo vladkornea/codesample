@@ -130,7 +130,7 @@ function printProfilePageInterface () {
 			$form.find('#contact-form-instructions').text("You can send a new message " +nextAllowedSendFormatted)
 		} else {
 			if (!userPreviouslyContacted) {
-				$form.find('#contact-form-instructions').text("You can only initiate contact once per day, so make your messages count.")
+				$form.find('#contact-form-instructions').text("You can only initiate first contact once per day, so make your messages count.")
 			} else {
 				$form.find('#contact-form-instructions').text("Conversation messages are listed latest-first.")
 			}
