@@ -1022,7 +1022,7 @@ EMAIL_TEXT;
 			if (!$keyword) {
 				continue;
 			}
-			$weight = $current_keyword_with_weight['weight'];
+			$weight = (int)$current_keyword_with_weight['weight'];
 			$this->saveKeyword($positive_or_negative, null, $keyword, $weight);
 			$saved_keywords[] = $keyword;
 		}
