@@ -36,6 +36,6 @@ $pageShell->addCssFile('/pages/help/help.css');
 
 <hr>
 
-<h4>How do I contact someone at TypeTango?</h4>
+<h4>How do I contact customer service at TypeTango?</h4>
 <p>Send an email to owner at <?=EMAIL_DOMAIN?></p>
 
