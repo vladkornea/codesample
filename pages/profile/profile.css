@@ -121,6 +121,8 @@ td.sender-username
 	{display:block;}
 #delete-photo-button
 	{margin-left:60px;}
+#rotate-photo-button
+	{margin-left:60px;}
 
 #selected-carousel-photo
 	{display:inline-block; vertical-align:middle;}

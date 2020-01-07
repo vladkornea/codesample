@@ -130,7 +130,7 @@ function printProfilePageInterface () {
 			$form.find('#contact-form-instructions').text("You can send a new message " +nextAllowedSendFormatted)
 		} else {
 			if (!userPreviouslyContacted) {
-				$form.find('#contact-form-instructions').text("You can only initiate first contact once per day, so make your messages count.")
+				$form.find('#contact-form-instructions').text("You can only initiate contact once per day, so make your messages count.")
 			} else {
 				$form.find('#contact-form-instructions').text("Conversation messages are listed latest-first.")
 			}
@@ -1230,7 +1230,8 @@ function printPhotoCarouselWidget (photoCarouselData) {
 					'<form id="edit-selected-photo-form" action="/pages/profile/ajax?action=edit_photo" method="post">'
 						+'<label id="selected-photo-caption-label"><textarea id="selected-photo-caption" name="caption" rows="5" cols="45" placeholder="Photo Caption (limit 65,000 characters)" maxlength="65000"></textarea></label>'
 						+'<input id="save-caption-button" type="submit" value="Save">'
-						+'<input id="delete-photo-button" type="button" value="Delete Photo">'
+						+'<input id="rotate-photo-button" type="button" value="Rotate">'
+						+'<input id="delete-photo-button" type="button" value="Delete">'
 						+'<input type="hidden" name="photo_id">'
 						+'<input type="hidden" name="rotate_angle">'
 					+'</form>'
@@ -1239,6 +1240,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 				$editSelectedPhotoForm.find('[name=rotate_angle]').data('original_rotate_angle', photoRotateAngle).val(photoRotateAngle)
 				$editSelectedPhotoForm.find('[name=caption]').data('original_caption', photoCaption).val(photoCaption)
 				$editSelectedPhotoForm.find('#delete-photo-button').on('click', handleDeletePhotoButtonClick)
+				$editSelectedPhotoForm.find('#rotate-photo-button').on('click', handleRotatePhotoButtonClick)
 				$editSelectedPhotoForm.on('submit', handleSelectedPhotoFormSubmit)
 				$editSelectedPhotoForm.appendTo($selectedPhotoOrbit)
 			} else {
@@ -1252,14 +1254,22 @@ function printPhotoCarouselWidget (photoCarouselData) {
 		})() // insertSelectedPhoto
 	} // updatePhotosWidget
 
+	function handleRotatePhotoButtonClick () {
+		rotateSelectedCarouselPhoto()
+	} // handleRotatePhotoButtonClick
+
 	function handleSelectedCarouselPhotoClick (event) {
-		var $selectedCarouselPhoto = $(event.currentTarget)
+		rotateSelectedCarouselPhoto()
+	} // handleSelectedCarouselPhotoClick
+
+	function rotateSelectedCarouselPhoto () {
+		var $selectedCarouselPhoto = $('#selected-carousel-photo')
 		var $selectedPhotoRotateAngleInput = $('#edit-selected-photo-form').find('input[name=rotate_angle]')
 		var selectedPhotoRotateAngle = parseInt( $selectedPhotoRotateAngleInput.val() || 0 )
 		selectedPhotoRotateAngle = ( selectedPhotoRotateAngle + 90 ) % 360
 		$selectedPhotoRotateAngleInput.val( selectedPhotoRotateAngle )
 		$selectedCarouselPhoto.css( 'transform', 'rotate(' + selectedPhotoRotateAngle + 'deg)' )
-	} // handleSelectedCarouselPhotoClick
+	} // rotateSelectedCarouselPhoto
 
 	function handleViewModeSelectedCarouselPhotoContainerClick (event) {
 		var $selectedPhotoContainer = $(event.currentTarget)
