@@ -919,6 +919,9 @@ function printPhotoCarouselWidget (photoCarouselData) {
 		if ( ! carouselPhotos ) {
 			return
 		}
+		if ( 1 === carouselPhotos.length && 'view' === carouselMode ) {
+			return
+		}
 		for ( var i = 0; i < carouselPhotos.length; i++ ) {
 			var photoData = carouselPhotos[i]
 			var photoId = parseInt( photoData['photo_id'] )
