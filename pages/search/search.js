@@ -120,7 +120,7 @@ function printSearchPageInterface () {
 					+'<br><label><input type="checkbox" name="must_like_my_gender" value="1"><span class="label">...who like my gender</span></label>'
 				+'</fieldset>'
 				+'<fieldset id="mbti_type-fieldset">'
-					+'<legend>Personality Types</legend>'
+					+'<legend>Personality Types <span id="toggle-type-checkboxes">Flip All</span></legend>'
 					+'<table id="personality-types-table" class="structural">'
 						+'<tr>'
 							+'<td><label><input type="checkbox" name="mbti_types[]" value="ISTJ"><span class="label">ISTJ</span></label></td>'
@@ -144,7 +144,6 @@ function printSearchPageInterface () {
 							+'<td><label><input type="checkbox" name="mbti_types[]" value="ENTJ"><span class="label">ENTJ</span></label></td>'
 						+'</tr>'
 					+'</table>'
-					+'<span id="toggle-type-checkboxes">Flip All</span>'
 				+'</fieldset>'
 				+'<fieldset id="age-fieldset">'
 					+'<legend>Age</legend>'
@@ -158,12 +157,12 @@ function printSearchPageInterface () {
 				+'<fieldset id="search-options-fieldset">'
 					+'<legend>Search Options</legend>'
 					+'<ul class="structural">'
-						+'<li><label><input type="checkbox" class="boolean" value="1" name="must_have_picture"><span class="label">Exclude users without pictures</span></label></li>'
-						+'<li><label><input type="checkbox" class="boolean" value="1" name="must_have_description"><span class="label">Exclude users without descriptions</span></label></li>'
-						+'<li><label><input type="checkbox" class="boolean" value="1" name="exclude_contacted"><span class="label">Exclude users previously dealt with</span></label></li>'
-						+'<li><label><input type="checkbox" class="boolean" value="1" name="has_time_limit"><span class="label">Only search users newer than <input name="newer_than_days" type="text" maxlength="3" size="3" autocomplete="off"> days</span></label></li>'
-						+'<li><label><input type="checkbox" class="boolean" value="1" name="has_login_time_limit"><span class="label">Only search users logged in within <input name="logged_in_within_days" type="text" maxlength="3" size="3" autocomplete="off"> days</span></label></li>'
-						+'<li><label><input type="checkbox" class="boolean" value="1" name="match_shared_negatives"><span class="label">Match shared negatives</span></label> <span id="match-shared-negatives-explanation" title="">What is this?</span></li>'
+						+'<li><label><input type="checkbox" class="boolean" value="1" name="must_have_picture"><span class="label">Has picture</span></label></li>'
+						+'<li><label><input type="checkbox" class="boolean" value="1" name="must_have_description"><span class="label">Has description</span></label></li>'
+						+'<li><label><input type="checkbox" class="boolean" value="1" name="has_login_time_limit"><span class="label">Visited within <input name="logged_in_within_days" type="text" maxlength="3" size="3" autocomplete="off"> days</span></label></li>'
+						+'<li><label><input type="checkbox" class="boolean" value="1" name="has_time_limit"><span class="label">Registered within <input name="newer_than_days" type="text" maxlength="3" size="3" autocomplete="off"> days</span></label></li>'
+						+'<li><label><input type="checkbox" class="boolean" value="1" name="exclude_contacted"><span class="label">Exclude contacts</span></label></li>'
+						+'<li><label><input type="checkbox" class="boolean" value="1" name="match_shared_negatives"><span class="label">Match shared negatives</span></label> <span id="match-shared-negatives-explanation" title="">(?)</span></li>'
 					+'</ul>'
 				+'</fieldset>'
 				+'<input id="search-form-submit-button" type="submit" value="Search">'
@@ -187,7 +186,7 @@ function printSearchPageInterface () {
 			}
 			$countrySelect.append( optionElements )
 			if ( 'US' === userCountryCode ) {
-				$( '<div><label><input class="boolean" name="has_distance_limit" value="1" type="checkbox"><span class="label">Must be within <input id="max_distance-input" name="max_distance" type="text" maxlength="3" size="3" autocomplete="off"> miles</span></label></div>' ).appendTo( '#distance-fieldset' )
+				$( '<div><label><input class="boolean" name="has_distance_limit" value="1" type="checkbox"><span class="label">Within <input id="max_distance-input" name="max_distance" type="text" maxlength="3" size="3" autocomplete="off"> miles</span></label></div>' ).appendTo( '#distance-fieldset' )
 			}
 		})() // addCountrySelectOptions
 

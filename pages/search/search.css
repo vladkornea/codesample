@@ -14,7 +14,7 @@ body.wait, body.wait a, body.wait input
 	{padding-right:5px;}
 
 #search-results-container
-	{text-align:center; position:relative; vertical-align:top; margin:0; padding:18px 0 0 10px; display:inline-block; min-width:514px;}
+	{text-align:center; position:relative; vertical-align:top; margin:0; padding:18px 0 0 11px; display:inline-block; min-width:514px;}
 #search-results-container h3
 	{font-size:21px; text-align:left; margin:10px 5px; line-height:30px; color:black;}
 #search-results-list
@@ -51,9 +51,9 @@ body.wait, body.wait a, body.wait input
 
 
 #match-shared-negatives-explanation, #toggle-type-checkboxes
-	{color:midnightblue; font-size:11px; margin-left:15px; user-select:none; -moz-user-select:none; -ms-user-select:none;}
+	{color:midnightblue; font-size:11px; user-select:none; -moz-user-select:none; -ms-user-select:none;}
 #toggle-type-checkboxes
-	{margin:0 0 0 2em; vertical-align:top;}
+	{margin-left:2.5em;}
 #match-shared-negatives-explanation:hover
 	{cursor:help;}
 #toggle-type-checkboxes:hover
