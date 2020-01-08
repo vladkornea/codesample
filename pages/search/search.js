@@ -153,7 +153,7 @@ function printSearchPageInterface () {
 				+'</fieldset>'
 				+'<fieldset id="distance-fieldset">'
 					+'<legend>Location</legend>'
-					+'<div><label>Country <select id="country-select" name="country"><option value="">Worldwide</option></select></label></div>'
+					+'<div><label>Country <select id="country-select" name="country"></select></label></div>'
 				+'</fieldset>'
 				+'<fieldset id="search-options-fieldset">'
 					+'<legend>Search Options</legend>'
@@ -170,19 +170,27 @@ function printSearchPageInterface () {
 			+'</form>'
 		).appendTo($searchFormContainer)
 
-		;(function printCountries(){
-			var $countrySelect = $('#country-select')
-			var countries = pageData['countriesWithUsers']
-			for (var i = 0; i < countries.length; i++) {
-				var country = countries[i]
-				var countryCode = country['code']
-				var countryName = country['name']
-				$('<option></option>').val(countryCode).text(countryName).appendTo($countrySelect)
+		;(function addCountrySelectOptions(){
+			var $countrySelect = $( '#country-select' )
+			$( '<option value="">All</option>' ).appendTo( $countrySelect )
+			var userCountryCode = pageData[ 'userCountryCode' ]
+			var countries = pageData[ 'countriesWithUsers' ]
+			var optionElements = []
+			var countriesLength = countries.length
+			for ( var i = 0; i < countriesLength; i++ ) {
+				var country = countries[ i ]
+				var countryCode = country[ 'code' ]
+				var countryName = country[ 'name' ]
+				optionElements.push( $( '<option></option>' ).val( countryCode ).text( countryName ) )
+				if ( countryCode === userCountryCode ) {
+					$( '<option></option>' ).val( countryCode ).text( countryName ).appendTo( $countrySelect )
+				}
 			}
-			if (pageData['userCountryCode'] == 'US') {
-				$('<div><label><input class="boolean" name="has_distance_limit" value="1" type="checkbox"><span class="label">Must be within <input id="max_distance-input" name="max_distance" type="text" maxlength="3" size="3" autocomplete="off"> miles</span></label></div>').appendTo('#distance-fieldset')
+			$countrySelect.append( optionElements )
+			if ( 'US' === userCountryCode ) {
+				$( '<div><label><input class="boolean" name="has_distance_limit" value="1" type="checkbox"><span class="label">Must be within <input id="max_distance-input" name="max_distance" type="text" maxlength="3" size="3" autocomplete="off"> miles</span></label></div>' ).appendTo( '#distance-fieldset' )
 			}
-		})() // printCountries
+		})() // addCountrySelectOptions
 
 		$('#match-shared-negatives-explanation').click(function(){
 			alert("If the \"Match shared negatives\" option is disabled, then the search will only match your positives with other users' positives, your positives with others' negatives, and your negatives with their positives, but it will not match your negatives with their negatives. The reasoning behind this is that shared dislikes aren't as important as shared likes. You will still see all shared negatives when viewing profiles.")
