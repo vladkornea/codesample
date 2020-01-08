@@ -203,15 +203,20 @@ function handle_edit_photo (): void {
 		$pageShell->error( "Missing photo_id" );
 	}
 	$photoModel = new PhotoModel( $photo_id );
-	$photo_belongs_to_this_user = $photoModel->getUserId() == Session::getUserModel()->getId();
-	if ( ! $photo_belongs_to_this_user ) {
-		$error_message = "Photo does not belong to this user.";
-		$pageShell->error( $error_message );
+	if ( ! $photoModel->getIsEditableBy( Session::getUserModel() ) ) {
+		$pageShell->error( "Cannot edit photo: Permission denied." );
 	}
-	$photo_data = [
-		'caption'      => $_POST['caption'],
-		'rotate_angle' => $_POST['rotate_angle'],
-	];
+	$photo_data = [];
+	$valid_fields = [ 'caption', 'rotate_angle', 'add_to_rotate_angle' ];
+	foreach ( $valid_fields as $loop_field_name ) {
+		if ( array_key_exists( $loop_field_name, $_POST ) ) {
+			if ( 'add_to_rotate_angle' === $loop_field_name ) {
+				$photo_data[ 'rotate_angle' ] = $photoModel->getRotateAngle() +  $_POST[ $loop_field_name ];
+				continue;
+			}
+			$photo_data[ $loop_field_name ] = $_POST[ $loop_field_name ];
+		}
+	}
 	$photoModel->update( $photo_data );
 	$output_data = [ 'photoCarouselData' => Session::getUserModel()->getPhotoCarouselData() ];
 	$pageShell->success( $output_data );

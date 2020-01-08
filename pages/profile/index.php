@@ -42,6 +42,9 @@ if (empty($_GET['username']) and empty($_GET['user_id'])) {
 	include_photo_carousel_widget_and_data($user_id);
 	include_view_mode_profile_data($user_id);
 	include_conversation_with_logged_in_user($user_id);
+	if ( Session::getUserModel()->getIsAdmin() ) {
+		$pageShell->addJsFile( '/pages/profile/admin.js' );
+	}
 }
 
 return; // functions below

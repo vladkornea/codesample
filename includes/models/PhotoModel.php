@@ -5,6 +5,7 @@ require_once 'LoggedModel.php';
 interface PhotoModelInterface extends LoggedModelInterface {
 	function setCaption (string $caption): void;
 	function getIsDeleted (): bool;
+	function getIsEditableBy ( UserModel $userModel = null ): bool;
 	function getRotateAngle (): ?int;
 	function getUserId (): int;
 	function getThumbnailWidth (): int;
@@ -208,6 +209,17 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 		}
 		return parent::update( $row_data, $event_synopsis );
 	} // update
+
+	public function getIsEditableBy ( UserModel $userModel = null ): bool {
+		if ( ! $userModel ) {
+			return false;
+		}
+		if ( $userModel->getIsAdmin() ) {
+			return true;
+		}
+		$photo_belongs_to_this_user = $userModel->getId() === $this->getUserId();
+		return $photo_belongs_to_this_user;
+	} // getIsEditableBy
 
 	public function getUserId (): int {
 		return (int)$this->commonGet('user_id');

@@ -15,6 +15,7 @@ interface UserModelInterface extends LoggedModelInterface {
 	function getEmail (): ?string;
 	function getEmailBouncing (): ?string;
 	function getGender (): string;
+	function getIsAdmin (): bool;
 	function getIsBlockedByUserId (int $user_id): bool;
 	function getIsBouncing (): bool;
 	function getIsDeactivated (): bool;
@@ -1311,5 +1312,15 @@ TypeTango Jungian Myers-Briggs/Keirsey dating site";
 	public function setPrimaryThumbnailRotateAngle ( int $rotate_angle ): void {
 		$this->update( ['primary_thumbnail_rotate_angle' => $rotate_angle] );
 	} // setPrimaryThumbnailRotateAngle
+
+	public function getIsAdmin (): bool {
+		/**
+		 * I am the only admin, and that might never change.
+		 * I'm choosing not to waste architecture on a speculative future.
+		 * If I eventually need to create a system of users assigned to groups which
+		 *   have permissions, the changes will be confined to this method.
+		 */
+		 return 1 === $this->getId();
+	} // getIsAdmin
 } // UserModel
 

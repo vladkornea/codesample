@@ -1203,6 +1203,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 			var $selectedPhotoOrbit     = $('#selected-photo-orbit')
 			var $selectedPhotoContainer = $('<span id="selected-photo-container"><img id="selected-carousel-photo" alt="Selected Photo"></span>')
 			var $selectedCarouselPhoto  = $selectedPhotoContainer.find('#selected-carousel-photo')
+			$selectedCarouselPhoto.data( 'photo_id', photoId )
 			$selectedPhotoOrbit.empty()
 			$selectedPhotoContainer.css({'min-width': photoCarouselData['max_standard_width']+'px', 'min-height': photoCarouselData['max_standard_height']+'px'})
 
@@ -1252,6 +1253,13 @@ function printPhotoCarouselWidget (photoCarouselData) {
 				$selectedPhotoContainer.on('click', handleViewModeSelectedCarouselPhotoContainerClick)
 			}
 		})() // insertSelectedPhoto
+
+		// Include admin actions.
+		setTimeout( function(){
+			if ( 'function' === typeof enableAdminPhotoRotate  ) {
+				enableAdminPhotoRotate()
+			}
+		}, 0 )
 	} // updatePhotosWidget
 
 	function handleRotatePhotoButtonClick () {
@@ -1272,6 +1280,9 @@ function printPhotoCarouselWidget (photoCarouselData) {
 	} // rotateSelectedCarouselPhoto
 
 	function handleViewModeSelectedCarouselPhotoContainerClick (event) {
+		if ( event.ctrlKey ) {
+			return
+		}
 		var $selectedPhotoContainer = $(event.currentTarget)
 		var containerLeftX = $selectedPhotoContainer.offset()['left']
 		var mouseX = event.pageX
