@@ -14,7 +14,7 @@ body.wait, body.wait a, body.wait input
 	{padding-right:5px;}
 
 #search-results-container
-	{text-align:center; position:relative; vertical-align:top; margin:0; padding:5px 14px; border:1px solid saddlebrown; background-color:papayawhip; display:inline-block; border-radius:14px; min-width:514px;}
+	{text-align:center; position:relative; vertical-align:top; margin:0; padding:18px 0 0 10px; display:inline-block; min-width:514px;}
 #search-results-container h3
 	{font-size:21px; text-align:left; margin:10px 5px; line-height:30px; color:black;}
 #search-results-list
@@ -41,7 +41,7 @@ body.wait, body.wait a, body.wait input
 #pagination-container > *
 	{margin:0 3px; padding:2px; display:inline-block; vertical-align:middle;}
 #pagination-container > #next-page-link
-	{font-size:20px;}
+	{font-size:22px;}
 
 #current-page-link
 	{color:chocolate;}

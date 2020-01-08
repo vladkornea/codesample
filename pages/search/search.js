@@ -33,7 +33,6 @@ function printSearchPageInterface () {
 		$('body').removeClass('wait')
 		$('#search-results-container').remove()
 		var $searchResultsContainer = $('<div id="search-results-container"></div>').appendTo($localContainer)
-		$searchResultsContainer.append('<h3>Search Results</h3>')
 		var foundUsers = searchResults['users']
 		if (!foundUsers.length) {
 			$('<p>None found.</p>').appendTo($searchResultsContainer)
