@@ -84,7 +84,7 @@ td.sender-username
 #photo-carousel-widget-container
 	{margin-bottom:15px;}
 #photo-carousel-widget
-	{display:inline-block; position:relative; max-width:1000px; padding:10px; border:1px solid chocolate; background-color:papayawhip;}
+	{display:inline-block; position:relative; max-width:1000px;}
 #photo-carousel-widget.dragging-happening * /* todo consider better ways */
 	{cursor:none !important;}
 
@@ -112,7 +112,7 @@ td.sender-username
 	box-shadow:0px 0px 22px 3px black;}
 
 #selected-photo-orbit
-	{display:inline-block; float:left; text-align:center; padding:6px 10px; margin:0px 10px 5px 0px; border:1px solid chocolate; border-radius:4px; background-color:blanchedalmond; user-select:none; -moz-user-select:none; -ms-user-select:none;}
+	{display:inline-block; float:left; text-align:center; padding:6px 10px; margin:0px 10px 5px 0px; border:1px solid chocolate; background-color:blanchedalmond; user-select:none; -moz-user-select:none; -ms-user-select:none;}
 #selected-photo-container
 	{display:block; text-align:center; padding:0; margin:6px; line-height:480px; position:relative;}
 #selected-photo-container       #selected-photo-controls-container
