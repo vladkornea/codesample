@@ -153,7 +153,7 @@ function printSearchPageInterface () {
 				+'</fieldset>'
 				+'<fieldset id="distance-fieldset">'
 					+'<legend>Location</legend>'
-					+'<div><label>Country <select id="country-select" name="country"></select></label></div>'
+					+'<div><label>Country <select id="country-select" name="country"><option value="">All</option></select></label></div>'
 				+'</fieldset>'
 				+'<fieldset id="search-options-fieldset">'
 					+'<legend>Search Options</legend>'
@@ -172,7 +172,6 @@ function printSearchPageInterface () {
 
 		;(function addCountrySelectOptions(){
 			var $countrySelect = $( '#country-select' )
-			$( '<option value="">All</option>' ).appendTo( $countrySelect )
 			var userCountryCode = pageData[ 'userCountryCode' ]
 			var countries = pageData[ 'countriesWithUsers' ]
 			var optionElements = []
