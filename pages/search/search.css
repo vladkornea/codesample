@@ -5,6 +5,8 @@ body.wait, body.wait a, body.wait input
 	{display:inline-block; vertical-align:top; margin:0 13px 27px 0;}
 #search-form
 	{display:inline-block; background-color:lemonchiffon; text-align:left;}
+#search-form input[type=text]
+	{height:18px; margin-top:1px; margin-bottom:1px; font-size:inherit;}
 #search-form-submit-button
 	{margin-top:10px;}
 
