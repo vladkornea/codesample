@@ -86,9 +86,9 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 		}
 
 		// Rotate image based on orientation in exif metadata.
-		$imagetype_constant = exif_imagetype( $temp_original_photo_path );
+		$imagetype_constant = @exif_imagetype( $temp_original_photo_path );
 		if ( false !== $imagetype_constant ) {
-			$exif_data = exif_read_data( $temp_original_photo_path );
+			$exif_data = @exif_read_data( $temp_original_photo_path );
 			$exif_orientation = $exif_data[ 'Orientation' ] ?? null;
 			if ( $exif_orientation ) {
 				switch ( $exif_orientation ) {
