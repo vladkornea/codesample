@@ -85,19 +85,23 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			return ['file' => "Error creating resource from file."];
 		}
 
-		$exif_data = exif_read_data( $temp_original_photo_path );
-		$orientation = $exif_data[ 'Orientation' ] ?? null;
-		if ( $orientation ) {
-			switch ( $orientation ) {
-				case 8:
-					$original_photo_resource = imagerotate( $original_photo_resource, 90, 0 );
-					break;
-				case 3:
-					$original_photo_resource = imagerotate( $original_photo_resource, 180, 0 );
-					break;
-				case 6:
-					$original_photo_resource = imagerotate( $original_photo_resource, 270, 0 );
-					break;
+		// Rotate image based on orientation in exif metadata.
+		$imagetype_constant = exif_imagetype( $temp_original_photo_path );
+		if ( false !== $imagetype_constant ) {
+			$exif_data = exif_read_data( $temp_original_photo_path );
+			$exif_orientation = $exif_data[ 'Orientation' ] ?? null;
+			if ( $exif_orientation ) {
+				switch ( $exif_orientation ) {
+					case 8:
+						$original_photo_resource = imagerotate( $original_photo_resource, 90, 0 );
+						break;
+					case 3:
+						$original_photo_resource = imagerotate( $original_photo_resource, 180, 0 );
+						break;
+					case 6:
+						$original_photo_resource = imagerotate( $original_photo_resource, 270, 0 );
+						break;
+				}
 			}
 		}
 
