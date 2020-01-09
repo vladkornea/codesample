@@ -2,7 +2,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 
-$pageShell = new AjaxPageShell;
+$pageShell = new AdminAjaxPageShell;
 
 $action = $_GET['action'] ?? null;
 switch ($action) {
