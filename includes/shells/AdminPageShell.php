@@ -29,7 +29,7 @@ class AdminPageShell extends HtmlPageShell implements AdminPageShellInterface {
 	<div id="header-placeholder"></div>
 	<div id="header-container">
 		<div id="header">
-		<div id="header-left"><a id="homepage-anchor" href="/"><img src="/images/logo150x79blue.jpg"></a></div>
+		<div id="header-left"><!-- <a id="homepage-anchor" href="/"><img src="/images/logo150x79blue.jpg"></a>--></div>
 			<h1 id="page-title"><?=htmlspecialchars($this->pageTitle)?></h1>
 			<div id="header-right"></div>
 		</div><!-- /#header -->
@@ -45,6 +45,9 @@ class AdminPageShell extends HtmlPageShell implements AdminPageShellInterface {
 		<li><a href="/admin/spammers">Spammers</a></li>
 		<li><a href="/admin/db-upgrades">DB Upgrades</a></li>
 		<li><a href="/admin/zip-code-coordinates">Zip Coordinates</a></li>
+		<li><a href="/admin/recreate-images">Recreate Images</a></li>
+		<li><a href="/admin/update-photo-dimensions">Update Photo Dimensions</a></li>
+		<li><a href="/admin/purge-deleted-photos">Purge Deleted Photos</a></li>
 		<li><a href="/admin/test">Test</a></li>
 		<li><a href="/admin/phpinfo">phpinfo</a></li>
 	</ul>
