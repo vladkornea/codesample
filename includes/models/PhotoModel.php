@@ -232,16 +232,9 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			return [ 'file' => "Error creating resource from file." ];
 		}
 
-		// Set original photo width and height.
-		$form_data[ 'original_width' ]  = imagesx( $uploaded_photo_resource );
-		$form_data[ 'original_height' ] = imagesy( $uploaded_photo_resource );
-
 		// Rotate image based on orientation in exif metadata.
-		$oriented_width  = $form_data[ 'original_width' ];
-		$oriented_height = $form_data[ 'original_height' ];
 		$original_exif_orientation = @exif_read_data( $temp_original_photo_path )[ 'Orientation' ] ?? null;
 		if ( $original_exif_orientation ) {
-			$rotate_angle = 0;
 			switch ( $original_exif_orientation ) {
 				case 8:
 					$rotate_angle = 90;
@@ -252,13 +245,16 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 				case 6:
 					$rotate_angle = 270;
 					break;
+				default:
+					$rotate_angle = 0;
+					break;
 			}
 			if ( $rotate_angle ) {
 				$uploaded_photo_resource = imagerotate( $uploaded_photo_resource, $rotate_angle, 0 );
-				$oriented_width  = imagesx( $uploaded_photo_resource );
-				$oriented_height = imagesy( $uploaded_photo_resource );
 			}
 		}
+		$oriented_width  = imagesx( $uploaded_photo_resource );
+		$oriented_height = imagesy( $uploaded_photo_resource );
 
 		// Standard photo.
 		$width_ratio = $oriented_width / static::STANDARD_MAX_WIDTH;

@@ -44,6 +44,7 @@ class DbUpgrades implements DbUpgradesInterface {
 //		'addRotateAngleColumnToPhotosTable',
 //		'addPrimaryThumbnailRotateAngleColumnToUsersTable',
 		'updatePrimaryThumbnailRotateAngleFromFirstPhotoRotateAngle',
+		'dropOriginalHeightAndWidthColumnsFromPhotosTable',
 	];
 
 	public static function isInstalled (): bool {
@@ -450,6 +451,11 @@ class DbUpgrades implements DbUpgradesInterface {
 			);
 		}
 	} // updatePrimaryThumbnailRotateAngleFromFirstPhotoRotateAngle
+
+	static function dropOriginalHeightAndWidthColumnsFromPhotosTable (): void {
+		DB::query('alter table photos drop column original_width');
+		DB::query('alter table photos drop column original_height');
+	} // dropOriginalHeightAndWidthColumnsFromPhotosTable
 
 } // DbUpgrades
 
