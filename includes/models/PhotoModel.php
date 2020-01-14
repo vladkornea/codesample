@@ -3,15 +3,30 @@
 require_once 'LoggedModel.php';
 
 interface PhotoModelInterface extends LoggedModelInterface {
-	function setCaption ( string $caption ): void;
+	function delete (): void;
 	function getIsDeleted (): bool;
 	function getIsEditableBy ( UserModel $userModel = null ): bool;
+	function getOriginalPhotoAbsolutePath () : string;
+	function getOriginalPhotoExifData ();
+	function getOriginalPhotoExifOrientation ();
+	function getOriginalPhotoExifOrientationDegrees () : int;
+	function getOriginalUrl () : string;
+	function getPhotoLocalDir () : string;
+	function getPhotoRemoteDir () : string;
 	function getRotateAngle (): ?int;
-	function getUserId (): int;
-	function getThumbnailWidth (): int;
+	function getStandardPhotoAbsolutePath () : string;
+	function getStandardUrl (): string;
 	function getThumbnailHeight (): int;
-	function delete (): void;
+	function getThumbnailPhotoAbsolutePath () : string;
+	function getThumbnailUrl () : string;
+	function getThumbnailWidth (): int;
+	function getUserId (): int;
+	function getUserModel (): UserModel;
+	function setCaption ( string $caption ): void;
+	function setRotateAngle ( int $rotate_angle ): void;
+	function update ( array $form_data, string $event_synopsis = "" );
 	static function getPhotoResource ( string $photo_path, string $original_filename, int $imagetype_constant = null );
+	static function create ( array $form_data, string $event_synopsis = '', bool $log_query = true );
 } // PhotoModelInterface
 
 class PhotoModel extends LoggedModel implements PhotoModelInterface {
@@ -21,13 +36,70 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	const THUMBNAIL_MAX_HEIGHT = 80;
 	const STANDARD_MAX_WIDTH  = 480;
 	const STANDARD_MAX_HEIGHT = 480;
-	const MAX_IMAGE_BYTES = 2000000;
+	const MAX_IMAGE_BYTES = 5000000;
 
 	const TYPE_JPEG = 'jpeg';
 	const TYPE_GIF  = 'gif';
 	const TYPE_PNG  = 'png';
 
-	protected $userModel = null;
+	const STANDARD_FILE  = 'standard.jpeg';
+	const THUMBNAIL_FILE = 'thumbnail.jpeg';
+	const ORIGINAL_FILE  = 'original.jpeg';
+
+	protected $userModel;
+	protected $originalPhotoExifData;
+
+	public function getPhotoRemoteDir () : string {
+		return PROFILE_PHOTOS_REMOTE_DIR . '/' . $this->getUserId() . '/' . $this->getId();
+	} // getPhotoRemoteDir
+	public function getOriginalUrl () : string {
+		return $this->getPhotoRemoteDir() . '/' . static::ORIGINAL_FILE;
+	} // getOriginalUrl
+	public function getStandardUrl (): string {
+		return $this->getPhotoRemoteDir() . '/' . static::STANDARD_FILE;
+	} // getStandardUrl
+	public function getThumbnailUrl () : string {
+		return $this->getPhotoRemoteDir() . '/' . static::THUMBNAIL_FILE;
+	} // getThumbnailUrl
+
+	public function getPhotoLocalDir () : string {
+		return PROFILE_PHOTOS_LOCAL_DIR . '/' . $this->getUserId() . '/' . $this->getId();
+	} // getPhotoLocalDir
+	public function getOriginalPhotoAbsolutePath () : string {
+		return $this->getPhotoLocalDir() . '/' . static::ORIGINAL_FILE;
+	} // getOriginalPhotoAbsolutePath
+	public function getStandardPhotoAbsolutePath () : string {
+		return $this->getPhotoLocalDir() . '/' . static::STANDARD_FILE;
+	} // getStandardPhotoAbsolutePath
+	public function getThumbnailPhotoAbsolutePath () : string {
+		return $this->getPhotoLocalDir() . '/' . static::THUMBNAIL_FILE;
+	} // getThumbnailPhotoAbsolutePath
+
+	public function getOriginalPhotoExifData () {
+		if ( ! $this->originalPhotoExifData ) {
+			$this->originalPhotoExifData = @exif_read_data(
+				$this->getOriginalPhotoAbsolutePath()
+			);
+		}
+		return $this->originalPhotoExifData;
+	} // getOriginalPhotoExifData
+
+	public function getOriginalPhotoExifOrientation () {
+		return $this->getOriginalPhotoExifData()[ 'Orientation' ] ?? null;
+	} // getOriginalPhotoExifOrientation
+
+	public function getOriginalPhotoExifOrientationDegrees () : int {
+		switch ( $this->getOriginalPhotoExifOrientation() ) {
+			case 8:
+				return 90;
+			case 3:
+				return 180;
+			case 6:
+				return 270;
+			default:
+				return 0;
+		}
+	} // getOriginalPhotoExifOrientationDegrees
 
 	/**
 	 * @param string $photo_path
@@ -52,7 +124,16 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 		return is_resource( $photo_resource ) ? $photo_resource : null;
 	} // getPhotoResourceFromImageType
 
-	static public function getPhotoResource ( string $photo_path, string $original_filename, int $exif_imagetype_constant = null ) {
+	/**
+	 * @param string $photo_path
+	 * @param string|null $original_filename
+	 * @param int|null $exif_imagetype_constant
+	 * @return resource|null
+	 */
+	static public function getPhotoResource ( string $photo_path, string $original_filename = null, int $exif_imagetype_constant = null ) {
+		if ( ! $exif_imagetype_constant ) {
+			$exif_imagetype_constant = @exif_imagetype( $photo_path );
+		}
 		$image_type_from_exif = null;
 		if ( $exif_imagetype_constant ) {
 			switch ( $exif_imagetype_constant ) {
@@ -174,11 +255,8 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			}
 			if ( $rotate_angle ) {
 				$uploaded_photo_resource = imagerotate( $uploaded_photo_resource, $rotate_angle, 0 );
-				$height_and_width_switched = abs( $rotate_angle ) % 180 !== 0;
-				if ( $height_and_width_switched ) {
-					$oriented_width  = $form_data[ 'original_height' ];
-					$oriented_height = $form_data[ 'original_width' ];
-				}
+				$oriented_width  = imagesx( $uploaded_photo_resource );
+				$oriented_height = imagesy( $uploaded_photo_resource );
 			}
 		}
 
@@ -238,12 +316,12 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 		$new_photo_dir = PROFILE_PHOTOS_LOCAL_DIR ."/$user_id/$photo_id";
 		mkdir( $new_photo_dir, 0774, true );
 
-		rename( $temp_original_photo_path, "$new_photo_dir/original.jpeg" );
-		chmod( "$new_photo_dir/original.jpeg", 0774 );
-		rename( $temp_standard_photo_path, "$new_photo_dir/standard.jpeg" );
-		chmod( "$new_photo_dir/standard.jpeg", 0774 );
-		rename( $temp_thumbnail_path, "$new_photo_dir/thumbnail.jpeg" );
-		chmod( "$new_photo_dir/thumbnail.jpeg", 0774 );
+		rename( $temp_original_photo_path, $new_photo_dir . '/' . static::ORIGINAL_FILE );
+		chmod( $new_photo_dir . '/' . static::ORIGINAL_FILE, 0774 );
+		rename( $temp_standard_photo_path, $new_photo_dir . '/' . static::STANDARD_FILE );
+		chmod( $new_photo_dir . '/' . static::STANDARD_FILE, 0774 );
+		rename( $temp_thumbnail_path, $new_photo_dir . '/' . static::THUMBNAIL_FILE );
+		chmod( $new_photo_dir . '/' . static::THUMBNAIL_FILE, 0774 );
 
 		// update `photo_order` in `users` table
 		$user_update = [];
@@ -269,7 +347,7 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	 * @return number|array affected rows or error message keyed by field name
 	 */
 	public function update ( array $form_data, string $event_synopsis = "" ) {
-		$editable_fields = [ 'caption', 'deleted', 'rotate_angle' ];
+		$editable_fields = [ 'caption', 'deleted', 'rotate_angle', 'thumbnail_height', 'thumbnail_width', 'standard_width', 'standard_height' ];
 		$row_data = [];
 		foreach ( $form_data as $field_name => $form_field_value ) {
 			$field_is_editable = in_array( $field_name, $editable_fields );
@@ -279,14 +357,7 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			}
 			switch ( $field_name ) {
 				case 'rotate_angle':
-					$rotate_angle = $form_field_value % 360;
-					$row_field_value = $rotate_angle;
-					$primary_photo_id = $this->getUserModel()->getPrimaryPhotoId();
-					if ( $this->getId() == $primary_photo_id ) {
-						if ( $this->getRotateAngle() != $rotate_angle ) {
-							$this->getUserModel()->setPrimaryThumbnailRotateAngle($rotate_angle);
-						}
-					}
+					$row_field_value = $form_field_value % 360;
 					break;
 				case 'caption':
 					$row_field_value = trim( $form_field_value );
@@ -300,7 +371,17 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			}
 			$row_data[ $field_name ] = $row_field_value;
 		}
-		return parent::update( $row_data, $event_synopsis );
+		$affected_rows = parent::update( $row_data, $event_synopsis );
+		$this_is_the_primary_photo = $this->getUserModel()->getPrimaryPhotoId() === $this->getId();
+		if ( $this_is_the_primary_photo ) {
+			$user_row = [
+				'primary_thumbnail_width'        => $row_data[ 'thumbnail_width' ]  ?? $this->getThumbnailWidth(),
+				'primary_thumbnail_height'       => $row_data[ 'thumbnail_height' ] ?? $this->getThumbnailHeight(),
+				'primary_thumbnail_rotate_angle' => $row_data[ 'rotate_angle' ]     ?? $this->getRotateAngle(),
+			];
+			$this->getUserModel()->update( $user_row );
+		}
+		return $affected_rows;
 	} // update
 
 	public function getIsEditableBy ( UserModel $userModel = null ): bool {
@@ -328,6 +409,16 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	public function setCaption ( string $caption ): void {
 		$this->update( [ 'caption' => $caption ] );
 	} // setCaption
+
+	public function setRotateAngle ( int $rotate_angle ): void {
+		$rotate_angle = $rotate_angle % 360;
+		$invalid_rotate_angle = $rotate_angle % 90;
+		if ( $invalid_rotate_angle ) {
+			trigger_error( "Invalid rotate angle: $rotate_angle", E_USER_WARNING );
+			$rotate_angle = 0;
+		}
+		$this->update( [ 'rotate_angle' => $rotate_angle ] );
+	} // setRotateAngle
 
 	public function delete (): void {
 		$this->update( [ 'deleted' => true ] );
@@ -371,6 +462,8 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 				$userModel->update( $user_update );
 			}
 		} // photo_order updated
+
+		$this->deleteFiles();
 	} // delete
 
 	public function getIsDeleted (): bool {
@@ -388,6 +481,19 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	public function getRotateAngle (): ?int {
 		return $this->commonGet( 'rotate_angle' );
 	} // getRotateAngle
+
+	public function deleteFiles () {
+		if ( ! $this->getIsDeleted() ) {
+			throw new Exception( "Error deleting files: photo is not marked as deleted in the DB" );
+		}
+		unlink( $this->getThumbnailPhotoAbsolutePath() );
+		unlink( $this->getStandardPhotoAbsolutePath() );
+		$original_photo_absolute_path = $this->getOriginalPhotoAbsolutePath();
+		if ( file_exists( $original_photo_absolute_path ) ) {
+			unlink( $original_photo_absolute_path );
+		}
+		rmdir( $this->getPhotoLocalDir() );
+	} // deleteFiles
 
 } // PhotoModel
 

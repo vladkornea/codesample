@@ -6,18 +6,24 @@ interface PhotoFinderInterface extends BaseFinderInterface {
 	static function getPhotoCarouselPhotosData ($user_id, $ordered_ids);
 	function setIdOrder ($ordered_ids);
 	function setUserId ($user_id);
+	function setIsDeleted (): void;
 } // PhotoFinderInterface
 
 class PhotoFinder extends BaseFinder implements PhotoFinderInterface {
 	use PhotoTraits;
 
 	protected $userId;
+	protected $isDeleted;
 	protected $idOrder;
 
 	/** @param number $user_id */
 	public function setUserId ($user_id) {
 		$this->userId = (int)$user_id;
 	} // setUserId
+
+	public function setIsDeleted (): void {
+		$this->isDeleted = true;
+	} // setIsDeleted
 
 	/**
 	 * @param string $ordered_ids like '123,31,23'
@@ -62,6 +68,9 @@ class PhotoFinder extends BaseFinder implements PhotoFinderInterface {
 		$where = ['deleted' => false];
 		if ($this->userId) {
 			$where['user_id'] = $this->userId;
+		}
+		if ( $this->isDeleted ) {
+			$where['deleted'] = $this->isDeleted;
 		}
 		$order_by_clause = '';
 		if ($this->idOrder) {
