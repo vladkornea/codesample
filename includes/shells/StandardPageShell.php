@@ -20,7 +20,7 @@ class StandardPageShell extends HtmlPageShell implements StandardPageShellInterf
 			static::requireBasicHttpAuth();
 		}
 		$this->includeJavascriptSessionVars();
-		$this->setKeywords('INTJ, ENTJ, INTP, ENTP, ISTJ, ESTJ, ISTP, ESTP, INFJ, ENFJ, INFP, ENFP, ISFJ, ESFJ, ISFP, ESFP, Myers-Briggs, MBTI, David Keirsey, Carl Jung, Personality Theory, Dating');
+		$this->setKeywords('INTJ, ENTJ, INTP, ENTP, ISTJ, ESTJ, ISTP, ESTP, INFJ, ENFJ, INFP, ENFP, ISFJ, ESFJ, ISFP, ESFP, Myers-Briggs, MBTI, David Keirsey, Carl Jung, Personality Theory, Dating, Temperament');
 	} // __construct
 
 
