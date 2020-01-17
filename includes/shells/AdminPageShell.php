@@ -29,7 +29,7 @@ class AdminPageShell extends HtmlPageShell implements AdminPageShellInterface {
 	<div id="header-placeholder"></div>
 	<div id="header-container">
 		<div id="header">
-		<div id="header-left"><!-- <a id="homepage-anchor" href="/"><img src="/images/logo150x79blue.jpg"></a>--></div>
+		<div id="header-left"></div>
 			<h1 id="page-title"><?=htmlspecialchars($this->pageTitle)?></h1>
 			<div id="header-right"></div>
 		</div><!-- /#header -->
