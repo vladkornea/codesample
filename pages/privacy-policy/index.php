@@ -5,7 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 $pageShell = new StandardPageShell("Privacy Policy");
 $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
 ?>
-<div style="width:6.5in; text-align:justify; line-height:1.6em;">
+<div id="privacy-policy-text">
 	<h3>Cookies</h3>
 
 	<p>TypeTango uses <a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank">HTTP cookies</a> to keep you logged in.</p>

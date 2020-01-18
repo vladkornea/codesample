@@ -2,7 +2,7 @@
 	{vertical-align:top;}
 
 #site-description
-	{text-align:left; font-size:20px; line-height:1.62; font-family:"Times New Roman",serif; margin:0 0 20px 0;}
+	{text-align:left; font-size:20px; line-height:1.62; font-family:"Times New Roman",serif; margin:0 0 20px 0; display:inline-block;}
 #site-description > p
 	{margin:0;}
 
@@ -50,4 +50,3 @@
 	{margin-left:10px;}
 #demographic-tabs #demographic-tab-content
 	{display:block; text-align:center; padding:20px 10px; border-radius:10px; background-color:lemonchiffon; box-shadow:0px 8px 22px -8px saddlebrown; border:1px solid saddlebrown;}
-

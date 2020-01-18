@@ -13,4 +13,4 @@ table.keywords-table > tbody > tr:nth-child(even)
 table.keywords-table > tbody > tr > td:first-child
 	{text-align:right;}
 table.keywords-table > tbody > tr > td:nth-child(2)
-	{font-family:"Comic Sans MS",sans-serif;}
+	{font-family:"Comic Sans MS",sans-serif; text-align:left;}

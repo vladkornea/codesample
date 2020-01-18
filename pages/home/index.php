@@ -18,3 +18,4 @@ $pageShell->addJsVar('countryStatistics', UserFinder::getCountryStatistics());
 	<p>TypeTango's keyword matching system lets you find people based on shared values and interests.</p>
 	<p>TypeTango is free to use. New contacts are limited to one per day.</p>
 </div>
+<br>
