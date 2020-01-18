@@ -1,0 +1,25 @@
+/* #login-widget */
+#login-widget
+	{text-align:left; color:black;}
+#login-links-container
+	{line-height:28px;}
+#login-widget-forms-container form
+	{padding:10px 20px 12px 20px; position:absolute; right:1em; z-index:100; box-shadow:-2px 2px 10px 0px #bbb;
+	font-size:11px; font-weight:normal; font-family:"Verdana","Open Sans",sans-serif; background-color:papayawhip; border:4px outset papayawhip; }
+#login-widget-forms-container form .form-label
+	{text-align:right; padding-right:3px;}
+#login-widget #forgot-password-link
+	{margin-left:25px; font-size:11px;}
+#login-widget input[type=button]
+	{font-size:11px; }
+#login-widget td
+	{position:relative; vertical-align:top;}
+#login-widget h3
+	{color:#555; font-size:18px; line-height:36px; text-align:center; margin:0 0 5px 0;}
+#login-widget #login-button-container
+	{text-align:right;}
+#login-widget #login-button
+	{min-width:84px;}
+#remember-me-checkbox-label
+	{white-space:pre;}
+

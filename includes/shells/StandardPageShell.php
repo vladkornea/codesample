@@ -1,11 +1,15 @@
 <?php
 
-require_once 'HtmlPageShell.php';
+require_once 'ModernPageShell.php';
+
+class StandardPageShell extends ModernPageShell {};
+
+return;
 
 interface StandardPageShellInterface extends HtmlPageShellInterface {
 } // StandardPageShellInterface
 
-class StandardPageShell extends HtmlPageShell implements StandardPageShellInterface {
+class OldStandardPageShell extends HtmlPageShell implements StandardPageShellInterface {
 	function __construct (string $page_title = "TypeTango") {
 		ob_start();
 		parent::__construct($page_title);
@@ -95,5 +99,5 @@ HEREDOC;
 			$userModel->setLastVisit();
 		}
 	} // __destruct
-} // StandardPageShell
+} // OldStandardPageShell
 
