@@ -89,3 +89,6 @@ table#page-structure
 #remember-me-checkbox-label
 	{white-space:pre;}
 
+#page-structure > *:not(tbody) a.current-page:not(#home-link)
+	{color:black; background-color: white;}
+

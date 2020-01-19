@@ -1,5 +1,11 @@
 $( installLoginWidget )
 
+$( hiliteCurrentLocation )
+
+function hiliteCurrentLocation () {
+	$( '#page-structure > *:not(tbody) a[href="' + location.pathname + location.search + '"]' ).addClass( 'current-page' )
+} // hiliteCurrentLocation
+
 function installLoginWidget () {
 	$( '#login-link' ).one( 'click', handleFirstLoginLinkClick )
 } // installLoginWidget
