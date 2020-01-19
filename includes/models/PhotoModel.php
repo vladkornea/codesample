@@ -353,10 +353,10 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			}
 			switch ( $field_name ) {
 				case 'rotate_angle':
-					$row_field_value = $form_field_value % 360;
+					$row_field_value = is_numeric( $form_field_value ) ? $form_field_value % 360 : $form_field_value;
 					break;
 				case 'caption':
-					$row_field_value = trim( $form_field_value );
+					$row_field_value = is_string( $form_field_value ) ? trim( $form_field_value ) : $form_field_value;
 					break;
 				case 'deleted':
 					$row_field_value = (bool) $form_field_value;
@@ -417,7 +417,15 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	} // setRotateAngle
 
 	public function delete (): void {
-		$this->update( [ 'deleted' => true ] );
+		$this->update( [
+			'deleted'          => true,
+			'caption'          => DB::verbatim('DEFAULT'),
+			'thumbnail_width'  => DB::verbatim('DEFAULT'),
+			'thumbnail_height' => DB::verbatim('DEFAULT'),
+			'standard_width'   => DB::verbatim('DEFAULT'),
+			'standard_height'  => DB::verbatim('DEFAULT'),
+			'rotate_angle'     => DB::verbatim('DEFAULT'),
+		] );
 
 		{ // update photo_order
 			$photo_id = $this->getId();
