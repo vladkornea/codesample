@@ -48,7 +48,6 @@ function runLoginWidget () {
 	$loginForm.on('submit', handleLoginFormSubmit)
 	$(document).click(handleDocumentClick)
 	$loginWidget.click(handleWidgetClick)
-	$loginLink.click(handleWidgetClick)
 	$loginLink.click(handleLoginLinkClick)
 	$loginWidget.find('#logout-link').click(handleLogoutLinkClick)
 	$loginWidget.find('#forgot-password-button').click(handleForgotPasswordClick)
@@ -76,6 +75,7 @@ function runLoginWidget () {
 	} // handleWidgetClick
 
 	function handleLoginLinkClick (event) {
+		event.stopPropagation() // Don't let document.click trigger, handleDocumentClick() collapses menus.
 		event.preventDefault()
 		openLoginForm()
 	} // handleLoginLinkClick
