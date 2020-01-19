@@ -21,8 +21,9 @@ function recreate_datafile_from_database () {
 	$countries_json = json_encode($countries_data);
 	$countries_js_code = "window.countries = $countries_json";
 	file_put_contents(DATA_FILE, $countries_js_code);
-	Email::sendEmailToDeveloperViaSendmail(['subject' => "Recreated " .DATA_FILE,
-		'attachments' => [ ['file_location' => DATA_FILE, 'file_name' => basename(DATA_FILE).'.txt'] ]
-	]);
+//	Email::sendEmailToDeveloperViaSendmail(['subject' => "Recreated " .DATA_FILE,
+//		'attachments' => [ ['file_location' => DATA_FILE, 'file_name' => basename(DATA_FILE).'.txt'] ]
+//	]);
+	error_log( "Recreated " . DATA_FILE );
 } // recreate_datafile_from_database
 
