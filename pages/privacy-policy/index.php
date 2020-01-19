@@ -8,9 +8,15 @@ $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
 <div id="privacy-policy-text">
 	<h3>Cookies</h3>
 
-	<p>TypeTango uses <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie" target="_blank">secure HTTP cookies</a> to keep you logged in.</p>
+	<ul>
 
-	<p>TypeTango also uses <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google Analytics</a> to track website traffic. <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google Analytics</a> uses <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Privacy_and_third-party_cookies" target="_blank">third-party cookies</a> as explained in <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google's privacy policy</a>.</p>
+		<li>TypeTango sets a <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie" target="_blank">secure HttpOnly session cookie</a> to store across subsequent anonymous requests temporary data such as notifications.</li>
+
+		<li>TypeTango sets a <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie" target="_blank">secure HttpOnly session cookie</a> to keep you logged in until your browser closes. This cookie is made <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Persistent_cookie" target="_blank">persistent</a> if "Remember me" is checked at login. Clicking "Log Out" removes this cookie.</li>
+
+		<li>TypeTango uses <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google Analytics</a> to track website traffic, which uses third-party cookies as per <a href="https://policies.google.com/technologies/cookies" target="_blank">Google's cookie policy</a>.</li>
+
+	</ul>
 
 	<h3>"Do Not Track" header</h3>
 
