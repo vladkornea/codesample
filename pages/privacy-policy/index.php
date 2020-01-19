@@ -7,20 +7,19 @@ $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
 ?>
 <div id="privacy-policy-text">
 	<h3>Cookies</h3>
-
 	<ul>
-
 		<li>TypeTango sets a <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie" target="_blank">secure HttpOnly session cookie</a> to store across subsequent anonymous requests temporary data such as notifications.</li>
-
 		<li>TypeTango sets a <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie" target="_blank">secure HttpOnly session cookie</a> to keep you logged in until your browser closes. This cookie is made <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Persistent_cookie" target="_blank">persistent</a> if "Remember me" is checked at login. Clicking "Log Out" removes this cookie.</li>
-
 		<li>TypeTango uses <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google Analytics</a> to track website traffic, which uses third-party cookies as per <a href="https://policies.google.com/technologies/cookies" target="_blank">Google's cookie policy</a>.</li>
-
 	</ul>
 
 	<h3>"Do Not Track" header</h3>
 
-	<p>If your browser includes a "<a href="https://en.wikipedia.org/wiki/Do_Not_Track" target="_blank">Do Not Track</a>" HTTP header (like during <a href="https://en.wikipedia.org/wiki/Private_browsing" target="_blank">private browsing</a>), TypeTango will not include <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google Analytics</a>.</p>
+	<p>If your browser requests "<a href="https://en.wikipedia.org/wiki/Do_Not_Track" target="_blank">Do Not Track</a>" such as during <a href="https://en.wikipedia.org/wiki/Private_browsing" target="_blank">private browsing</a>:</p>
+	<ul>
+		<li><a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google Analytics</a> is not included.</li>
+		<li>The "Remember me" checkbox in the login form defaults to unchecked.</li>
+	</ul>
 
 	<h3>Registration</h3>
 
