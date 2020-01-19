@@ -12,6 +12,7 @@ interface SessionInterface {
 	static function getUserId (): ?int;
 	static function getUserModel (): ?UserModel;
 	static function getEmail (): string;
+	static function start (): bool;
 } // SessionInterface
 
 class Session implements SessionInterface {
@@ -87,6 +88,12 @@ class Session implements SessionInterface {
 	} // getLoginMethod
 
 
+	static function start () : bool {
+		session_set_cookie_params( 0, '/', $_SERVER[ 'HTTP_HOST' ], true, true ); // TODO: SameSite=Strict needs PHP 7.3+
+		return session_start();
+	} // start
+
+
 	/**
 	 * @param string $cookie_name
 	 * @param string $cookie_value
@@ -96,7 +103,7 @@ class Session implements SessionInterface {
 		if ( ! is_numeric( $when_expires ) ) {
 			$when_expires = strtotime( $when_expires );
 		}
-		setcookie( $cookie_name, $cookie_value, $when_expires, '/', $_SERVER[ 'HTTP_HOST' ], true, true );
+		setcookie( $cookie_name, $cookie_value, $when_expires, '/', $_SERVER[ 'HTTP_HOST' ], true, true ); // TODO: SameSite=Strict needs PHP 7.3+
 	} // setCookie
 
 

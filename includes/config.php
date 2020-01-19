@@ -4,8 +4,6 @@ ini_set('display_errors', false);
 
 require 'constants.php';
 
-session_start();
-
 { // error handlers
 	require 'debug/ShutdownErrorHandler.php';
 	ShutdownErrorHandler::register();
@@ -47,3 +45,4 @@ spl_autoload_register(function ($classname) { // PHP asks this function to defin
 	}
 }); // spl_autoload_register
 
+Session::start();
