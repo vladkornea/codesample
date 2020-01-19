@@ -48,7 +48,7 @@ table#page-structure
 #page-structure > thead > tr a:hover:not(#home-link)
 	{background-color:#CE2045;}
 #page-structure > thead > tr:last-child a
-	{padding:0 1.5em; line-height:50px;}
+	{padding:0 2em; line-height:50px;}
 
 /* footer links */
 #page-structure > tfoot a
