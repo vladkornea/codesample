@@ -42,7 +42,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 	} // __construct
 
 	public function includeMomentJsLib () : void {
-		$lib_dir = '/js/lib/moment/2.19.2';
+		$lib_dir = '/js/lib/moment/2.24.0';
 		$this->addJsFiles( [ "$lib_dir/moment-with-locales.js", "$lib_dir/moment-timezone-with-data.js" ] );
 	} // includeMomentJsLib
 
