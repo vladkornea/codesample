@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 
 $pageShell = new AdminPageShell("Test");
 $pageShell->addJsFile('/pages/admin/test/test.js');
-$pageShell->addJsFiles(['/js/lib/moment/2.19.2/moment-with-locales.js', '/js/lib/moment/2.19.2/moment-timezone-with-data.js']);
+$pageShell->includeMomentJsLib();
 
 $db_connection_ok = is_array(DB::getRow('show tables')) ? true : false;
 if (!$db_connection_ok) {

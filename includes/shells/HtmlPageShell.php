@@ -10,6 +10,7 @@ interface HtmlPageShellInterface extends HttpPageShellInterface {
 	function addJsFiles (array $js_files): void;
 	function addJsVar (string $var_name, $var_value): void;
 	function appendToHead (string $meta_tag): void;
+	function includeMomentJsLib () : void;
 	function setDescription (string $meta_description): void;
 	function setDiscourageIndexing (): void;
 	function setKeywords (string $keywords): void;
@@ -39,6 +40,11 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 			throw new RuntimeException("Headers already sent.");
 		}
 	} // __construct
+
+	public function includeMomentJsLib () : void {
+		$lib_dir = '/js/lib/moment/2.19.2';
+		$this->addJsFiles( [ "$lib_dir/moment-with-locales.js", "$lib_dir/moment-timezone-with-data.js" ] );
+	} // includeMomentJsLib
 
 	public function addCssCode (string $css_code): void {
 		$this->appendToHead('<style type="text/css">' ."\n$css_code\n" .'</style>');

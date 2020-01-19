@@ -73,7 +73,7 @@ function include_edit_mode_profile_data (int $user_id): void {
 
 function include_view_mode_profile_data (int $user_id): void {
 	global $pageShell;
-	$pageShell->addJsFiles(['/js/lib/moment/2.19.2/moment-with-locales.js', '/js/lib/moment/2.19.2/moment-timezone-with-data.js']);
+	$pageShell->includeMomentJsLib();
 	$userModel = new UserModel($user_id);
 	$next_send_allowed_at = $userModel->getWhenNextSendAllowed();
 	$pageShell->addJsVar('nextSendAllowedAt', $next_send_allowed_at);

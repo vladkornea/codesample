@@ -11,7 +11,7 @@ $pageShell->addJsFiles(['/js/countries.js', '/js/usa-states.js', '/pages/create-
 
 $next_allowed_account_creation_time_of_ip_address = LoginFinder::getNextAllowedAccountCreationTimeOfIpAddress($_SERVER['REMOTE_ADDR']);
 if ($next_allowed_account_creation_time_of_ip_address) {
-	$pageShell->addJsFiles(['/js/lib/moment/2.19.2/moment-with-locales.js', '/js/lib/moment/2.19.2/moment-timezone-with-data.js']);
+	$pageShell->includeMomentJsLib();
 	$pageShell->addJsVar('nextAllowedAccountCreationTime', $next_allowed_account_creation_time_of_ip_address);
 }
 
