@@ -34,7 +34,7 @@ function runLoginWidget () {
 							+'<td id="login-button-container"><input type="submit" id="login-button" value="Log in"></td>'
 							+'<td class="form-field">'
 								+'<label id="remember-me-checkbox-label" for="remember-me-checkbox">'
-									+'<input type="checkbox" id="remember-me-checkbox" name="remember_me" checked>'
+									+'<input type="checkbox" id="remember-me-checkbox" name="remember_me" ' + ( 1 == navigator.doNotTrack ? '' : 'checked' ) + '>'
 									+'<span class="label">Remember me</span>'
 								+'</label>'
 							+'</td>'
