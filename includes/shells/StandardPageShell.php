@@ -1,15 +1,11 @@
 <?php
 
-require_once 'ModernPageShell.php';
-
-class StandardPageShell extends ModernPageShell {};
-
-return;
+require_once 'HtmlPageShell.php';
 
 interface StandardPageShellInterface extends HtmlPageShellInterface {
 } // StandardPageShellInterface
 
-class OldStandardPageShell extends HtmlPageShell implements StandardPageShellInterface {
+class StandardPageShell extends HtmlPageShell implements StandardPageShellInterface {
 	function __construct (string $page_title = "TypeTango") {
 		ob_start();
 		parent::__construct($page_title);
@@ -24,7 +20,7 @@ class OldStandardPageShell extends HtmlPageShell implements StandardPageShellInt
 			static::requireBasicHttpAuth();
 		}
 		$this->includeJavascriptSessionVars();
-		$this->setKeywords('INTJ, ENTJ, INTP, ENTP, ISTJ, ESTJ, ISTP, ESTP, INFJ, ENFJ, INFP, ENFP, ISFJ, ESFJ, ISFP, ESFP, Myers-Briggs, MBTI, David Keirsey, Carl Jung, Personality Theory, Dating, Temperament');
+		$this->setKeywords('INTJ, ENTJ, INTP, ENTP, ISTJ, ESTJ, ISTP, ESTP, INFJ, ENFJ, INFP, ENFP, ISFJ, ESFJ, ISFP, ESFP, Myers-Briggs, MBTI, David Keirsey, Carl Jung, Personality Theory, Temperament, Dating');
 	} // __construct
 
 
@@ -73,18 +69,29 @@ HEREDOC;
 
 	protected function printStandardPageMarkup () {
 		$ob_content = ob_get_clean(); ?>
-<table id="page-structure"><tbody>
+<table id="page-structure" class="structural"><thead>
 	<tr>
-		<td id="left-panel"><div id="navbar"></div></td>
-		<td id="main">
-<?=$this->getAccountIsDeactivatedMessageMarkup()?>
-<?=$this->getConfirmationMessageMarkupOnce()?>
-<h1 id="page-title"><?=$this->pageTitle?></h1>
-<?=$ob_content?>
+		<td><a id="home-link" href="/"><img src="/images/typetango-logo.gif" alt="TypeTango" width="150" height="80"></a><a id="keyword-suggestions-link" href="/keyword-suggestions">💡 Keyword Suggestions</a><!-- <a id="type-distribution-link" href="/">📊 Type Distribution</a>--></td>
+		<td><a href="/help">❓ Help</a> <?php
+			if ( Session::getUserId() ) {
+				?><a id="account-link" href="/account">🔑 My Account</a> <a id="logout-link" href="/logout">🚪 Log Out</a></td><?php
+			} else {
+				?><a id="account-link" href="/create-account"><!--📋-->📝 Create Account</a> <a id="login-link" href="/login">🚪 Log In</a></td><?php
+			} ?>
+	</tr><tr>
+		<td colspan="2"><?php
+		if ( Session::getUserId() ) {
+			?><a id="edit-profile-link" href="/profile">✎ Edit Profile</a> <a id="view-profile-link" href="/profile?user_id=<?=Session::getUserId()?>">👀 View Profile</a> <a id="search-link" href="/search">🔍 Search</a> <a id="contacts-link" href="/contacts">✉ Contacts</a><?php
+		} ?>
 		</td>
 	</tr>
+</thead><tbody>
+	<tr>
+		<td id="main" colspan="2"><?=$this->getAccountIsDeactivatedMessageMarkup()?><?=$this->getConfirmationMessageMarkupOnce()?><?=$ob_content?></td>
+	</tr>
 </tbody><tfoot>
-	<tr><td colspan="2" id="footer">Myers-Briggs®, MBTI®, and Myers-Briggs Type Indicator® are trademarks of CPP, Inc. TypeTango is not affiliated with CPP, Inc. © <a href="https://www.kornea.com/resume" target="_blank">Vladimir Kornea</a><a id="privacy-policy-page-footer-link" href="/privacy-policy">Privacy Policy</a></td></tr>
+	<tr><td colspan="2" id="footer"><div id="footer-copyright-notice">Myers-Briggs®, MBTI®, and Myers-Briggs Type Indicator® are trademarks of <a href="https://www.myersbriggs.org" target="_blank">the Myers &amp; Briggs Foundation</a>.<br>Keirsey Temperament Sorter®, Guardian®, Artisan®, and Rational® are trademarks of Prometheus Nemesis Book Company.<br>TypeTango is not affiliated with either organization. © <?=date('Y')?> <a href="https://www.kornea.com/resume" target="_blank">Vladimir Kornea</a>. All rights reserved. Logo by <a href="https://www.easchweitzer.com/" target="_blank">Elise Schweitzer</a>.</div><a id="privacy-policy-page-footer-link" href="/privacy-policy">🔒 Cookies and Privacy Policy</a>
+</td></tr>
 </tfoot></table>
 <?php
 	} // printStandardPageMarkup
@@ -99,5 +106,5 @@ HEREDOC;
 			$userModel->setLastVisit();
 		}
 	} // __destruct
-} // OldStandardPageShell
+} // StandardPageShell
 

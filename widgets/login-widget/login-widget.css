@@ -1,10 +1,10 @@
 /* #login-widget */
 #login-widget
-	{text-align:left; }
+	{text-align:left; color:black;}
 #login-links-container
 	{line-height:28px;}
 #login-widget-forms-container form
-	{padding:10px 20px 12px 20px; position:absolute; top:120px; left:0; z-index:100; box-shadow:-2px 2px 10px 0px #bbb;
+	{padding:10px 20px 12px 20px; position:absolute; right:1em; z-index:100; box-shadow:-2px 2px 10px 0px #bbb;
 	font-size:11px; font-weight:normal; font-family:"Verdana","Open Sans",sans-serif; background-color:papayawhip; border:4px outset papayawhip; }
 #login-widget-forms-container form .form-label
 	{text-align:right; padding-right:3px;}

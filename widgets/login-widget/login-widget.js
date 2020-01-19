@@ -1,32 +1,20 @@
-$(loadLoginWidget)
-function loadLoginWidget () {
-	var pageData = window['pageData']
-	var sessionData = pageData ? pageData['sessionData'] : null
-	var userId = sessionData ? sessionData['user_id'] : null
-	var $localContainer = $('#navbar')
+$( installLoginWidget )
+
+function installLoginWidget () {
+	$( '#login-link' ).one( 'click', handleFirstLoginLinkClick )
+} // installLoginWidget
+
+function handleFirstLoginLinkClick ( clickEvent ) {
+	clickEvent.preventDefault()
+	clickEvent.stopPropagation()
+	runLoginWidget()
+} // handleFirstLoginLinkClick
+
+function runLoginWidget () {
+	var $loginLink = $( '#login-link' )
+	var $localContainer = $loginLink.parent()
 	var $loginWidget = $(
 		'<div id="login-widget">'
-			+'<div id="login-links-container">'
-				+(userId ? '' : // not logged  in
-					'<a id="home-link" href="/">TypeTango</a>'
-					+'<a id="create-account-link" href="/create-account">Create Account</a>'
-					+'<a id="keyword-suggestions-link" href="/keyword-suggestions">Keyword Suggestions</a>'
-					+'<a id="create-account-link" href="/help">Help</a>'
-					+'<a id="privacy-policy-link" href="/privacy-policy">Privacy</a>'
-					+'<a id="login-link" href="/login">Log In</a>'
-				)
-				+(!userId ? '' : // logged in
-					'<a id="home-link" href="/">TypeTango</a>'
-					+'<a id="edit-profile-link" href="/profile">Edit Profile</a>'
-					+'<a id="view-profile-link" href="/profile?user_id=' +userId +'">View Profile</a>'
-					+'<a id="search-link" href="/search">Search</a>'
-					+'<a id="contacts-link" href="/contacts">Contacts</a>'
-					+'<a id="account-link" href="/account">My Account</a>'
-					+'<a id="keyword-suggestions-link" href="/keyword-suggestions">Keyword Suggestions</a>'
-					+'<a id="create-account-link" href="/help">Help</a>'
-					+'<a id="logout-link" href="/logout">Log Out</a>'
-				)
-			+'</div>'
 			+'<div id="login-widget-forms-container">'
 				+'<div id="login-form-container">'
 					+'<form id="login-form" action="/ajax/account?action=log_in" method="post">'
@@ -60,15 +48,12 @@ function loadLoginWidget () {
 	$loginForm.on('submit', handleLoginFormSubmit)
 	$(document).click(handleDocumentClick)
 	$loginWidget.click(handleWidgetClick)
-	$loginWidget.find('#login-link').click(handleLoginLinkClick)
+	$loginLink.click(handleLoginLinkClick)
 	$loginWidget.find('#logout-link').click(handleLogoutLinkClick)
-	$loginWidget.find('#login-form-container').hide()
 	$loginWidget.find('#forgot-password-button').click(handleForgotPasswordClick)
 	$loginWidget.appendTo($localContainer)
 
-	if (window.location.pathname === '/login') { // this is the login page
-		openLoginForm()
-	}
+	openLoginForm()
 	return // functions below
 	function openLoginForm () {
 		$('#login-form-container').show().find('input').first().focus()
@@ -90,6 +75,7 @@ function loadLoginWidget () {
 	} // handleWidgetClick
 
 	function handleLoginLinkClick (event) {
+		event.stopPropagation() // Don't let document.click trigger, handleDocumentClick() collapses menus.
 		event.preventDefault()
 		openLoginForm()
 	} // handleLoginLinkClick
@@ -175,5 +161,5 @@ function loadLoginWidget () {
 			}
 		} // handleLoginResponse
 	} // handleLoginFormSubmit
-} // loadLoginWidget
+} // runLoginWidget
 
