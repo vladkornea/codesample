@@ -10,7 +10,7 @@ table#page-structure
 #page-structure > thead
 	{white-space:nowrap; font-size:16px; color:white;}
 #page-structure > tbody
-	{background-color:linen;}
+	{background-color:white;}
 #page-structure > tfoot
 	{font-size:11px; line-height:13px; color:white; background-color:#2a333b;}
 
@@ -29,6 +29,8 @@ table#page-structure
 	{vertical-align:inherit;}
 #page-structure > thead > tr:first-child > td:last-child
 	{text-align:right;}
+#page-structure > thead > tr:last-child > td
+	{text-align:center;}
 #page-structure > tbody > tr > td
 	{text-align:center; padding:1em;}
 #page-structure > tfoot > tr > td
@@ -38,10 +40,10 @@ table#page-structure
 #page-structure > thead a
 	{display:inline-block; margin:0; color:inherit;}
 #page-structure > thead a:hover
-	{text-decoration:none; color:white;}
+	{text-decoration:none;}
 #page-structure > thead > tr:first-child a
 	{padding:0 2em; line-height:80px;}
-#page-structure > thead > tr a:hover
+#page-structure > thead > tr a:hover:not(#home-link)
 	{background-color:#CE2045;}
 #page-structure > thead > tr:last-child a
 	{padding:0 1.5em; line-height:50px;}
