@@ -96,7 +96,7 @@ class Session implements SessionInterface {
 		if (!is_numeric($when_expires)) {
 			$when_expires = strtotime($when_expires);
 		}
-		setcookie($cookie_name, $cookie_value, $when_expires, '/', $_SERVER['HTTP_HOST']);
+		setcookie( $cookie_name, $cookie_value, $when_expires, '/', $_SERVER['HTTP_HOST'], true );
 	} // setCookie
 
 
