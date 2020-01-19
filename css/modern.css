@@ -2,6 +2,8 @@ body
 	{font-family:Verdana,sans-serif;}
 .wait, .wait *
 	{cursor:progress !important;}
+.error
+	{color:#CE2045;}
 
 table#page-structure
 	{width:100%; height:100%;}
