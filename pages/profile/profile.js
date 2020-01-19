@@ -152,7 +152,6 @@ function printProfilePageInterface () {
 				var senderUserId = messageData['from_user_id']
 				var senderUsername = senderUserId == ourUserId ? ourUsername : theirUsername
 				var messageText = messageData['message_text']
-				var sentTime = messageData['inserted']
 				var $userMessage = $('<tr class="user-message"><td class="sender-username"></td><td class="message-text"></td></tr>')
 				$userMessage.find('.sender-username').text(senderUsername)
 				$userMessage.find('.message-text').text(messageText)
@@ -812,8 +811,20 @@ function printProfilePageInterface () {
 		var countryCode = $countrySelect.val()
 		var isAmerican = countryCode == 'US' ? true : false
 		$locationRow.empty()
+		var $locationRowCells
+		if (!isAmerican) {
+			$locationRowCells = $(
+				'<th><label for="city">City</label>, <label for="state">Province</label> <label for="zip_code">Postal Code</label></th>'
+				+'<td>'
+					+'<input id="city" type="text" name="city" aria-required="true" required="" placeholder="City" size="16">, '
+					+'<input id="province" type="text" name="state" placeholder="Province" size="14"> '
+					+'<input id="postal-code" type="text" name="zip_code" placeholder="Postal Code" autocomplete="postal-code" size="9">'
+				+'</td>'
+			)
+			$locationRowCells.appendTo($locationRow)
+		}
 		if (isAmerican) {
-			var $locationRowCells = $(
+			$locationRowCells = $(
 				'<th><label for="city">City</label>, <label for="state">State</label> <label for="zip-code">Zip</label></th>'
 				+'<td>'
 					+'<input id="city" type="text" name="city" aria-required="true" required="" placeholder="City" size="16">, '
@@ -833,17 +844,6 @@ function printProfilePageInterface () {
 			})() // addStates
 			var $zipCode = $locationRowCells.find('#zip-code')
 			$zipCode.on({'input': handleZipCodeInput})
-			$locationRowCells.appendTo($locationRow)
-		}
-		if (!isAmerican) {
-			var $locationRowCells = $(
-				'<th><label for="city">City</label>, <label for="state">Province</label> <label for="zip_code">Postal Code</label></th>'
-				+'<td>'
-					+'<input id="city" type="text" name="city" aria-required="true" required="" placeholder="City" size="16">, '
-					+'<input id="province" type="text" name="state" placeholder="Province" size="14"> '
-					+'<input id="postal-code" type="text" name="zip_code" placeholder="Postal Code" autocomplete="postal-code" size="9">'
-				+'</td>'
-			)
 			$locationRowCells.appendTo($locationRow)
 		}
 		var userSelectedOriginalCountryAgain = profileData['country'] == countryCode
@@ -1057,8 +1057,8 @@ function printPhotoCarouselWidget (photoCarouselData) {
 		var originalElementOffset = $elementBeingMoved.offset()
 		var elementWidth = $elementBeingMoved.width()
 		var elementHeight = $elementBeingMoved.height()
-		var tileCenterX = parseInt(originalElementOffset.left + (elementWidth / 2))
-		var tileCenterY = parseInt(originalElementOffset.top + (elementHeight / 2))
+		var tileCenterX = Math.round( originalElementOffset.left + (elementWidth / 2) )
+		var tileCenterY = Math.round( originalElementOffset.top + (elementHeight / 2) )
 		var pointerDistanceToTileCenterX = tileCenterX - mouseDownPageX
 		var pointerDistanceToTileCenterY = tileCenterY - mouseDownPageY
 		$document.data( 'oldPhotoOrder', getPhotoOrder() )
@@ -1269,7 +1269,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 		rotateSelectedCarouselPhoto()
 	} // handleRotatePhotoButtonClick
 
-	function handleSelectedCarouselPhotoClick (event) {
+	function handleSelectedCarouselPhotoClick () {
 		rotateSelectedCarouselPhoto()
 	} // handleSelectedCarouselPhotoClick
 

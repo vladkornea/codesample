@@ -11,9 +11,6 @@ function handleFirstLoginLinkClick ( clickEvent ) {
 } // handleFirstLoginLinkClick
 
 function runLoginWidget () {
-	var pageData = window[ 'pageData' ]
-	var sessionData = pageData ? pageData[ 'sessionData' ] : null
-	var userId = sessionData ? sessionData[ 'user_id' ] : null
 	var $loginLink = $( '#login-link' )
 	var $localContainer = $loginLink.parent()
 	var $loginWidget = $(

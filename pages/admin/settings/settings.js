@@ -47,7 +47,7 @@ function printSettingsPageInterface () {
 			})
 			submitFormViaAjax($settingsForm, handleSaveSettingsResponse, uncheckedSettings)
 			return // functions below
-			function handleSaveSettingsResponse (response) {
+			function handleSaveSettingsResponse () {
 				window.location.reload()
 			} // handleSaveSettingsResponse
 		} // handleSettingsFormSubmit
