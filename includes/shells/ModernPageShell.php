@@ -87,12 +87,7 @@ HEREDOC;
 	</tr>
 </thead><tbody>
 	<tr>
-		<td id="main" colspan="2">
-<?=$this->getAccountIsDeactivatedMessageMarkup()?>
-<?=$this->getConfirmationMessageMarkupOnce()?>
-<?=$ob_content?>
-			<br>
-		</td>
+		<td id="main" colspan="2"><?=$this->getAccountIsDeactivatedMessageMarkup()?><?=$this->getConfirmationMessageMarkupOnce()?><?=$ob_content?></td>
 	</tr>
 </tbody><tfoot>
 	<tr><td colspan="2" id="footer"><div id="footer-copyright-notice">Myers-Briggs®, MBTI®, and Myers-Briggs Type Indicator® are trademarks of <a href="https://www.myersbriggs.org" target="_blank">the Myers &amp; Briggs Foundation</a>.<br>Keirsey Temperament Sorter®, Guardian®, Artisan®, and Rational® are trademarks of Prometheus Nemesis Book Company.<br>TypeTango is not affiliated with either organization. © <?=date('Y')?> <a href="https://www.kornea.com/resume" target="_blank">Vladimir Kornea</a>. All rights reserved. Logo by <a href="https://www.easchweitzer.com/" target="_blank">Elise Schweitzer</a>.</div><a id="privacy-policy-page-footer-link" href="/privacy-policy">🔒 Privacy Policy</a>
