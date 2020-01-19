@@ -56,7 +56,7 @@ table#page-structure
 #page-structure > tfoot a#privacy-policy-page-footer-link
 	{font-size:14px; position:absolute; right:0.5em; padding:1em 1.5em;}
 #page-structure > tfoot a#privacy-policy-page-footer-link:hover
-	{text-decoration:none; background-color:#CE2045;}
+	{text-decoration:none; background-color:black; border-radius:20px;}
 
 /* page structure texts */
 #page-structure > tfoot #footer-copyright-notice
