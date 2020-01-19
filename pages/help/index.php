@@ -23,7 +23,7 @@ $pageShell->addCssFile('/pages/help/help.css');
 <p>TypeTango sends an email to the person you are attempting to contact.</p>
 
 <h3>Books</h3>
-<ul class="structural">
+	<ul>
 <li><a href="https://www.amazon.com/exec/obidos/tg/detail/-/089106074X" target="_blank"><i>Gifts Differing: Understanding Personality Type</i></a> by Isabel Briggs Myers, Peter B. Myers<br>Good introduction to the entire theory, along with statistical data</li>
 <li><a href="https://www.amazon.com/exec/obidos/tg/detail/-/0877739870" target="_blank"><i>Personality Type: An Owner's Manual</i></a> by Lenore Thomson<br>Functions in their dominant role</li>
 <li><a href="https://www.amazon.com/exec/obidos/tg/detail/-/0891061703" target="_blank"><i>Was That Really Me?: How Everyday Stress Brings Out Our Hidden Personality</i></a> by Naomi L. Quenk<br>Functions in their inferior role</li>

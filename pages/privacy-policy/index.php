@@ -8,7 +8,7 @@ $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
 <div id="privacy-policy-text">
 	<h3>Cookies</h3>
 
-	<p>TypeTango uses <a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank">HTTP cookies</a> to keep you logged in.</p>
+	<p>TypeTango uses <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie" target="_blank">secure HTTP cookies</a> to keep you logged in.</p>
 
 	<p>TypeTango also uses <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google Analytics</a> to track website traffic. <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google Analytics</a> uses <a href="https://en.wikipedia.org/wiki/HTTP_cookie#Privacy_and_third-party_cookies" target="_blank">third-party cookies</a> as explained in <a href="https://policies.google.com/technologies/partner-sites" target="_blank">Google's privacy policy</a>.</p>
 
@@ -35,5 +35,4 @@ $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
 	<p>TypeTango<br>
 		70-22 66th St 3L<br>
 		Glendale, NY 11385</p>
-
 </div>
