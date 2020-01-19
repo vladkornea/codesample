@@ -28,7 +28,7 @@ function submitFormViaAjax (formElement/*can be a jQuery object or selector stri
 	var $form = $(formElement)
 	var formData = new FormData($form[0])
 	$form.find('input[type=checkbox].boolean:not(:checked)').each(function(i, uncheckedBooleanCheckbox){
-		formData.append($(uncheckedBooleanCheckbox).attr('name'), 0)
+		formData.append( $(uncheckedBooleanCheckbox).attr('name'), '0' )
 	})
 	;(function addExtraDataToFormData(){
 		if (extraData) {

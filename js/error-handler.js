@@ -7,7 +7,9 @@
 	function handleWindowError (messageOrEvent, errorFileUrl, lineNumber, column, originalErrorData) {
 		if (errorsReportedCount >= MAX_ERRORS_REPORTED) {
 			window.onerror = previousErrorHandler
-			previousErrorHandler(messageOrEvent, errorFileUrl, lineNumber, column, originalErrorData)
+			if ( window.onerror ) {
+				window.onerror( messageOrEvent, errorFileUrl, lineNumber, column, originalErrorData )
+			}
 			return
 		}
 		errorsReportedCount++
