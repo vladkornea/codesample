@@ -92,16 +92,16 @@ class Session implements SessionInterface {
 	 * @param string $cookie_value
 	 * @param int|string $when_expires unix timestamp or string understood by `strtotime()` (`0` means "when browser closes").
 	 */
-	public static function setCookie (string $cookie_name, string $cookie_value, $when_expires = 0): void {
-		if (!is_numeric($when_expires)) {
-			$when_expires = strtotime($when_expires);
+	public static function setCookie ( string $cookie_name, string $cookie_value, $when_expires = 0 ) : void {
+		if ( ! is_numeric( $when_expires ) ) {
+			$when_expires = strtotime( $when_expires );
 		}
-		setcookie( $cookie_name, $cookie_value, $when_expires, '/', $_SERVER['HTTP_HOST'], true );
+		setcookie( $cookie_name, $cookie_value, $when_expires, '/', $_SERVER[ 'HTTP_HOST' ], true, true );
 	} // setCookie
 
 
-	public static function removeCookie (string $cookie_name): void {
-		setcookie($cookie_name, '', strtotime('-1 day'), '/', $_SERVER['HTTP_HOST']);
+	public static function removeCookie ( string $cookie_name ) : void {
+		static::setCookie( $cookie_name, '', 1 );
 	} // removeCookie
 
 
