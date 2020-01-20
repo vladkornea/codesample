@@ -14,7 +14,6 @@ class StandardPageShell extends HtmlPageShell implements StandardPageShellInterf
 		$this->addJsFile('/js/lib/jquery/jquery-3.4.1.min.js');
 		$this->addJsFile('/js/functions.js');
 		JavascriptErrorHandler::register($this);
-		$this->addCssFile('/css/standard.css');
 		$this->addJsFile('/js/standard.js');
 		if (SERVER_ROLE != 'live') {
 			static::requireBasicHttpAuth();
