@@ -69,7 +69,7 @@ HEREDOC;
 
 	protected function printStandardPageMarkup () {
 		$ob_content = ob_get_clean(); ?>
-<table id="page-structure" class="structural"><thead>
+<table id="page-structure" class="structural<?=Session::getUserId() ? ' logged_in' : ''?>"><thead>
 	<tr>
 		<td><a id="home-link" href="/"><img src="/images/typetango-logo.gif" alt="TypeTango" width="150" height="80"></a><a id="keyword-suggestions-link" href="/keyword-suggestions">💡 Keyword Suggestions</a><!-- <a id="type-distribution-link" href="/">📊 Type Distribution</a>--></td>
 		<td><a href="/help">❓ Help</a> <?php

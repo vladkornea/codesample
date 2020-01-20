@@ -45,10 +45,12 @@ table#page-structure
 	{text-decoration:none;}
 #page-structure > thead > tr:first-child a
 	{padding:0 2em; line-height:80px;}
+#page-structure.logged_in > thead > tr:first-child a
+	{line-height:35px; height:35px; font-size:15px;}
 #page-structure > thead > tr a:hover:not(#home-link)
 	{background-color:#CE2045;}
 #page-structure > thead > tr:last-child a
-	{padding:0 2em; line-height:50px;}
+	{padding:0 2em; line-height:45px;}
 
 /* footer links */
 #page-structure > tfoot a
