@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 
 $pageShell = new StandardPageShell("Privacy Policy");
 $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
+
 ?>
 <div id="privacy-policy-text">
 	<h3>Cookies</h3>

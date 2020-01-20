@@ -6,7 +6,6 @@ $pageShell = new StandardPageShell("Help");
 $pageShell->addCssFile('/pages/help/help.css');
 
 ?>
-
 <div id="help-page-text">
 
 <h3>How do TypeTango keywords work?</h3>
@@ -30,7 +29,7 @@ $pageShell->addCssFile('/pages/help/help.css');
 <li><a href="https://www.amazon.com/exec/obidos/tg/detail/-/1885705026" target="_blank"><i>Please Understand Me II: Temperament, Character, Intelligence</i></a> by David Keirsey<br>Categorizes the sixteen types into four groups (SJ Guardians, SP Artisans, NF Idealists, NT Rationals).</li>
 </ul>
 
-<h3>How do I contact customer service at TypeTango?</h3>
+<h3>Contact Us</h3>
 <p>Send an email to owner at <?=EMAIL_DOMAIN?></p>
 
 </div>

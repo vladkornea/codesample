@@ -1,6 +1,6 @@
-$( installLoginWidget )
-
 $( hiliteCurrentLocation )
+
+$( installLoginWidget )
 
 function hiliteCurrentLocation () {
 	$( '#page-structure > *:not(tbody) a[href="' + location.pathname + location.search + '"]' ).addClass( 'current-page' )

@@ -2,7 +2,7 @@
 	{display:inline-block; font-size:14px; line-height:21px; max-width:7.5in; text-align:justify;}
 
 #privacy-policy-text h3
-	{background-color:#2a333b; color:white; padding:2px 8px; font-size:14px; font-weight:bold; margin:1.5em 0;}
+	{background-color:#2a333b; color:white; padding:2px 8px; font-size:14px;}
 
 #privacy-policy-text ul > li
 	{list-style-type:circle; margin:1em 0;}
