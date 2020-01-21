@@ -839,49 +839,36 @@ EMAIL_TEXT;
 	} // getPreviouslyContactedUsersIds
 
 
+	protected function getDataForUsers ( array $user_ids, int $limit = 1000 ) : array {
+		if ( ! $user_ids ) {
+			return [];
+		}
+		$userFinder = new UserFinder;
+		$userFinder->setUserIds( $user_ids );
+		$userFinder->setPageSize( $limit );
+		[ 'users' => $user_data ] = $userFinder->getSearchResults( [ 'username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle' ] );
+		return $user_data;
+	} // getDataForUsers
+
+
+	public function getDataOfUsersWaitingToHearFromYou () : array {
+		return $this->getDataForUsers( $this->getUsersWaitingToHearFromYou() );
+	} // getDataOfUsersWaitingToHearFromYou
+
+
 	// data needed for each contacted user: username, user_id, thumbnail_url, thumbnail_width, thumbnail_height
 	public function getContactedUsersData (): array {
-		$contacted_users_data = []; // return value
-		foreach ($this->getPreviouslyContactedUsersIds() as $loop_user_id) {
-			$userFinder = new UserFinder;
-			$userFinder->setUserId($loop_user_id);
-			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle']);
-			if (!$user_data) { // deactivated user
-				continue;
-			}
-			$contacted_users_data[] = $user_data[0];
-		}
-		return $contacted_users_data;
+		return $this->getDataForUsers( $this->getPreviouslyContactedUsersIds() );
 	} // getContactedUsersData
 
 
 	public function getBlockedUsersData (): array {
-		$blocked_users_data = []; // return value
-		foreach ($this->getBlockedUsers() as $loop_user_id) {
-			$userFinder = new UserFinder;
-			$userFinder->setUserId($loop_user_id);
-			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle']);
-			if (!$user_data) { // deactivated user
-				continue;
-			}
-			$blocked_users_data[] = $user_data[0];
-		}
-		return $blocked_users_data;
+		return $this->getDataForUsers( $this->getBlockedUsers() );
 	} // getBlockedUsersData
 
 
 	public function getReportedUsersData (): array {
-		$reported_users_data = []; // return value
-		foreach ($this->getReportedUsers() as $loop_user_id) {
-			$userFinder = new UserFinder;
-			$userFinder->setUserId($loop_user_id);
-			['users' => $user_data] = $userFinder->getSearchResults(['username', 'user_id', 'thumbnail_url', 'primary_thumbnail_width', 'primary_thumbnail_height', 'primary_thumbnail_rotate_angle']);
-			if (!$user_data) { // deactivated user
-				continue;
-			}
-			$reported_users_data[] = $user_data[0];
-		}
-		return $reported_users_data;
+		return $this->getDataForUsers( $this->getReportedUsers() );
 	} // getReportedUsersData
 
 
@@ -1054,6 +1041,21 @@ EMAIL_TEXT;
 	public function getReportedUsers (): array {
 		return DB::getColumn('select reported_user_id from reported_users where ' .DB::where(['reported_by_user_id' => $this->getId()]));
 	} // getReportedUsers
+
+	public function getUsersWaitingToHearFromYou () : array {
+		$query = '
+			select distinct user_messages.from_user_id
+			from user_messages
+			where user_messages.to_user_id = ' . (int) $this->getId();
+		$users_who_sent_messages_to_this_user = DB::getColumn( $query );
+		$query = '
+			select distinct user_messages.to_user_id
+			from user_messages
+			where user_messages.from_user_id = ' . (int) $this->getId();
+		$users_this_user_sent_messages_to = DB::getColumn( $query );
+		$user_waiting_to_hear_from_you = array_diff( $users_who_sent_messages_to_this_user, $users_this_user_sent_messages_to );
+		return $user_waiting_to_hear_from_you;
+	} // getUsersWaitingToHearFromYou
 
 	public function getKeywordsAsOther (UserModel $theirUserModel): array {
 		// their keywords

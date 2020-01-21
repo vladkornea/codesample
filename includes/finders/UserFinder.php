@@ -25,6 +25,7 @@ interface UserFinderInterface extends BaseFinderInterface {
 	function setNewerThanDays (int $days): void;
 	function setSortStalestFirst (): void;
 	function setUserId (int $user_id): void;
+	function setUserIds (array $user_ids): void;
 	static function getCountOfUsersRegistered ($time_string_or_timestamp = 'yesterday'): int;
 	static function getCountriesWithUsers (): array;
 	static function getCountryStatistics (): array;
@@ -50,6 +51,7 @@ class UserFinder extends BaseFinder implements UserFinderInterface {
 	/* @see setMustLikeGender() */ protected $mustLikeGender;
 	/* @see setNewerThanDays() */ protected $newerThanDays;
 	/* @see setUserId() */ protected $userId;
+	/* @see setUserIds() */ protected $userIds;
 	/* @see setCoordinatesRange() */ protected $minLatitude, $maxLatitude, $minLongitude, $maxLongitude;
 	/* @see setSortByMatchWithUserId() */ protected $sortByMatchWithUserId;
 	/* @see setMatchSharedNegatives() */ protected $matchSharedNegatives;
@@ -149,6 +151,9 @@ class UserFinder extends BaseFinder implements UserFinderInterface {
 		}
 		if ($this->userId) {
 			$where[] = DB::where(['users.user_id' => $this->userId]);
+		}
+		if ($this->userIds) {
+			$where[] = DB::where(['users.user_id' => $this->userIds]);
 		}
 		if ($this->minLatitude) {
 			$condition = "users.latitude > $this->minLatitude and users.latitude < $this->maxLatitude and users.longitude > $this->minLongitude and users.longitude < $this->maxLongitude";
@@ -569,6 +574,11 @@ class UserFinder extends BaseFinder implements UserFinderInterface {
 	public function setUserId (int $user_id): void {
 		$this->userId = (int)$user_id;
 	} // setUserId
+
+
+	public function setUserIds ( array $user_ids ): void {
+		$this->userIds = $user_ids;
+	} // setUserIds
 
 
 	// return like ['INTP'=>1231,'ENTP'=>1231]
