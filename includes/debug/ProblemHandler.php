@@ -72,7 +72,7 @@ abstract class ProblemHandler {
 			return;
 		}
 		$email_params = [
-			 'from'        => [DEFAULT_FROM => get_called_class()]
+			 'from'        => [ DEFAULT_FROM => SERVER_ROLE .' ' .get_called_class() ]
 			,'reply-to'    => DEFAULT_REPLY_TO
 			,'to'          => ERROR_RECIPIENT
 			,'subject'     => $this->getEmailSubject()
