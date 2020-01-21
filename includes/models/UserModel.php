@@ -487,14 +487,14 @@ class UserModel extends LoggedModel implements UserModelInterface {
 
 		{ // primary_thumbnail_width, primary_thumbnail_height
 			if ( array_key_exists('primary_thumbnail_width', $form_data) and array_key_exists('primary_thumbnail_height', $form_data) ) {
-				$row_data['primary_thumbnail_width'] = (int) $form_data['primary_thumbnail_width'];
-				$row_data['primary_thumbnail_height'] = (int) $form_data['primary_thumbnail_height'];
+				$row_data['primary_thumbnail_width']  = $form_data['primary_thumbnail_width'];
+				$row_data['primary_thumbnail_height'] = $form_data['primary_thumbnail_height'];
 			}
 		}
 
 		{ // primary_thumbnail_rotate_angle
 			if ( array_key_exists('primary_thumbnail_rotate_angle', $form_data) ) {
-				$row_data['primary_thumbnail_rotate_angle'] = (int) $form_data['primary_thumbnail_rotate_angle'];
+				$row_data['primary_thumbnail_rotate_angle'] = $form_data['primary_thumbnail_rotate_angle'];
 			}
 		}
 
