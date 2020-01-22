@@ -20,6 +20,10 @@ $pageShell->addJsVar('blocked_users', $blocked_users);
 $reported_users = $userModel->getReportedUsersData();
 $pageShell->addJsVar('reported_users', $reported_users);
 
+// add users waiting to hear from you
+$users_waiting_to_hear_from_you = $userModel->getDataOfUsersWaitingToHearFromYou();
+$pageShell->addJsVar('users_waiting_to_hear_from_you', $users_waiting_to_hear_from_you);
+
 // print interface containers
 echo '<div id="contacts-page-interface-container"></div>';
 
