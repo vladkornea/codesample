@@ -88,8 +88,21 @@ class Session implements SessionInterface {
 	} // getLoginMethod
 
 
+	protected static function getCookieOptions () : array {
+		return [
+			'path'     => '/',
+			'domain'   => $_SERVER[ 'HTTP_HOST' ],
+			'secure'   => true,
+			'httponly' => true,
+			'samesite' => 'Strict',
+		];
+	} // getCookieOptions
+
+
 	static function start () : bool {
-		session_set_cookie_params( 0, '/', $_SERVER[ 'HTTP_HOST' ], true, true ); // TODO: SameSite=Strict needs PHP 7.3+
+		$cookie_options = static::getCookieOptions();
+		$cookie_options[ 'lifetime' ] = 0;
+		session_set_cookie_params( $cookie_options );
 		return session_start();
 	} // start
 
@@ -100,10 +113,9 @@ class Session implements SessionInterface {
 	 * @param int|string $when_expires unix timestamp or string understood by `strtotime()` (`0` means "when browser closes").
 	 */
 	public static function setCookie ( string $cookie_name, string $cookie_value, $when_expires = 0 ) : void {
-		if ( ! is_numeric( $when_expires ) ) {
-			$when_expires = strtotime( $when_expires );
-		}
-		setcookie( $cookie_name, $cookie_value, $when_expires, '/', $_SERVER[ 'HTTP_HOST' ], true, true ); // TODO: SameSite=Strict needs PHP 7.3+
+		$cookie_options = static::getCookieOptions();
+		$cookie_options['expires'] = is_numeric( $when_expires ) ? $when_expires : strtotime( $when_expires );
+		setcookie( $cookie_name, $cookie_value, $cookie_options );
 	} // setCookie
 
 
