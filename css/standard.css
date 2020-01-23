@@ -58,7 +58,7 @@ table#page-structure
 #page-structure > tfoot a:hover
 	{text-decoration:underline; color:white;}
 #page-structure > tfoot a#privacy-policy-page-footer-link
-	{font-size:14px; position:absolute; right:0.5em; padding:1em 1.5em; border-radius:20px;}
+	{font-size:12px; position:absolute; right:0.5em; padding:1em 1.5em; border-radius:20px;}
 #page-structure > tfoot a#privacy-policy-page-footer-link:hover
 	{text-decoration:none; background-color:black;}
 
