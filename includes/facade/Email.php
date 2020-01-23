@@ -197,8 +197,8 @@ class Email implements EmailInterface {
 			// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html
 			require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail-1.4.1/Mail/mail.php';
 
-			// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/_Mail_Mime-1.10.1---Mail---mime.php.html
-			require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail_Mime-1.10.1/Mail/mime.php';
+			// https://pear.php.net/package/Mail_Mime/docs/1.10.4/Mail_Mime/_Mail_Mime-1.10.4---Mail---mime.php.html
+			require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail_Mime-1.10.4/Mail/mime.php';
 
 			// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#var$build_params
 			$build_params = [

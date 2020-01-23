@@ -8,7 +8,7 @@
  * of mime mail.
  * This class however allows full control over the email.
  *
- * Compatible with PHP version 5
+ * Compatible with PHP version 5 and 7
  *
  * LICENSE: This LICENSE is in the BSD license style.
  * Copyright (c) 2002-2003, Richard Heyes <richard@phpguru.org>
@@ -93,7 +93,7 @@ class Mail_mimePart
      *
      * @var array
      */
-    protected $subparts;
+    protected $subparts = array();
 
     /**
      * The output of this part after being built
@@ -107,7 +107,7 @@ class Mail_mimePart
      *
      * @var array
      */
-    protected $headers;
+    protected $headers = array();
 
     /**
      * The body of this part (not encoded)
@@ -340,12 +340,12 @@ class Mail_mimePart
             $encoded['body'] = $this->getEncodedData($this->body, $this->encoding);
         } else if ($this->body_file) {
             // Temporarily reset magic_quotes_runtime for file reads and writes
-            if ($magic_quote_setting = get_magic_quotes_runtime()) {
-                @ini_set('magic_quotes_runtime', 0);
+            if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+                $magic_quotes = @ini_set('magic_quotes_runtime', 0);
             }
             $body = $this->getEncodedDataFromFile($this->body_file, $this->encoding);
-            if ($magic_quote_setting) {
-                @ini_set('magic_quotes_runtime', $magic_quote_setting);
+            if (isset($magic_quotes)) {
+                @ini_set('magic_quotes_runtime', $magic_quotes);
             }
 
             if (is_a($body, 'PEAR_Error')) {
@@ -392,8 +392,8 @@ class Mail_mimePart
         }
 
         // Temporarily reset magic_quotes_runtime for file reads and writes
-        if ($magic_quote_setting = get_magic_quotes_runtime()) {
-            @ini_set('magic_quotes_runtime', 0);
+        if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+            $magic_quotes = @ini_set('magic_quotes_runtime', 0);
         }
 
         $res = $this->encodePartToFile($fh, $boundary, $skip_head);
@@ -402,8 +402,8 @@ class Mail_mimePart
             fclose($fh);
         }
 
-        if ($magic_quote_setting) {
-            @ini_set('magic_quotes_runtime', $magic_quote_setting);
+        if (isset($magic_quotes)) {
+            @ini_set('magic_quotes_runtime', $magic_quotes);
         }
 
         return is_a($res, 'PEAR_Error') ? $res : $this->headers;
@@ -622,7 +622,7 @@ class Mail_mimePart
         $escape = '=';
         $output = '';
 
-        while (list($idx, $line) = each($lines)) {
+        foreach ($lines as $idx => $line) {
             $newline = '';
             $i = 0;
 
@@ -656,13 +656,17 @@ class Mail_mimePart
                     $output  .= $newline . $escape . $eol;
                     $newline  = '';
                 }
+
                 $newline .= $char;
             } // end of for
+
             $output .= $newline . $eol;
             unset($lines[$idx]);
         }
+
         // Don't want last crlf
         $output = substr($output, 0, -1 * strlen($eol));
+
         return $output;
     }
 
