@@ -137,7 +137,7 @@ class SearchCriteriaModel extends LoggedModel implements SearchCriteriaModelInte
 	 * @param string $event_synopsis
 	 * @return int|array error messages or `search_criteria.search_criteria_id`
 	 */
-	public static function create (array $form_data, string $event_synopsis = '') {
+	public static function create (array $form_data, string $event_synopsis = '', bool $log_query = true) {
 		['error_messages'=>$error_messages, 'db_row'=>$db_row] = static::transformFormDataToDbRowFormat($form_data);
 		if ($error_messages) {
 			return $error_messages;
