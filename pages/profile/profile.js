@@ -1399,6 +1399,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 					}
 					alert(errorMessages.join("\n"))
 				}
+				reprintPhotoCarouselWidget( photoCarouselData )
 			}
 			if (response['success']) {
 				reprintPhotoCarouselWidget(response['photoCarouselData'])
