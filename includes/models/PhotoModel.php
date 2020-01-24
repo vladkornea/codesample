@@ -41,6 +41,7 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	const TYPE_JPEG = 'jpeg';
 	const TYPE_GIF  = 'gif';
 	const TYPE_PNG  = 'png';
+	const TYPE_BMP  = 'bmp';
 
 	const STANDARD_FILE  = 'standard.jpeg';
 	const THUMBNAIL_FILE = 'thumbnail.jpeg';
@@ -117,6 +118,9 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 			case static::TYPE_GIF:
 				$photo_resource = imagecreatefromgif( $photo_path );
 				break;
+			case static::TYPE_BMP:
+				$photo_resource = imagecreatefrombmp( $photo_path ); // E_WARNING "not a valid BMP file" if 32-bit (24-bit ok)
+				break;
 			default:
 				$photo_resource = null;
 				break;
@@ -146,6 +150,9 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 				case IMAGETYPE_GIF:
 					$image_type_from_exif = static::TYPE_GIF;
 					break;
+				case IMAGETYPE_BMP:
+					$image_type_from_exif = static::TYPE_BMP;
+					break;
 			}
 			if ( $image_type_from_exif ) {
 				$photo_resource = static::getPhotoResourceFromImageType( $photo_path, $image_type_from_exif );
@@ -169,6 +176,9 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 				break;
 			case 'gif':
 				$image_type_from_extension = static::TYPE_GIF;
+				break;
+			case 'bmp':
+				$image_type_from_extension = static::TYPE_BMP;
 				break;
 		}
 		if ( ! $image_type_from_extension ) {
@@ -228,7 +238,7 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 		// Create image resource from original photo file.
 		$uploaded_photo_resource = static::getPhotoResource( $temp_original_photo_path, $original_filename, $exif_imagetype_constant );
 		if ( ! $uploaded_photo_resource ) {
-			trigger_error("Error creading resource from file.", E_USER_WARNING);
+			trigger_error("Error creating resource from file.", E_USER_WARNING);
 			return [ 'file' => "Error creating resource from file." ];
 		}
 
