@@ -73,7 +73,7 @@ function printSearchPageInterface () {
 		function printPagination () {
 			var totalPages = searchResults['total_pages']
 			var currentPageNumber = searchResults['current_page']
-			document.title = "Search Page " +currentPageNumber
+			document.title = "Search Page " +currentPageNumber +" - TypeTango"
 			if (totalPages < 2) {
 				return
 			}

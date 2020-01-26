@@ -32,7 +32,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 		ob_start();
 		parent::__construct();
 		ini_set('html_errors', true);
-		$this->pageTitle = $page_title;
+		$this->setTitle( $page_title );
 		if (isset($_SESSION['Confirmation Message'])) {
 			$this->confirmationMessageFromPreviousPage = $_SESSION['Confirmation Message'];
 		}
@@ -96,8 +96,12 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 		$this->keywords = $keywords;
 	} // setKeywords
 
-	public function setTitle (string $title): void {
-		$this->pageTitle = $title;
+	public function setTitle ( string $page_title ): void {
+		$site_name_is_in_page_title = false !== strpos( $page_title, 'TypeTango');
+		if ( ! $site_name_is_in_page_title ) {
+			$page_title = "$page_title - TypeTango";
+		}
+		$this->pageTitle = $page_title;
 	} // setTitle
 
 	// Temporary session message to print on the next page.
