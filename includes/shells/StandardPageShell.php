@@ -48,10 +48,10 @@ class StandardPageShell extends HtmlPageShell implements StandardPageShellInterf
 
 
 	protected function getGoogleAnalyticsCode (): string {
-		$do_not_track_requested = ! empty( $_SERVER[ 'HTTP_DNT' ] );
-		if ( $do_not_track_requested ) {
-			return '';
-		}
+//		$do_not_track_requested = ! empty( $_SERVER[ 'HTTP_DNT' ] );
+//		if ( $do_not_track_requested ) {
+//			return '';
+//		}
 		$google_analytics_code = <<<HEREDOC
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1659325-1"></script>
 <script>

@@ -15,7 +15,6 @@ $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
 	</ul>
 	<h3>If <a href="https://en.wikipedia.org/wiki/Do_Not_Track" target="_blank">"Do Not Track"</a> header is included</h3>
 	<ul>
-		<li>Google Analytics is not included.</li>
 		<li>The "remember me" checkbox in the login form defaults to unchecked.</li>
 	</ul>
 	<h3>Registration</h3>
@@ -23,7 +22,7 @@ $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
 		<li>Passwords are <a href="http://php.net/manual/en/function.password-hash.php" target="_blank">not stored in a retrievable format</a>.</li>
 		<li>Email addresses are kept private.</li>
 		<li>Date of birth is not shown to other users, it is merely used to calculate age.</li>
-		<li>Geographical coordinates and zip/postal code are not shown to other users; they are merely used to calculate distance between users.</li>
+		<li>Geographical coordinates and zip code are not shown to other users; they are merely used to calculate distance between users.</li>
 		<li>Other personal information such as city, gender, and personality type are requested in order to show to other users.</li>
 	</ul>
 	<h3>Sharing</h3>
