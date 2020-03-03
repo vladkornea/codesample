@@ -94,7 +94,7 @@ class Session implements SessionInterface {
 			'domain'   => $_SERVER[ 'HTTP_HOST' ],
 			'secure'   => true,
 			'httponly' => true,
-			'samesite' => 'Strict',
+//			'samesite' => 'Strict', // 2020-03-02 observed that FireFox doesn't include cookie if HTTP referrer is a different domain
 		];
 	} // getCookieOptions
 
