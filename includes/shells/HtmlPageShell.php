@@ -23,16 +23,17 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 	protected $pageTitle    = ''; // Passed to constructor.
 	protected $keywords     = ''; // Call ->setKeywords().
 	protected $appendToHead = ''; // Call ->appendToHead().
-	protected $metaDescription = "TypeTango Jungian Myers-Briggs/Keirsey Personality Theory Dating: INTJ, ENTJ, INTP, ENTP, ISTJ, ESTJ, ISTP, ESTP, INFJ, ENFJ, INFP, ENFP, ISFJ, ESFJ, ISFP, ESFP"; // Call ->setDescription().
+	protected $metaDescription = ""; // Call ->setDescription().
 	protected $jsVars       = []; // Call ->addJsVar(string, mixed)
 	protected $confirmationMessageFromPreviousPage = ''; // __construct() set it from $_SESSION, call ->getConfirmationMessageMarkupOnce()
 	protected static $confirmationMessageForNextPage = ''; // __destruct() sets $_SESSION from it, call ::setConfirmationMessage()
 
-	function __construct (string $page_title = 'TypeTango') {
+	function __construct (string $page_title = 'TypeTango', string $page_description = "TypeTango Jungian Myers-Briggs/Keirsey Personality Theory Dating: INTJ, ENTJ, INTP, ENTP, ISTJ, ESTJ, ISTP, ESTP, INFJ, ENFJ, INFP, ENFP, ISFJ, ESFJ, ISFP, ESFP") {
 		ob_start();
 		parent::__construct();
 		ini_set('html_errors', true);
 		$this->setTitle( $page_title );
+		$this->setDescription( $page_description );
 		if (isset($_SESSION['Confirmation Message'])) {
 			$this->confirmationMessageFromPreviousPage = $_SESSION['Confirmation Message'];
 		}

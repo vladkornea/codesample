@@ -6,7 +6,7 @@ interface StandardPageShellInterface extends HtmlPageShellInterface {
 } // StandardPageShellInterface
 
 class StandardPageShell extends HtmlPageShell implements StandardPageShellInterface {
-	function __construct (string $page_title = "TypeTango") {
+	function __construct (string $page_title = "TypeTango", string $page_description = null) {
 		ob_start();
 		parent::__construct($page_title);
 		$this->addCssFile('/css/generic.css');
@@ -19,7 +19,7 @@ class StandardPageShell extends HtmlPageShell implements StandardPageShellInterf
 			static::requireBasicHttpAuth();
 		}
 		$this->includeJavascriptSessionVars();
-		$this->setKeywords('INTJ, ENTJ, INTP, ENTP, ISTJ, ESTJ, ISTP, ESTP, INFJ, ENFJ, INFP, ENFP, ISFJ, ESFJ, ISFP, ESFP, Myers-Briggs, MBTI, David Keirsey, Carl Jung, Personality Theory, Temperament, Dating');
+		$this->setKeywords('INTP, INFP, INTJ, INFJ, ENTP, ENFP, ENTJ, ENFJ, ISTP, ISFP, ISTJ, ISFJ, ESTP, ESFP, ESTJ, ESFJ, Myers-Briggs, MBTI, David Keirsey, Carl Jung, Personality Theory, Temperament, Dating, Socionics, Isabel Briggs Myers, Katharine Cook Briggs, Lenore Thompson, Naomi Quenk');
 	} // __construct
 
 
