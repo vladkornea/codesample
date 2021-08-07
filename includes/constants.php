@@ -14,11 +14,6 @@
 	define('ADMIN_HTTP_USERNAME',   getenv('ADMIN_HTTP_USERNAME'));
 	define('ADMIN_HTTP_PASSWORD',     getenv('ADMIN_HTTP_PASSWORD'));
 
-	// Database
-	define('DB_NAME',   getenv('DB_NAME'));
-	define('DB_USER',   getenv('DB_USER'));
-	define('DB_PASSWD', getenv('DB_PASSWD'));
-
 	// Email sending and error handling
 	define('EMAIL_DOMAIN', getenv('EMAIL_DOMAIN'));
 	define('DEFAULT_FROM',       'webserver@'.EMAIL_DOMAIN);
