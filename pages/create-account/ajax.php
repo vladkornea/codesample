@@ -1,5 +1,9 @@
 <?php
 
+if ( ! isset($_GET['action']) ) {
+	return;
+}
+
 require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 
 $pageShell = new AjaxPageShell;
