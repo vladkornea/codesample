@@ -29,6 +29,9 @@ function handle_login (): void {
 	global $pageShell;
 	$password = $_POST['password'];
 	$remember_me = empty($_POST['remember_me']) ? false : true;
+	if ( empty( $_POST['user'] ) ) {
+		$pageShell->error(['user' => "User not found."]);
+	}
 	$username_or_email = $_POST['user'];
 	$user_id = UserFinder::getIdFromUsernameOrEmail($username_or_email);
 	if (!$user_id) {
