@@ -39,7 +39,7 @@ body.wait, body.wait a, body.wait input
 	{vertical-align:middle;}
 
 #pagination-container
-	{text-align:left; font-size:14px; padding:0px; line-height:18px;}
+	{text-align:left; font-size:14px; padding:0; line-height:18px;}
 #pagination-container > *
 	{margin:0 3px; padding:2px; display:inline-block; vertical-align:middle;}
 #pagination-container > #next-page-link

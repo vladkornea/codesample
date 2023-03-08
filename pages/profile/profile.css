@@ -42,7 +42,7 @@
 	{font-size:11px;}
 
 #keywords-info-table
-	{padding:0px; border-collapse:separate; border-spacing:15px 3px; margin:10px 0 0 -15px;}
+	{padding:0; border-collapse:separate; border-spacing:15px 3px; margin:10px 0 0 -15px;}
 #keywords-info-table > thead > tr > th
 	{color:#484848; font-weight:normal; white-space:nowrap; padding-bottom:0; line-height:12px; font-size:12px; text-align:left;}
 #positive-keywords, #negative-keywords
@@ -92,9 +92,9 @@ td.sender-username
 	{cursor:none !important;}
 
 #carousel-thumbnail-area
-	{margin:0px; padding:0px;}
+	{margin:0; padding:0;}
 #carousel-thumbnail-area         .photo-carousel-thumbnail-link
-	{display:inline-block; padding:0px; width:80px; height:80px; text-align:center; line-height:80px; font-size:0px; margin:3px; position:relative; vertical-align:top;}
+	{display:inline-block; padding:0; width:80px; height:80px; text-align:center; line-height:80px; font-size:0; margin:3px; position:relative; vertical-align:top;}
 #photo-carousel-widget.edit-mode .photo-carousel-thumbnail-link:hover
 	{cursor:grab;}
 #photo-carousel-widget.edit-mode .photo-carousel-thumbnail-link:hover:active
@@ -104,7 +104,7 @@ td.sender-username
 #carousel-thumbnail-area         .photo-carousel-thumbnail-link.being-moved
 	{z-index:2;}
 #carousel-thumbnail-area         .photo-carousel-thumbnail-link.selected:not(.being-moved)
-	{box-shadow:0px 0px 6px 3px chocolate;}
+	{box-shadow:0 0 6px 3px chocolate;}
 #carousel-thumbnail-area         .photo-carousel-thumbnail-link             .photo-carousel-thumbnail
 	{vertical-align:middle; border-style:none;}
 #carousel-thumbnail-area         .photo-carousel-thumbnail-link.being-moved .photo-carousel-thumbnail
@@ -112,10 +112,10 @@ td.sender-username
 	event triggers, element gets class .being-moved added, border changes, user releases mouse, click
 	event fails to trigger because the border is no longer under the mouse pointer.
 	also, note that there is a potential conflict when the selected thumbnail link is being moved. */
-	box-shadow:0px 0px 22px 3px black;}
+	box-shadow:0 0 22px 3px black;}
 
 #selected-photo-orbit
-	{display:inline-block; float:left; text-align:center; padding:6px 10px; margin:0px 10px 5px 0px; border:1px solid chocolate; background-color:blanchedalmond; user-select:none; -moz-user-select:none; -ms-user-select:none;}
+	{display:inline-block; float:left; text-align:center; padding:6px 10px; margin:0 10px 5px 0; border:1px solid chocolate; background-color:blanchedalmond; user-select:none; -moz-user-select:none; -ms-user-select:none;}
 #selected-photo-container
 	{display:block; text-align:center; padding:0; margin:6px; line-height:480px; position:relative;}
 #selected-photo-container       #selected-photo-controls-container

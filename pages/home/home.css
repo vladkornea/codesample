@@ -49,4 +49,4 @@
 #demographic-tabs #tab-row > .tab:first-child
 	{margin-left:10px;}
 #demographic-tabs #demographic-tab-content
-	{display:block; text-align:center; padding:20px 10px; border-radius:10px; background-color:lemonchiffon; box-shadow:0px 8px 22px -8px saddlebrown; border:1px solid saddlebrown;}
+	{display:block; text-align:center; padding:20px 10px; border-radius:10px; background-color:lemonchiffon; box-shadow:0 8px 22px -8px saddlebrown; border:1px solid saddlebrown;}
