@@ -74,9 +74,11 @@ function include_edit_mode_profile_data (int $user_id): void {
 
 function include_view_mode_profile_data (int $user_id): void {
 	global $pageShell;
-	$pageShell->includeMomentJsLib();
 	$userModel = new UserModel($user_id);
 	$next_send_allowed_at = $userModel->getWhenNextSendAllowed();
+	if ( $next_send_allowed_at ) {
+		$pageShell->includeMomentJsLib();
+	}
 	$pageShell->addJsVar('nextSendAllowedAt', $next_send_allowed_at);
 	$profile_data = (function() use($user_id): array {
 		$desired_fields = ['user_id', 'username', 'would_relocate', 'body_type', 'height_in_in', 'weight_in_kg', 'have_children', 'want_children', 'self_described', 'lover_described', 'virtrades', 'last_visit', 'description', 'thumbnail_url', 'positive_keywords', 'negative_keywords', 'email_bouncing'];
