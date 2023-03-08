@@ -101,7 +101,6 @@ function printProfilePageInterface () {
 			return
 		}
 
-		var userTimezone = moment.tz.guess()
 		var $form = $(
 			'<form id="contact-form" action="/pages/profile/ajax?action=send_message" method="post">'
 				+'<div id="contact-form-instructions"></div>'
@@ -114,6 +113,7 @@ function printProfilePageInterface () {
 		var nextSendAllowedAt = pageData['nextSendAllowedAt']
 		var userPreviouslyContacted = $.isEmptyObject(pageData['conversation']) ? false : true
 		if (nextSendAllowedAt && !userPreviouslyContacted) {
+			var userTimezone = moment.tz.guess()
 			var nextAllowedSendMoment = moment.tz(nextSendAllowedAt, userTimezone)
 			var currentMoment = moment.tz(userTimezone)
 			var nextAllowedSendFormatted = (function(){
