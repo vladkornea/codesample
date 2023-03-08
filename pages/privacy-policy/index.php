@@ -35,6 +35,13 @@ $pageShell->addCssFile('/pages/privacy-policy/privacy-policy.css');
 	<h3>Contact Us</h3>
 	<ul>
 		<li>Send email to owner at typetango.com</li>
-		<li>TypeTango<br>70-22 66th St., 3L<br>Glendale, NY 11385-6518</li>
+		<li><address itemscope itemtype="http://schema.org/PostalAddress">
+			<span>TypeTango</span><br>
+			<span itemprop="streetAddress">70-22 66th Street, 3L</span><br>
+			<span itemprop="addressLocality">Glendale</span>,
+			<span itemprop="addressRegion"><abbr title="New York">NY</abbr></span>
+			<span itemprop="addressCode">11385</span>,
+			<span itemprop="addressCountry"><abbr title="United States of America">US</abbr></span>
+		</address></li>
 	</ul>
 </div>
