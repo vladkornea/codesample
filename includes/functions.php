@@ -44,7 +44,8 @@ function get_html_table_markup (array $table): string {
  */
 function convert_shorthand_byte_notation_to_bytes (string $shorthand_byte_notation): int {
 	$formula = str_replace(['K', 'M', 'G'], ['*1024', '*1048576', '*1073741824'], strtoupper($shorthand_byte_notation));
-	return eval("return intval($formula);");
+	$chunks = explode( '*', $formula );
+	return $chunks[0] * $chunks[1];
 } // convert_shorthand_byte_notation_to_bytes
 
 
