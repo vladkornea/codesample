@@ -53,8 +53,6 @@
 	{background-color:springgreen; color:black;}
 #positive-keywords > .negative-keyword, #negative-keywords > .positive-keyword
 	{background-color:Tomato; color:white;}
-#keywords-separator
-	{width:9px;}
 #positive-keywords-form input,
 #negative-keywords-form input
 	{font-size:11px;}
@@ -118,10 +116,6 @@ td.sender-username
 	{display:inline-block; float:left; text-align:center; padding:6px 10px; margin:0 10px 5px 0; border:1px solid chocolate; background-color:blanchedalmond; user-select:none; -moz-user-select:none; -ms-user-select:none;}
 #selected-photo-container
 	{display:block; text-align:center; padding:0; margin:6px; line-height:480px; position:relative;}
-#selected-photo-container       #selected-photo-controls-container
-	{display:none; position:absolute; line-height:1em; width:100%; top:20px;}
-#selected-photo-container:hover #selected-photo-controls-container
-	{display:block;}
 #delete-photo-button
 	{margin-left:60px;}
 #rotate-photo-button
