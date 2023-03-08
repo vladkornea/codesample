@@ -5,7 +5,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 $pageShell = new StandardPageShell();
 HttpPageShell::requireSessionLogin();
 $pageShell->addCssFile('/pages/profile/profile.css');
-$pageShell->addJsFile('/pages/profile/profile.js');
 
 if (empty($_GET['username']) and empty($_GET['user_id'])) {
 	$pageShell->setTitle("Edit Profile");
@@ -46,6 +45,8 @@ if (empty($_GET['username']) and empty($_GET['user_id'])) {
 		$pageShell->addJsFile( '/pages/profile/admin.js' );
 	}
 }
+
+$pageShell->addJsFile('/pages/profile/profile.js');
 
 return; // functions below
 
@@ -90,11 +91,11 @@ function include_view_mode_profile_data (int $user_id): void {
 	$pageShell->addJsVar('profileData', $profile_data);
 
 	$blocked_users = Session::getUserModel()->getBlockedUsers();
-	$is_blocked = in_array($user_id, $blocked_users) ? true : false;
+	$is_blocked = in_array($user_id, $blocked_users);
 	$pageShell->addJsVar('isBlocked', $is_blocked);
 
 	$reported_users = Session::getUserModel()->getReportedUsers();
-	$is_reported = in_array($user_id, $reported_users) ? true : false;
+	$is_reported = in_array($user_id, $reported_users);
 	$pageShell->addJsVar('isReported', $is_reported);
 
 	$pageShell->addJsVar('isDeactivated', $userModel->getIsDeactivated());
