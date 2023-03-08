@@ -75,10 +75,9 @@ function process_sqs_message (array $sqs_message, string $queue_name): void {
 	if ($success === false) {
 		trigger_error("Failed to process SQS message $db_sqs_message_id.", E_USER_WARNING);
 		return;
-	} else {
-		$event_synopsis = is_string($success) ? $success : null;
-		SQS::deleteMessageFromQueue($sqs_message['ReceiptHandle'], $queue_name);
-		$sqsMessage->markDeleted($event_synopsis);
 	}
+	$event_synopsis = is_string($success) ? $success : null;
+	SQS::deleteMessageFromQueue($sqs_message['ReceiptHandle'], $queue_name);
+	$sqsMessage->markDeleted($event_synopsis);
 } // process_sqs_message
 
