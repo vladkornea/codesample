@@ -936,6 +936,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 				'src':     photoData['thumbnail_url']
 				,'width':  photoData['thumbnail_width']
 				,'height': photoData['thumbnail_height']
+				,'alt':    photoData['caption'] || photoData['uploaded'] || 'Untitled Thumbnail'
 			}).css( 'transform', 'rotate(' +photoRotateAngle +'deg)' )
 			if ( 'edit' === carouselMode ) {
 				$photoCarouselThumbnailLink.attr('draggable', 'false')
