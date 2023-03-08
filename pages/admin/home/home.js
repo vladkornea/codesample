@@ -29,7 +29,7 @@ function printAdminHomePageInterface () {
 				+'</label>'
 				+'<input type="submit" value="Save">'
 			+'</form>'
-		).appendTo('#main')
+		).appendTo('main')
 		$globalSettingsForm.find('#process-received-queue-checkbox').prop('checked', currentSettings['process_received_queue'] == 1)
 		$globalSettingsForm.find('#process-sent-queue-checkbox').prop('checked', currentSettings['process_sent_queue'] == 1)
 		$globalSettingsForm.find('#send-queued-emails-checkbox').prop('checked', currentSettings['queued_email_sending'] == 1)

@@ -34,12 +34,10 @@ class AdminPageShell extends HtmlPageShell implements AdminPageShellInterface {
 			<div id="header-right"></div>
 		</div><!-- /#header -->
 	</div><!-- /#header-container -->
-	<div id="main-container">
-		<div id="main">
+		<main>
 <?=$this->getConfirmationMessageMarkupOnce()?>
 <?=$ob_contents?>
-		</div><!-- /#main -->
-	</div><!-- /#main-container -->
+		</main>
 	<ul id="navbar">
 		<li><a href="/admin/settings">Settings</a></li>
 		<li><a href="/admin/spammers">Spammers</a></li>

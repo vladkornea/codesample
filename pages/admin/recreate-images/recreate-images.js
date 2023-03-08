@@ -1,7 +1,7 @@
 $( printRecreateImagesPageInterface )
 
 function printRecreateImagesPageInterface () {
-	var $localContainer = $( '#main' );
+	var $localContainer = $( 'main' );
 	requestImageData()
 	return // functions below
 	function requestImageData () {

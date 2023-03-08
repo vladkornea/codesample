@@ -1,6 +1,6 @@
 $(printSpammersPageInterface)
 function printSpammersPageInterface () {
-	var $localContainer = $('#main')
+	var $localContainer = $('main')
 	var pageData = window['pageData']
 	if (!pageData) {
 		$('<p class="error">Missing pageData</p>').appendTo($localContainer)
