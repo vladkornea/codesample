@@ -125,6 +125,7 @@ abstract class BaseModel implements BaseModelInterface {
 	 * </code>
 	 * @param string $field_name
 	 * @return mixed scalar
+	 * @throws Exception
 	 */
 	protected function commonGet (string $field_name) {
 		if (!$this->record) {

@@ -1167,7 +1167,10 @@ EMAIL_TEXT;
 		return $this->update($update);
 	} // setPhotoOrder
 
-	/** @return string like '12,51,14' */
+	/**
+	 * @return string like '12,51,14'
+	 * @throws Exception
+	 */
 	public function getPhotoOrder (): string {
 		return $this->commonGet('photo_order');
 	} // getPhotoOrder

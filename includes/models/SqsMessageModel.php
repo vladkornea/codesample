@@ -52,7 +52,10 @@ class SqsMessageModel extends LoggedModel implements SqsMessageModelInterface {
 		return $local_db_sqs_message_id;
 	} // getLocalDbIdFromAwsMessageId
 
-	/** @return string|bool event synopsis or true on success, boolean false on error */
+	/**
+	 * @return string|bool event synopsis or true on success, boolean false on error
+	 * @throws EmailException
+	 */
 	public function processSqsMessage () {
 		$notification = $this->getNotification();
 		if (!$notification) {

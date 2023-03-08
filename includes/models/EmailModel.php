@@ -20,7 +20,10 @@ class EmailModel extends LoggedModel implements EmailModelInterface {
 	use EmailTraits;
 
 
-	/** @return null|string error message */
+	/**
+	 * @return null|string error message
+	 * @throws Exception
+	 */
 	protected function sendEmail (): ?string {
 		$ses = new SES;
 		$outcome = $ses->sendRawEmail($this->getRawSource());
@@ -38,7 +41,10 @@ class EmailModel extends LoggedModel implements EmailModelInterface {
 	} // sendEmail
 
 
-	/** @return null|string error message */
+	/**
+	 * @return null|string error message
+	 * @throws Exception
+	 */
 	public static function sendQueuedEmails (): ?string {
 		for ($i = 0; $i < 10; $i++) {
 			if (!GlobalSettings::queuedEmailSending()) {

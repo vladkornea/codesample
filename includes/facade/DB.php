@@ -550,6 +550,8 @@ class DB implements DB_Interface {
 	 * `DB::insert()` returns this automatically.
 	 * If the optional $query argument is provided, the query will be executed first.
 	 * @link http://www.php.net/manual/en/mysqli.insert-id.php
+	 * @param string|null $query
+	 * @return int
 	 */
 	public static function getInsertId ( string $query = null ) : int {
 		if ( $query ) {
@@ -679,7 +681,7 @@ class DB implements DB_Interface {
 	 * method is a shortcut way of doing the same thing; it cannot handle complex queries.
 	 * @param string $table_name
 	 * @param array|string $columns
-	 * @param array|string $where
+	 * @param array|string|null $where
 	 * @return mysqli_result
 	 */
 	public static function select (string $table_name, $columns, $where = null): mysqli_result {
@@ -777,6 +779,8 @@ class DB implements DB_Interface {
 	 * $log = DB::log( false );
 	 * </code>
 	 * Returns the current log after resetting it and optionally disabling further logging.
+	 * @param bool $enable_logging
+	 * @return array|null
 	 * @see DB::$log, DB::query()
 	 */
 	public static function log ( bool $enable_logging = true ) : ?array {

@@ -135,6 +135,7 @@ class SearchCriteriaModel extends LoggedModel implements SearchCriteriaModelInte
 	/**
 	 * @param array $form_data
 	 * @param string $event_synopsis
+	 * @param bool $log_query
 	 * @return int|array error messages or `search_criteria.search_criteria_id`
 	 */
 	public static function create (array $form_data, string $event_synopsis = '', bool $log_query = true) {

@@ -8,7 +8,7 @@ interface AjaxPageShellInterface extends HttpPageShellInterface {
 } // AjaxPageShellInterface
 
 class AjaxPageShell extends HttpPageShell implements AjaxPageShellInterface {
-	/** @param array|string $data_or_message */
+	/** @param array|string|null $data_or_message */
 	public function success ($data_or_message = null): void {
 		$data = is_array($data_or_message) ? $data_or_message : [];
 		$message = is_string($data_or_message) ? $data_or_message : '';

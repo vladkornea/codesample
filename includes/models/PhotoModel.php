@@ -201,6 +201,7 @@ class PhotoModel extends LoggedModel implements PhotoModelInterface {
 	 * @param string $event_synopsis
 	 * @param bool $log_query
 	 * @return array|int
+	 * @throws Exception
 	 */
 	static public function create ( array $form_data, string $event_synopsis = '', bool $log_query = true ) {
 		// refute invalid arguments

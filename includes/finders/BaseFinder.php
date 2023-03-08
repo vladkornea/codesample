@@ -58,6 +58,7 @@ abstract class BaseFinder implements BaseFinderInterface  {
 	 * Must be called after find(). Assumes that the query in the extending class's find()
 	 * method included 'sql_calc_found_rows' in its select clause.
 	 * @return int
+	 * @throws Exception
 	 */
 	public function getFoundPages () {
 		if ($this->pageSize == 0) {
@@ -95,7 +96,10 @@ abstract class BaseFinder implements BaseFinderInterface  {
 		return $select;
 	} // getSelectClause
 
-
+	/**
+	 * @param array $desired_fields
+	 * @return array
+	 */
 	protected function getValidDesiredFields (array $desired_fields): array {
 		$available_fields = static::getAvailableFields();
 		$valid_desired_fields = [];
