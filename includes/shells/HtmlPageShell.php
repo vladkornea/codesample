@@ -129,19 +129,17 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title><?=htmlspecialchars($this->pageTitle)?></title>
 <?php
-		if ($this->pageTitle) {
-			echo '<title>', htmlspecialchars($this->pageTitle), '</title>', "\n";
-		}
-		if ($this->metaDescription) {
-			echo '<meta name="description" content="', htmlspecialchars($this->metaDescription), '">', "\n";
-		}
-		if ($this->author) {
-			echo '<meta name="author" content="', htmlspecialchars($this->author), '">', "\n";
-		}
-		if ($this->keywords) {
-			echo '<meta name="keywords" content="', htmlspecialchars($this->keywords), '">', "\n";
-		}
+	if ($this->metaDescription) {
+		echo '<meta name="description" content="', htmlspecialchars($this->metaDescription), '">', "\n";
+	}
+	if ($this->author) {
+		echo '<meta name="author" content="', htmlspecialchars($this->author), '">', "\n";
+	}
+	if ($this->keywords) {
+		echo '<meta name="keywords" content="', htmlspecialchars($this->keywords), '">', "\n";
+	}
 ?>
 <?=$this->appendToHead?>
 <link rel="icon" href="/favicon.ico">
