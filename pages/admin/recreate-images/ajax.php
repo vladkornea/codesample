@@ -78,9 +78,6 @@ function handle_get_image_data () {
 	$oriented_width  = imagesx( $photo_resource );
 	$oriented_height = imagesy( $photo_resource );
 
-	$css_rotation_matches_exif_orientation = $exif_orientation_degrees == $old_rotate_angle;
-	if ( $css_rotation_matches_exif_orientation ) {}
-
 	// Create new standard photo.
 	$width_ratio  = $oriented_width  / PhotoModel::STANDARD_MAX_WIDTH;
 	$height_ratio = $oriented_height / PhotoModel::STANDARD_MAX_HEIGHT;
