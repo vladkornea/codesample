@@ -1,13 +1,13 @@
 $(printProfilePageInterface)
 function printProfilePageInterface () {
-	var $localContainer = $('<div id="profile-container"></div>').appendTo('#main')
+	var $localContainer = $('main')
 	var pageData = window['pageData']
 	if (!pageData) {
 		$localContainer.append('<p class="error">Missing page data.</p>')
 		return
 	}
 	if (pageData['isValidUser'] === false) {
-		$('#main').append('<p class="error">No such user.</p>')
+		$localContainer.append('<p class="error">No such user.</p>')
 		return
 	}
 	if (pageData['whyCannotViewUser']) {
@@ -904,7 +904,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 
 	// Print HTML and attach event handlers
 	var $document = $(document)
-	var $localContainer = $('<div id="photo-carousel-widget-container"></div>').prependTo('#profile-container')
+	var $localContainer = $('<div id="photo-carousel-widget-container"></div>').prependTo('main')
 	var $carouselWidget = $(
 		'<div id="photo-carousel-widget">'
 			+'<div id="carousel-thumbnail-area" class="structural">'

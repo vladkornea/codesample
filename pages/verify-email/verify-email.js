@@ -1,6 +1,6 @@
 $(printVerifyEmailPageInterface)
 function printVerifyEmailPageInterface () {
-	var $localContainer = $('#main')
+	var $localContainer = $('main')
 	sendVerifyEmailRequest()
 	return // functions below
 	function sendVerifyEmailRequest () {

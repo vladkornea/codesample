@@ -15,5 +15,3 @@ $js_vars = [
 ];
 $pageShell->addJsVar('defaultFormData', $js_vars);
 
-echo '<div id="account-form-container"></div>';
-

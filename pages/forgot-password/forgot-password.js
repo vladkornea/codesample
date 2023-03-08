@@ -1,6 +1,6 @@
 $(printForgotPasswordPageInterface)
 function printForgotPasswordPageInterface () {
-	var $localContainer = $('#main')
+	var $localContainer = $('main')
 	var verificationCode = getUrlParams()['verification_code']
 	var verificationCodeIsValid = window['pageData']['verificationCodeIsValid']
 	if (!verificationCodeIsValid) {

@@ -6,7 +6,7 @@ function printContactsPageInterface () {
 		alert('Missing pageData')
 		return
 	}
-	var $localContainer = $('#contacts-page-interface-container')
+	var $localContainer = $('main')
 
 	printPageStructure()
 

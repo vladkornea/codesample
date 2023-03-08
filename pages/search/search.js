@@ -1,6 +1,6 @@
 $(printSearchPageInterface)
 function printSearchPageInterface () {
-	var $localContainer = $( '<div id="search-page-container"></div>' ).appendTo( '#main' )
+	var $localContainer = $( 'main' )
 	var pageData = window['pageData']
 	if (!pageData) {
 		$('<p class="error">Missing pageData</p>').appendTo($localContainer)

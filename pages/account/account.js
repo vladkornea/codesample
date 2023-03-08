@@ -1,6 +1,6 @@
 $(printAccountPageInterface)
 function printAccountPageInterface () {
-	var $localContainer = $('#account-form-container')
+	var $localContainer = $('main')
 	var pageData = window['pageData']
 	if (!pageData) {
 		$localContainer.append('<p class="error">Missing page data.</p>')

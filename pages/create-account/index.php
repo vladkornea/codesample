@@ -16,5 +16,3 @@ if ($next_allowed_account_creation_time_of_ip_address) {
 
 $pageShell->addJsFiles(['/js/countries.js', '/js/usa-states.js', '/pages/create-account/create-account.js']); // create-account.js relies on countries.js and usa-states.js
 
-echo '<div id="account-creation-form-container"></div>';
-

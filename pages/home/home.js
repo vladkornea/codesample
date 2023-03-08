@@ -1,7 +1,7 @@
 // Written by Vladimir Kornea for TypeTango.com
 $(printHomePageInterface)
 function printHomePageInterface () {
-	var $localContainer = $('#main')
+	var $localContainer = $('main')
 	var pageData = window['pageData']
 	if (!pageData) {
 		$localContainer.html('<p class="error-message">Missing pageData</p>')

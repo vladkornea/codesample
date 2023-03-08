@@ -1,6 +1,6 @@
 $(printAccountCreationPageInterface)
 function printAccountCreationPageInterface () {
-	var $localContainer = $('#account-creation-form-container')
+	var $localContainer = $('main')
 	var pageData = window['pageData'] || {}
 	if (pageData['nextAllowedAccountCreationTime']) {
 		var userTimezone = moment.tz.guess()
