@@ -73,10 +73,11 @@ HEREDOC;
 		<td><a id="home-link" href="/"><img src="/images/typetango-logo.gif" alt="TypeTango" width="150" height="80"></a><a id="keyword-suggestions-link" href="/keyword-suggestions">💡 Keyword Suggestions</a><!-- <a id="type-distribution-link" href="/">📊 Type Distribution</a>--></td>
 		<td><a href="/help">❓ Help</a> <?php
 			if ( Session::getUserId() ) {
-				?><a id="account-link" href="/account">🔑 My Account</a> <a id="logout-link" href="/logout">🚪 Log Out</a></td><?php
+				?><a id="account-link" href="/account">🔑 My Account</a> <a id="logout-link" href="/logout">🚪 Log Out</a><?php
 			} else {
-				?><a id="account-link" href="/create-account"><!--📋-->📝 Create Account</a> <a id="login-link" href="/login">🚪 Log In</a></td><?php
+				?><a id="account-link" href="/create-account"><!--📋-->📝 Create Account</a> <a id="login-link" href="/login">🚪 Log In</a><?php
 			} ?>
+		</td>
 	</tr><tr>
 		<td colspan="2"><?php
 		if ( Session::getUserId() ) {
