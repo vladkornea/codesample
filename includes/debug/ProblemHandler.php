@@ -164,9 +164,7 @@ abstract class ProblemHandler {
 			$problem_details['Functions'] = $this->errorFunctions;
 		}
 		if (isset($this->memoryUsed)) {
-			$memory_limit = ini_get('memory_limit');
-			$memory_limit = str_replace(['K', 'M', 'G'], ['*1024', '*1048576', '*1073741824'], $memory_limit);
-			$memory_limit = eval("return $memory_limit;");
+			$memory_limit = convert_shorthand_byte_notation_to_bytes( ini_get('memory_limit') );
 			$percentage = round($this->memoryUsed / $memory_limit * 100, 2);
 			$problem_details['Memory'] = number_format($this->memoryUsed) .' of ' .number_format($memory_limit) ." bytes ($percentage%)";
 		}
