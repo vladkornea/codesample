@@ -137,7 +137,7 @@ class UserModel extends LoggedModel implements UserModelInterface {
 						if ($username_is_too_long) {
 							$error_messages['username'] = "Username cannot have more than " .static::$maxUsernameLength ." characters.";
 						} else {
-							$username_is_too_short = strlen($row_data['username']) < static::$minUsernameLength;;
+							$username_is_too_short = strlen($row_data['username']) < static::$minUsernameLength;
 							if ($username_is_too_short) {
 								$error_messages['username'] = "Username cannot have less than " .static::$minUsernameLength ." characters.";
 							} else {
