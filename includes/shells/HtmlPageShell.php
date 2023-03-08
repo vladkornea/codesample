@@ -66,7 +66,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 	public function addJsFile (string $js_file): void {
 		$requested_filename = $_SERVER['DOCUMENT_ROOT'] .$js_file;
 		$filemtime = file_exists($requested_filename) ? filemtime($requested_filename) : filemtime("$requested_filename.php");
-		$this->appendToHead('<script src="' ."$js_file?filemtime=$filemtime" .'"></script>');
+		$this->appendToHead('<script defer src="' ."$js_file?filemtime=$filemtime" .'"></script>');
 	} // addJsFile
 
 	/** @param array $js_files Some files like create-account.js and profile.js rely on files like countries.js and usa-states.js. */
