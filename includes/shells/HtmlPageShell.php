@@ -54,7 +54,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 	/** @param string $css_file Path relative to document root, starting with slash. */
 	public function addCssFile (string $css_file): void {
 		$filemtime = filemtime($_SERVER['DOCUMENT_ROOT'] .$css_file);
-		$this->appendToHead('<link rel="stylesheet" type="text/css" href="' ."$css_file?filemtime=$filemtime" .'">');
+		$this->appendToHead('<link rel="stylesheet" type="text/css" media="screen" href="' ."$css_file?filemtime=$filemtime" .'">');
 	} // addCssFile
 
 	/** @param string $js_code without `<script>` tags */
