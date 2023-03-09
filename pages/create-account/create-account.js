@@ -146,7 +146,7 @@ function printAccountCreationPageInterface () {
 		var $locationRow = $('#location-row')
 		$locationRow.empty()
 		var $country = $('#country')
-		var isAmerican = $country.val() == 'US' ? true : false
+		var isAmerican = $country.val() === 'US' ? true : false
 		if (isAmerican) {
 			var $locationRowCells = $(
 				'<th><label for="city">City</label>, <label for="state">State</label> <label for="zip-code">Zip Code</label></th>'
@@ -214,7 +214,7 @@ function printAccountCreationPageInterface () {
 		event.preventDefault()
 		removeOldErrorMessages($localContainer[0])
 		var $form = $(event.currentTarget)
-		if ($form.find('#password').val() != $form.find('#confirm-password').val()) {
+		if ($form.find('#password').val() !== $form.find('#confirm-password').val()) {
 			displayFormTableErrorMessage('#confirm-password', "Passwords don't match.")
 			return
 		}
@@ -240,7 +240,7 @@ function printAccountCreationPageInterface () {
 						if (fieldFound) {
 							displayFormTableErrorMessage($input, errorMessage);
 						} else {
-							if (fieldName == 'birth_date') {
+							if (fieldName === 'birth_date') {
 								displayFormTableErrorMessage('#birth-year', errorMessage)
 							} else {
 								displayFormTableErrorMessage($submitButton, errorMessage)

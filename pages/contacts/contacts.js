@@ -60,7 +60,7 @@ function printContactsPageInterface () {
 		var $tabContentContainer = $('#tab-content-container')
 		$tabContentContainer.empty()
 		var users = pageData['contacted_users']
-		if (!users || users.length == 0) {
+		if (!users || users.length === 0) {
 			$('<p>You have no contacted users.</p>').appendTo($tabContentContainer)
 			return
 		}
@@ -72,7 +72,7 @@ function printContactsPageInterface () {
 		var $tabContentContainer = $('#tab-content-container')
 		$tabContentContainer.empty()
 		var users = pageData['blocked_users']
-		if (!users || users.length == 0) {
+		if (!users || users.length === 0) {
 			$('<p>You have no blocked users.</p>').appendTo($tabContentContainer)
 			return
 		}
@@ -84,7 +84,7 @@ function printContactsPageInterface () {
 		var $tabContentContainer = $('#tab-content-container')
 		$tabContentContainer.empty()
 		var users = pageData['users_waiting_to_hear_from_you']
-		if (!users || users.length == 0) {
+		if (!users || users.length === 0) {
 			$('<p>You have no users waiting to hear from you.</p>').appendTo($tabContentContainer)
 			return
 		}
@@ -96,7 +96,7 @@ function printContactsPageInterface () {
 		var $tabContentContainer = $('#tab-content-container')
 		$tabContentContainer.empty()
 		var users = pageData['reported_users']
-		if (!users || users.length == 0) {
+		if (!users || users.length === 0) {
 			$('<p>You have no reported users.</p>').appendTo($tabContentContainer)
 			return
 		}

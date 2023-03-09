@@ -60,7 +60,7 @@ function printAccountPageInterface () {
 		var email = sessionData['email']
 		var verifiedEmail = defaultFormData['verifiedEmail']
 		var unverifiedEmail = defaultFormData['unverifiedEmail']
-		var userHasMultipleEmailAddresses = verifiedEmail && unverifiedEmail && (verifiedEmail != unverifiedEmail) ? true : false
+		var userHasMultipleEmailAddresses = verifiedEmail && unverifiedEmail && (verifiedEmail !== unverifiedEmail) ? true : false
 		if (userHasMultipleEmailAddresses) {
 			$('#verified-email').text(verifiedEmail)
 			$('#email-input').val(unverifiedEmail)
@@ -68,7 +68,7 @@ function printAccountPageInterface () {
 			$('#verified-email-row').remove()
 			$('#email-input').val(email)
 		}
-		var isBouncing = pageData['defaultFormData']['email_bouncing'] == 'bounced'
+		var isBouncing = pageData['defaultFormData']['email_bouncing'] === 'bounced'
 		if (isBouncing) {
 			var $bouncingNotice = $('<div id="bouncing-notice" class="error">Email is bouncing. Profile is inactive.</div>')
 			$bouncingNotice.insertAfter('#email-input')
@@ -81,7 +81,7 @@ function printAccountPageInterface () {
 		removeOldErrorMessages($localContainer[0])
 		var formData = {}
 		var newUsername = $('#username-input').val()
-		if (newUsername && newUsername != username) {
+		if (newUsername && newUsername !== username) {
 			formData['new_username'] = newUsername
 		}
 		var $email = $('#email-input')
@@ -98,7 +98,7 @@ function printAccountPageInterface () {
 			var newPassword = $newPassword.val()
 			var confirmNewPassword = $confirmNewPassword.val()
 			if (newPassword || confirmNewPassword) {
-				if (newPassword != confirmNewPassword) {
+				if (newPassword !== confirmNewPassword) {
 					displayFormTableErrorMessage($newPassword, "Passwords do not match.")
 					$newPassword.focus()
 					return

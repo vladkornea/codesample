@@ -195,12 +195,12 @@ function setNamedFormData (formElement, formData) {
 	var $form = $(formElement)
 	$.each(formData, function processField(fieldName, fieldValue) {
 		var $inputElement = $form.find('[name="'+fieldName+'"]')
-		if ($inputElement.length == 1) {
+		if ($inputElement.length === 1) {
 			$inputElement.val(fieldValue)
 			return
 		}
 		var $radioInput = $form.find('[name='+fieldName+'][value="'+fieldValue+'"]')
-		if ($radioInput.length == 1) {
+		if ($radioInput.length === 1) {
 			$radioInput.prop('checked', true)
 			return
 		}

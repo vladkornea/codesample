@@ -72,12 +72,12 @@ function printProfilePageInterface () {
 		,'lover_described': "What will you expect from people you meet through TypeTango?"
 	}
 
-	if (profileMode == 'edit') {
+	if (profileMode === 'edit') {
 		printPhotoCarouselWidget(pageData['photoCarouselData'])
 		printProfileForm()
 		printKeywordForms()
 	}
-	if (profileMode == 'view') {
+	if (profileMode === 'view') {
 		printPhotoCarouselWidget(pageData['photoCarouselData'])
 		printProfileInfo()
 		printKeywordsInfo()
@@ -89,13 +89,13 @@ function printProfilePageInterface () {
 
 	function printContactForm () {
 		var $contactFormContainer = $('#contact-form-container')
-		if ($contactFormContainer.length == 0) {
+		if ($contactFormContainer.length === 0) {
 			$contactFormContainer = $('<div id="contact-form-container"></div>').appendTo($localContainer)
 		} else {
 			$contactFormContainer.empty()
 		}
 
-		var isEmailBouncing = profileData['email_bouncing'] == 'bounced' || profileData['email_bouncing'] == 'complained'
+		var isEmailBouncing = profileData['email_bouncing'] === 'bounced' || profileData['email_bouncing'] === 'complained'
 		if (isEmailBouncing || pageData['theyBlockedUs']) {
 			$('<div id="cannot-message-notice">Cannot send message to user (usually because their email address is bouncing).</div>').appendTo($contactFormContainer)
 			return
@@ -197,7 +197,7 @@ function printProfilePageInterface () {
 
 	function printBlockAndReportButtons () {
 		var $buttonsContainer = $('#block-and-report-buttons-container')
-		if ($buttonsContainer.length == 0) {
+		if ($buttonsContainer.length === 0) {
 			$buttonsContainer = $('<div id="block-and-report-buttons-container"></div>').appendTo($localContainer)
 		} else {
 			$buttonsContainer.empty()
@@ -474,7 +474,7 @@ function printProfilePageInterface () {
 				var $textInputElement = $(event.currentTarget)
 				var originalTextInputValue = $textInputElement.data('originalValue')
 				var currentTextInputValue = $textInputElement.val()
-				if (originalTextInputValue != currentTextInputValue) {
+				if (originalTextInputValue !== currentTextInputValue) {
 					updateKeyword(event.currentTarget)
 				}
 			} // handleKeywordTextInputBlur
@@ -504,7 +504,7 @@ function printProfilePageInterface () {
 				var oldKeyword = $keywordInput.data('originalValue')
 				var newKeywordWeight = $keywordWeightInput.val()
 				var oldKeywordWeight = $keywordInput.data('originalValue')
-				var isUnchanged = newKeyword == oldKeyword && newKeywordWeight == oldKeywordWeight
+				var isUnchanged = newKeyword === oldKeyword && newKeywordWeight === oldKeywordWeight
 				if (isUnchanged) {
 					return
 				}
@@ -792,7 +792,7 @@ function printProfilePageInterface () {
 						if (fieldFound) {
 							displayFormTableErrorMessage($input, errorMessage)
 						} else {
-							if (fieldName == 'birth_date') {
+							if (fieldName === 'birth_date') {
 								displayFormTableErrorMessage('#birth-year', errorMessage)
 							} else {
 								displayFormTableErrorMessage($submitButton, errorMessage)
@@ -815,7 +815,7 @@ function printProfilePageInterface () {
 		var $countrySelect = $('#country')
 		var $locationRow = $('#location-row')
 		var countryCode = $countrySelect.val()
-		var isAmerican = countryCode == 'US' ? true : false
+		var isAmerican = countryCode === 'US' ? true : false
 		$locationRow.empty()
 		var $locationRowCells
 		if (!isAmerican) {
@@ -852,14 +852,14 @@ function printProfilePageInterface () {
 			$zipCode.on({'input': handleZipCodeInput})
 			$locationRowCells.appendTo($locationRow)
 		}
-		var userSelectedOriginalCountryAgain = profileData['country'] == countryCode
+		var userSelectedOriginalCountryAgain = profileData['country'] === countryCode
 		if (userSelectedOriginalCountryAgain) {
-			if (countryCode == 'US') {
+			if (countryCode === 'US') {
 				$('#city').val(profileData['city'])
 				$('#state').val(profileData['state'])
 				$('#zip-code').val(profileData['zip_code'])
 			}
-			if (countryCode != 'US') {
+			if (countryCode !== 'US') {
 				$('#city').val(profileData['city'])
 				$('#province').val(profileData['state'])
 				$('#postal-code').val(profileData['zip_code'])
@@ -903,7 +903,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 	var carouselPhotos = photoCarouselData['photos']
 	var urlParams = getUrlParams()
 	var carouselMode = (urlParams['user_id'] || urlParams['username']) ? 'view' : 'edit'
-	if (carouselMode == 'view' && !carouselPhotos.length) {
+	if (carouselMode === 'view' && !carouselPhotos.length) {
 		return // no photos in view mode means no carousel
 	}
 	var hashParams = getHashParams()
@@ -918,7 +918,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 			+'</div>'
 		+'</div>'
 	).appendTo($localContainer)
-	$carouselWidget.addClass(carouselMode == 'edit' ? 'edit-mode' : 'view-mode')
+	$carouselWidget.addClass(carouselMode === 'edit' ? 'edit-mode' : 'view-mode')
 	var $carouselThumbnailArea = $('#carousel-thumbnail-area')
 
 	;(function printCarouselThumbnails() {
@@ -954,7 +954,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 	})() // printCarouselThumbnails
 
 	;(function printUploadPhotoForm() {
-		if (carouselMode != 'edit') {
+		if (carouselMode !== 'edit') {
 			return
 		}
 		var $newPhotoUploadForm = $(
@@ -1129,7 +1129,7 @@ function printPhotoCarouselWidget (photoCarouselData) {
 			$elementBeingMoved.css({'top':'', 'left':'', 'z-index':''})
 			$carouselWidget.removeClass('dragging-happening')
 			var photoOrder = getPhotoOrder()
-			if ( $document.data('oldPhotoOrder') != photoOrder ) {
+			if ( $document.data('oldPhotoOrder') !== photoOrder ) {
 				apiCall('/pages/profile/ajax?action=set_photo_order', null, {'photo_order': photoOrder})
 			}
 		} // markAsNoLongerBeingMoved

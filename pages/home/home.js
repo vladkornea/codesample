@@ -93,7 +93,7 @@ function printHomePageInterface () {
 		var $typeDistributionChartBody = $typeDistributionTable.find('tbody')
 		for (var i = 0; i < mbtiTypes.length; i++) {
 			var loopMbtiType = mbtiTypes[i]
-			if (i % 4 == 0) {
+			if (i % 4 === 0) {
 				var $currentRowOfChart = $('<tr></tr>').appendTo($typeDistributionChartBody)
 			}
 			var totalUsersOfThisType = typeDistribution[loopMbtiType]

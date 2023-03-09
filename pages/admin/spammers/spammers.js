@@ -11,7 +11,7 @@ function printSpammersPageInterface () {
 	var $spammersForm = $('<form action="/pages/admin/spammers/ajax?action=update_spammers" method="post"></form>')
 
 	;(function appendKnownSpammers(){
-		if (knownSpammers.length == 0) {
+		if (knownSpammers.length === 0) {
 			return
 		}
 		$('<div>Check to mark as not spammer:</div><ul id="known-spammers-list" class="structural"></ul>').appendTo($spammersForm)
@@ -33,7 +33,7 @@ function printSpammersPageInterface () {
 	})() // appendNewSpammersInput
 
 	;(function appendSuspectedSpammers(){
-		if (suspectedSpammers.length == 0) {
+		if (suspectedSpammers.length === 0) {
 			return
 		}
 		$('<div>Suspected spammers:</div><ul id="suspected-spammers-list" class="structural"></ul>').appendTo($spammersForm)

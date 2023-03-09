@@ -43,7 +43,7 @@ function printForgotPasswordPageInterface () {
 				displayFormTableErrorMessage($password, "Password must be at least " +minPasswordLength +" characters long.")
 				return
 			}
-			var passwordMismatch = $password.val() != $confirmPassword.val()
+			var passwordMismatch = $password.val() !== $confirmPassword.val()
 			if (passwordMismatch) {
 				displayFormTableErrorMessage($confirmPassword, "Passwords do not match.")
 				return
