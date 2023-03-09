@@ -97,7 +97,7 @@ function printAccountCreationPageInterface () {
 					+'</tr><tr id="location-row">'
 					+'</tr><tr id="coordinates-row">'
 						+'<th><label for="latitude">Latitude</label>, <label for="longitude">Longitude</label></th>'
-						+'<td><input id="latitude" type="text" name="latitude" size="10">, <input id="longitude" type="text" name="longitude" size="10"> <span class="field-note">(not shown to others)</span><span class="field-block-note"><a href="https://www.google.com/maps/place/Statue+of+Liberty+National+Monument/@40.6892494,-74.0466891,17z" target="_blank">The Statue of Liberty is at 40.689247, -74.044502</a></span></td>'
+						+'<td><input id="latitude" type="text" name="latitude" size="10">, <input id="longitude" type="text" name="longitude" size="10"> <span class="field-note">(not shown to others)</span><span class="field-block-note"><a rel="external nofollow" href="https://www.google.com/maps/place/Statue+of+Liberty+National+Monument/@40.6892494,-74.0466891,17z" target="_blank">The Statue of Liberty is at 40.689247, -74.044502</a></span></td>'
 					+'</tr>'
 				+'</tbody><tfoot>'
 					+'<tr>'

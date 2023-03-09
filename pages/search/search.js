@@ -81,7 +81,7 @@ function printSearchPageInterface () {
 			var isLastPage = currentPageNumber == totalPages
 			if (!isLastPage) {
 				var nextPageNumber = parseInt(currentPageNumber) + 1
-				$('<a id="next-page-link">➜</a>').attr('href', '#page='+nextPageNumber).appendTo($paginationContainer)
+				$('<a rel="next" id="next-page-link">➜</a>').attr('href', '#page='+nextPageNumber).appendTo($paginationContainer)
 			}
 			;(function printPageNumbers (){
 				var pagesToShow = getPagesToShow(currentPageNumber, totalPages)
