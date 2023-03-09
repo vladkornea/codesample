@@ -120,7 +120,12 @@ function printContactsPageInterface () {
 				var primaryThumbnailWidth  = loopUser[ 'primary_thumbnail_width' ]
 				var primaryThumbnailHeight = loopUser[ 'primary_thumbnail_height' ]
 				var primaryThumbnailRotateAngle = loopUser[ 'primary_thumbnail_rotate_angle' ]
-				var $thumbnail = $( '<img>' ).attr( { 'src': thumbnailUrl, 'width': primaryThumbnailWidth, 'height': primaryThumbnailHeight } )
+				var $thumbnail = $( '<img>' ).attr( {
+					'src':    thumbnailUrl,
+					'width':  primaryThumbnailWidth,
+					'height': primaryThumbnailHeight,
+					'alt':    loopUser[ 'username' ]
+				} )
 				var $thumbnailContainer = $userTile.find( '.thumbnail-container' )
 				if ( primaryThumbnailRotateAngle ) {
 					$thumbnail.css( 'transform', 'rotate(' +primaryThumbnailRotateAngle +'deg)' )
