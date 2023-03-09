@@ -142,7 +142,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 	}
 ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' <?=htmlspecialchars($_SERVER['SERVER_NAME'])?>">
+<meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' https://<?=htmlspecialchars($_SERVER['SERVER_NAME'])?> https://www.googletagmanager.com https://www.google-analytics.com">
 <?=$this->appendToHead?>
 <link rel="icon" type="image/vnd.microsoft.icon" sizes="16x16" href="/favicon.ico">
 </head>
