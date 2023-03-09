@@ -204,15 +204,15 @@ function printProfilePageInterface () {
 		}
 		var isBlocked = pageData['isBlocked']
 		if (isBlocked) {
-			$('<input type="button" value="Unblock">').click(handleUnblockButtonClick).appendTo($buttonsContainer)
+			$('<input type="button" value="Unblock">').on('click', handleUnblockButtonClick).appendTo($buttonsContainer)
 		} else {
-			$('<input type="button" value="Block">').click(handleBlockButtonClick).appendTo($buttonsContainer)
+			$('<input type="button" value="Block">').on('click', handleBlockButtonClick).appendTo($buttonsContainer)
 		}
 		var isReported = pageData['isReported']
 		if (isReported) {
-			$('<input type="button" value="Unreport">').click(handleUnreportButtonClick).appendTo($buttonsContainer)
+			$('<input type="button" value="Unreport">').on('click', handleUnreportButtonClick).appendTo($buttonsContainer)
 		} else {
-			$('<input type="button" value="Report">').click(handleReportButtonClick).appendTo($buttonsContainer)
+			$('<input type="button" value="Report">').on('click', handleReportButtonClick).appendTo($buttonsContainer)
 		}
 		return // functions below
 		function handleBlockButtonClick () {
@@ -752,7 +752,7 @@ function printProfilePageInterface () {
 			$countrySelect.on('change', handleCountryChange)
 		})() // printCountryListOptions
 
-		$('#share_keywords-help').click(function(){alert("If you choose to restrict keywords, other users will be able to see only those of your keywords which they entered as well, and vice-versa. If you don't choose to restrict keywords, other users will see all of your keywords, and you'll be able to see all of theirs.")})
+		$('#share_keywords-help').on('click', function(){alert("If you choose to restrict keywords, other users will be able to see only those of your keywords which they entered as well, and vice-versa. If you don't choose to restrict keywords, other users will see all of your keywords, and you'll be able to see all of theirs.")})
 
 		;(function prefillCurrentFormValues(){
 			var defaultFormData = pageData['profileData']

@@ -190,11 +190,11 @@ function printSearchPageInterface () {
 			}
 		})() // addCountrySelectOptions
 
-		$('#match-shared-negatives-explanation').click(function(){
+		$('#match-shared-negatives-explanation').on('click', function(){
 			alert("If the \"Match shared negatives\" option is disabled, then the search will only match your positives with other users' positives, your positives with others' negatives, and your negatives with their positives, but it will not match your negatives with their negatives. The reasoning behind this is that shared dislikes aren't as important as shared likes. You will still see all shared negatives when viewing profiles.")
 		})
 
-		$('#toggle-type-checkboxes').click(function(event){
+		$('#toggle-type-checkboxes').on('click', function(event){
 			$(event.currentTarget).closest('fieldset').find('input[type=checkbox]').click()
 		})
 
