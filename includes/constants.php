@@ -10,9 +10,9 @@
 	define('PROFILE_PHOTOS_REMOTE_DIR', getenv('PROFILE_PHOTOS_REMOTE_DIR'));
 
 	// Basic Auth
-	define('ADMIN_IP_ADDRESS', getenv('ADMIN_IP_ADDRESS'));
-	define('ADMIN_HTTP_USERNAME',   getenv('ADMIN_HTTP_USERNAME'));
-	define('ADMIN_HTTP_PASSWORD',     getenv('ADMIN_HTTP_PASSWORD'));
+	define('ADMIN_IP_ADDRESSES',  getenv('ADMIN_IP_ADDRESSES'));
+	define('ADMIN_HTTP_USERNAME', getenv('ADMIN_HTTP_USERNAME'));
+	define('ADMIN_HTTP_PASSWORD', getenv('ADMIN_HTTP_PASSWORD'));
 
 	// Email sending and error handling
 	define('EMAIL_DOMAIN', getenv('EMAIL_DOMAIN'));

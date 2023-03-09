@@ -63,10 +63,14 @@ class HttpPageShell implements HttpPageShellInterface {
 
 	public static function requireAdminAccess (): void {
 		static::requireBasicHttpAuth();
-		$user_has_admin_ip_address = $_SERVER['REMOTE_ADDR'] == ADMIN_IP_ADDRESS;
-		if (!$user_has_admin_ip_address) {
-			static::forbid("Admin access required.");
+		if ( defined( 'ADMIN_IP_ADDRESSES' ) ) {
+			$addresses_array = explode( ',', ADMIN_IP_ADDRESSES );
+			$has_access = in_array ( $_SERVER['REMOTE_ADDR'], $addresses_array );
+			if( $has_access ) {
+				return;
+			}
 		}
+		static::forbid( "Admin access required." );
 	} // requireAdminAccess
 
 
