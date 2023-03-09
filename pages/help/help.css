@@ -6,3 +6,12 @@
 
 #help-page-text ul > li
 	{list-style-type:circle; margin:1em 0;}
+
+main [itemtype="https://schema.org/Book"] > [itemprop="name"]
+	{font-weight: bold;font-style: italic;}
+
+main [itemtype="http://schema.org/Person"] > [itemprop="name"]
+	{font-style: italic;}
+
+main [itemtype="https://schema.org/Review"] > [itemprop="reviewBody"]
+	{font-size: small;}
