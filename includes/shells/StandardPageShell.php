@@ -70,20 +70,20 @@ HEREDOC;
 		$ob_content = ob_get_clean(); ?>
 <table id="page-structure" class="structural<?=Session::getUserId() ? ' logged_in' : ''?>"><thead>
 	<tr>
-		<td><a id="home-link" href="/"><img src="/images/typetango-logo.gif" alt="TypeTango" width="150" height="80"></a><a id="keyword-suggestions-link" href="/keyword-suggestions">💡 Keyword Suggestions</a><!-- <a id="type-distribution-link" href="/">📊 Type Distribution</a>--></td>
-		<td><a href="/help">❓ Help</a> <?php
+		<td><nav><a id="home-link" href="/"><img src="/images/typetango-logo.gif" alt="TypeTango" width="150" height="80"></a><a id="keyword-suggestions-link" href="/keyword-suggestions">💡 Keyword Suggestions</a></nav></td>
+		<td><nav><a href="/help">❓ Help</a> <?php
 			if ( Session::getUserId() ) {
 				?><a id="account-link" href="/account">🔑 My Account</a> <a id="logout-link" href="/logout">🚪 Log Out</a><?php
 			} else {
 				?><a id="account-link" href="/create-account"><!--📋-->📝 Create Account</a> <a id="login-link" href="/login">🚪 Log In</a><?php
 			} ?>
-		</td>
+		</nav></td>
 	</tr><tr>
-		<td colspan="2"><?php
+		<td colspan="2"><nav><?php
 		if ( Session::getUserId() ) {
 			?><a id="edit-profile-link" href="/profile">✎ Edit Profile</a> <a id="view-profile-link" href="/profile?user_id=<?=Session::getUserId()?>">👀 View Profile</a> <a id="search-link" href="/search">🔍 Search</a> <a id="contacts-link" href="/contacts">✉ Contacts</a><?php
 		} ?>
-		</td>
+		</nav></td>
 	</tr>
 </thead><tbody>
 	<tr>
