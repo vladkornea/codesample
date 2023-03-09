@@ -141,6 +141,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 		echo '<meta name="keywords" content="', htmlspecialchars($this->keywords), '">', "\n";
 	}
 ?>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <?=$this->appendToHead?>
 <link rel="icon" href="/favicon.ico">
 </head>
