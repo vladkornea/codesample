@@ -142,6 +142,7 @@ class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
 	}
 ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' <?=htmlspecialchars($_SERVER['SERVER_NAME'])?>">
 <?=$this->appendToHead?>
 <link rel="icon" href="/favicon.ico">
 </head>
