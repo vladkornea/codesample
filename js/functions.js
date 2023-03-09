@@ -33,6 +33,9 @@ function submitFormViaAjax (formElement/*can be a jQuery object or selector stri
 	;(function addExtraDataToFormData(){
 		if (extraData) {
 			for (var fieldName in extraData) {
+				if ( ! extraData.hasOwnProperty( fieldName ) ) {
+					continue
+				}
 				var fieldValue = extraData[fieldName]
 				formData.append(fieldName, fieldValue)
 			}
@@ -251,6 +254,9 @@ function changeHashParams (replacementHashParams) {
 function getQueryString (queryParams) {
 	var keyValuePairs = []
 	for (var paramName in queryParams) {
+		if ( ! queryParams.hasOwnProperty( paramName ) ) {
+			continue
+		}
 		var paramValue = queryParams[paramName]
 		var keyValuePair = paramName +'=' +encodeURIComponent(paramValue)
 		keyValuePairs.push(keyValuePair)

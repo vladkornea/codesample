@@ -369,6 +369,9 @@ function printProfilePageInterface () {
 			var $positiveKeywordsCell = $('<td id="positive-keywords"></td>').appendTo($keywordsInfoTable.find('tbody > tr'))
 			;(function appendKeywords(){
 				for (var keyword in positiveKeywords) {
+					if ( ! positiveKeywords.hasOwnProperty( keyword ) ) {
+						continue
+					}
 					var weight = positiveKeywords[keyword]
 					var text = keyword
 					var spanClass = ''
@@ -391,6 +394,9 @@ function printProfilePageInterface () {
 			var $negativeKeywordsCell = $('<td id="negative-keywords"></td>').appendTo($keywordsInfoTable.find('tbody > tr'))
 			;(function appendKeywords(){
 				for (var keyword in negativeKeywords) {
+					if ( ! negativeKeywords.hasOwnProperty( keyword ) ) {
+						continue
+					}
 					var weight = negativeKeywords[keyword]
 					var text = keyword
 					var spanClass = ''
@@ -1396,6 +1402,9 @@ function printPhotoCarouselWidget (photoCarouselData) {
 				if (response['error_messages']) {
 					var errorMessages = []
 					for (var property in response['error_messages']) {
+						if ( ! response['error_messages'].hasOwnProperty( property ) ) {
+							continue
+						}
 						errorMessages.push(response['error_messages'][property])
 					}
 					alert(errorMessages.join("\n"))
