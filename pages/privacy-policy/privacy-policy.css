@@ -1,14 +1,14 @@
-#privacy-policy-text
+main article
 	{display:inline-block; font-size:14px; line-height:21px; max-width:640px; text-align:justify;}
 
-#privacy-policy-text h3
+main article h3
 	{background-color:#2a333b; color:white; padding:2px 8px; font-size:14px;}
 
-#privacy-policy-text ul
+main article ul
 	{list-style-type:circle; padding-left:1.5em;}
 
-#privacy-policy-text ul > li
+main article ul > li
 	{margin:1em 0;}
 
-#privacy-policy-text a
+main article a
 	{color:inherit; text-decoration:underline;}
