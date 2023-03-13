@@ -77,7 +77,7 @@ function printSearchPageInterface () {
 			if (totalPages < 2) {
 				return
 			}
-			var $paginationContainer = $('<footer id="pagination-container"></footer>').insertAfter($searchResultsList)
+			var $paginationContainer = $('<nav id="pagination-container"></nav>').insertAfter($searchResultsList)
 			var isLastPage = currentPageNumber == totalPages
 			if (!isLastPage) {
 				var nextPageNumber = parseInt(currentPageNumber) + 1
@@ -99,7 +99,7 @@ function printSearchPageInterface () {
 			if (matchCount.toLocaleString) {
 				matchCount = matchCount.toLocaleString()
 			}
-			$('<div id="number-of-matches"></div>').text(matchCount +' matches').appendTo($paginationContainer)
+			$('<aside id="number-of-matches"></aside>').text(matchCount +' matches').appendTo($paginationContainer)
 		} // printPagination
 	} // printSearchResults
 
