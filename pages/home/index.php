@@ -13,9 +13,9 @@ $pageShell->addJsVar('totalUsers', array_sum($type_distribution));
 $pageShell->addJsVar('countryStatistics', UserFinder::getCountryStatistics());
 
 ?>
-<div id="site-description">
+<section id="site-description">
 	<p>TypeTango is a dating site based on Jungian Myers-Briggs/Keirsey personality theory.</p>
 	<p>TypeTango's keyword matching system lets you find people based on shared values and interests.</p>
 	<p>TypeTango is free to use. New contacts are limited to one per day.</p>
-</div>
+</section>
 <br>
