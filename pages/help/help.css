@@ -1,10 +1,10 @@
-#help-page-text
+main
 	{display:inline-block; font-size:14px; line-height:21px; max-width:7.5in; text-align:justify;}
 
-#help-page-text h3
+main h3
 	{background-color:#2a333b; color:white; padding:2px 8px; font-size:14px;}
 
-#help-page-text ul > li
+main ul > li
 	{list-style-type:circle; margin:1em 0;}
 
 main [itemtype="https://schema.org/Book"] > [itemprop="name"]
