@@ -8,26 +8,26 @@ $pageShell->addCssFile('/pages/help/help.css');
 ?>
 
 <section>
-<h3>How do TypeTango keywords work?</h3>
+<header><h3>How do TypeTango keywords work?</h3></header>
 <p>There are two sets of keywords: <i>positives</i> and <i>negatives</i>. To view and edit these keywords, go to your profile.</p>
 
 <p>If you love to dance and dislike sarcasm, you'd enter <i>dancing</i> in positives and <i>sarcasm</i> in negatives. When you search, all your keywords are compared to all other users' keywords, and users are shown in order of total match score.</p>
 </section>
 
 <section>
-<h3>How do keyword weights work?</h3>
+<header><h3>How do keyword weights work?</h3></header>
 
 <p>Keyword weights control the relative importance of your keywords when searching. The higher the weight you assign to a keyword, the more it will increase or decrease your match score. If you assign the weight of 10 to <i>dancing</i> and only give 2 to <i>sarcasm</i>, dancing will be considered five times more important than sarcasm. The maximum keyword weight is 250.</p>
 </section>
 
 <section>
-<h3>How will a person know that I want to contact them?</h3>
+<header><h3>How will a person know that I want to contact them?</h3></header>
 
 <p>TypeTango sends an email to the person you are attempting to contact.</p>
 </section>
 
 <section>
-<h3>Books</h3>
+<header><h3>Books</h3></header>
 <ul><li itemscope itemtype="https://schema.org/Book">
 	<a itemprop="name" rel="external nofollow" href="https://www.amazon.com/exec/obidos/tg/detail/-/089106074X" target="_blank">
 		Gifts Differing: Understanding Personality Type
@@ -101,7 +101,7 @@ $pageShell->addCssFile('/pages/help/help.css');
 </section>
 
 <section>
-<h3>Contact Us</h3>
+<header><h3>Contact Us</h3></header>
 <p>Send an email to owner at <?=EMAIL_DOMAIN?></p>
 </section>
 
