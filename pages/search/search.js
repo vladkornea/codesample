@@ -32,7 +32,7 @@ function printSearchPageInterface () {
 	function printSearchResults (searchResults) {
 		$('body').removeClass('wait')
 		$('#search-results-container').remove()
-		var $searchResultsContainer = $('<div id="search-results-container"></div>').appendTo($localContainer)
+		var $searchResultsContainer = $('<section id="search-results-container"></section>').appendTo($localContainer)
 		var foundUsers = searchResults['users']
 		if (!foundUsers.length) {
 			$('<p>None found.</p>').appendTo($searchResultsContainer)
@@ -77,7 +77,7 @@ function printSearchPageInterface () {
 			if (totalPages < 2) {
 				return
 			}
-			var $paginationContainer = $('<div id="pagination-container"></div>').insertAfter($searchResultsList)
+			var $paginationContainer = $('<footer id="pagination-container"></footer>').insertAfter($searchResultsList)
 			var isLastPage = currentPageNumber == totalPages
 			if (!isLastPage) {
 				var nextPageNumber = parseInt(currentPageNumber) + 1
@@ -105,7 +105,7 @@ function printSearchPageInterface () {
 
 	function printSearchForm () {
 		$('#search-form-container').remove()
-		var $searchFormContainer = $('<div id="search-form-container"></div>').appendTo($localContainer)
+		var $searchFormContainer = $('<section id="search-form-container"></section>').appendTo($localContainer)
 		var searchFormData = pageData['searchFormData']
 		if (!searchFormData) {
 			$('<p class="error"></p>').text('Missing searchFormData').appendTo($searchFormContainer)
