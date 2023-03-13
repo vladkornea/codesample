@@ -46,12 +46,14 @@ function printContactsPageInterface () {
 
 	function printPageStructure () {
 		var $tabsContainer = $(
-			'<div id="contacts-page-tabs-container">'
-				+'<a id="waiting-to-hear-from-you-tab" href="#tab=waiting_to_hear_from_you">Waiting to Hear from You</a>'
-				+'<a id="contacted-users-tab" href="#tab=contacted_users">Contacted Users</a>'
-				+'<a id="blocked-users-tab" href="#tab=blocked_users">Blocked Users</a>'
-				+'<a id="reported-users-tab" href="#tab=reported_users">Reported Users</a>'
-			+'</div><div id="tab-content-container"></div>'
+			'<nav id="contacts-page-tabs-container">'
+				+'<ul>'
+				+'<li id="waiting-to-hear-from-you-tab"><a href="#tab=waiting_to_hear_from_you">Waiting to Hear from You</a></li>'
+				+'<li id="contacted-users-tab"><a href="#tab=contacted_users">Contacted Users</a></li>'
+				+'<li id="blocked-users-tab"><a href="#tab=blocked_users">Blocked Users</a></li>'
+				+'<li id="reported-users-tab"><a href="#tab=reported_users">Reported Users</a></li>'
+				+'</ul>'
+			+'</nav><section id="tab-content-container"></section>'
 		)
 		$tabsContainer.appendTo($localContainer)
 	} // printPageStructure

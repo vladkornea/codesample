@@ -1,3 +1,25 @@
+main
+	{text-align:left;}
+
+#contacts-page-tabs-container
+	{padding-left:20px;}
+#contacts-page-tabs-container ul
+	{list-style-type:none; padding:0; margin:0;}
+#contacts-page-tabs-container li
+	{display:inline-block; padding:0; margin:0 5px; position:relative; top:1px; list-style-type:none; border:1px solid chocolate; border-bottom:none; border-top-left-radius:12px; border-top-right-radius:12px;}
+#contacts-page-tabs-container li.selected
+	{background-color:papayawhip;}
+#contacts-page-tabs-container li a
+	{display:inline-block; padding:7px 20px; margin:0;}
+#contacts-page-tabs-container li.selected a
+	{padding-top:14px;}
+
+#tab-content-container
+	{background-color:papayawhip; border:1px solid chocolate; border-radius:12px; padding:10px 27px;}
+
+.thumbnail-container
+	{min-height:80px; min-width:80px;}
+
 .user-tile
 	{border:1px solid chocolate; background-color:blanchedalmond; padding:10px; margin:10px; display:inline-block; text-align:center;}
 .user-link
@@ -5,17 +27,3 @@
 .username
 	{display:block;}
 
-#contacts-page-tabs-container
-	{position:relative; padding-left:20px;}
-#contacts-page-tabs-container a
-	{display:inline-block; border:1px solid chocolate; border-bottom:none; padding:7px 14px; margin:7px 7px 0 10px; border-top-left-radius:12px; border-top-right-radius:12px; vertical-align:bottom;}
-#contacts-page-tabs-container a.selected
-	{background-color:papayawhip; padding:10px 20px; position:relative; top:1px;}
-#tab-content-container
-	{background-color:papayawhip; border:1px solid chocolate; border-radius:12px; padding:10px 27px;}
-
-.thumbnail-container
-	{min-height:80px; min-width:80px;}
-
-main
-	{text-align:left;}
