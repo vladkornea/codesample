@@ -140,7 +140,7 @@ function confirmBackspaceNavigations () {
 
 
 /**
- * Returns an object like { 'name':'Vladimir Kornea', 'favorites':['Ayn Rand','TNG','House MD'] }
+ * Returns an object like { 'name':'John Doe', 'favorites':['TNG','LOTR'] }
  * All fields that have a 'name' attribute are included.
  * Checkboxes can be boolean toggles or a set of values. While we could assume that whenever there
  * is only one checkbox it is boolean, that assumption might fail at times, for example maybe

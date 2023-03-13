@@ -52,7 +52,7 @@ class AdminPageShell extends HtmlPageShell implements AdminPageShellInterface {
 	<div id="footer-placeholder"></div>
 </div><!-- /#non-footer -->
 <div id="footer">
-	<span id="copyright-notice">Copyright <a href="/contact" rel="help">Vladimir Kornea</a></span>
+	<span id="copyright-notice">Copyright <a href="/contact" rel="help">Vlad Kornea</a></span>
 </div><!-- /#footer -->
 <?php
 		parent::__destruct();

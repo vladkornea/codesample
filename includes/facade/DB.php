@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Vladimir Kornea
+ * @author Vlad Kornea
  * @license http://www.kornea.com Please do not copy verbatim without attribution.
  * @uses PHP 7.1+ (void return types, nullable return types)
  * @uses PHP 7 (scalar type declarations, return type declarations)

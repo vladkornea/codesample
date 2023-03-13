@@ -357,7 +357,7 @@ class Email implements EmailInterface {
 
 
 	/**
-	 * @param string $header_string_value like "Vladimir Kornea" <vladkornea@gmail.com>
+	 * @param string $header_string_value like "John Doe" <johndoe@example.com>
 	 * @return string email address
 	 */
 	public static function extractEmailAddress (string $header_string_value): string {

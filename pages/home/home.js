@@ -1,4 +1,3 @@
-// Written by Vladimir Kornea for TypeTango.com
 $(printHomePageInterface)
 function printHomePageInterface () {
 	var $localContainer = $('main')

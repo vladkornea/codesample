@@ -19,7 +19,7 @@ interface HtmlPageShellInterface extends HttpPageShellInterface {
 } // HtmlPageShellInterface
 
 class HtmlPageShell extends HttpPageShell implements HtmlPageShellInterface {
-	protected $author       = "Vladimir Kornea";
+	protected $author       = "Vlad Kornea";
 	protected $pageTitle    = ''; // Passed to constructor.
 	protected $keywords     = ''; // Call ->setKeywords().
 	protected $appendToHead = ''; // Call ->appendToHead().
