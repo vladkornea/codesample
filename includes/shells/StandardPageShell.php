@@ -105,11 +105,12 @@ HEREDOC;
 		<td colspan="2"><main><?=$this->getAccountIsDeactivatedMessageMarkup()?><?=$this->getConfirmationMessageMarkupOnce()?><?=$ob_content?></main></td>
 	</tr>
 </tbody><tfoot>
-	<tr><td colspan="2" id="footer"><div id="footer-copyright-notice">
+	<tr><td colspan="2" id="footer"><footer><section id="footer-copyright-notice">
 		Myers-Briggs®, MBTI®, and Myers-Briggs Type Indicator® are trademarks of <a rel="external nofollow" href="https://trademarks.corporationwiki.com/marks-owner/myers-briggs-foundation/169559544/" target="_blank">the Myers &amp; Briggs Foundation</a>.<br>
 		Keirsey Temperament Sorter®, Keirsey®, Guardian®, Artisan®, and Rational® are trademarks of <a rel="external nofollow" href="https://trademarks.corporationwiki.com/marks-owner/prometheus-nemesis-book-company/40766872/" target="_blank">Prometheus Nemesis Book Company</a>.<br>
-		TypeTango is not affiliated with either organization. © <?=date('Y')?> <a rel="author external" href="https://www.kornea.com/resume" target="_blank" >Vladimir Kornea</a>. All rights reserved. Logo by <a rel="external nofollow" href="https://www.easchweitzer.com/" target="_blank">Elise Schweitzer</a>.</div><a rel="license" id="privacy-policy-page-footer-link" href="/privacy-policy">🔒 Cookies and Privacy Policy</a>
-</td></tr>
+		TypeTango is not affiliated with either organization. © <?=date('Y')?> <a rel="author external" href="https://www.kornea.com/resume" target="_blank" >Vladimir Kornea</a>. All rights reserved. Logo by <a rel="external nofollow" href="https://www.easchweitzer.com/" target="_blank">Elise Schweitzer</a>.</section>
+		<a rel="license" id="privacy-policy-page-footer-link" href="/privacy-policy">🔒 Cookies and Privacy Policy</a>
+	</footer></td></tr>
 </tfoot></table>
 <?php
 	} // printStandardPageMarkup
