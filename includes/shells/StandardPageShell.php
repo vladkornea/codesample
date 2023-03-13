@@ -67,7 +67,9 @@ HEREDOC;
 
 
 	protected function printStandardPageMarkup () {
-		$ob_content = ob_get_clean(); ?>
+		$ob_content = ob_get_clean();
+		$copyright_year = date('Y');
+		?>
 <table id="page-structure" class="structural<?=Session::getUserId() ? ' logged_in' : ''?>"><thead>
 	<tr>
 		<td><nav><ul>
@@ -105,10 +107,13 @@ HEREDOC;
 		<td colspan="2"><main><?=$this->getAccountIsDeactivatedMessageMarkup()?><?=$this->getConfirmationMessageMarkupOnce()?><?=$ob_content?></main></td>
 	</tr>
 </tbody><tfoot>
-	<tr><td colspan="2" id="footer"><footer><section id="footer-copyright-notice">
-		Myers-Briggs®, MBTI®, and Myers-Briggs Type Indicator® are trademarks of <a rel="external nofollow" href="https://trademarks.corporationwiki.com/marks-owner/myers-briggs-foundation/169559544/" target="_blank">the Myers &amp; Briggs Foundation</a>.<br>
-		Keirsey Temperament Sorter®, Keirsey®, Guardian®, Artisan®, and Rational® are trademarks of <a rel="external nofollow" href="https://trademarks.corporationwiki.com/marks-owner/prometheus-nemesis-book-company/40766872/" target="_blank">Prometheus Nemesis Book Company</a>.<br>
-		TypeTango is not affiliated with either organization. © <?=date('Y')?> <a rel="author external" href="https://www.kornea.com/resume" target="_blank" >Vlad Kornea</a>. All rights reserved. Logo by <a rel="external nofollow" href="https://www.easchweitzer.com/" target="_blank">Elise Schweitzer</a>.</section>
+	<tr><td colspan="2" id="footer"><footer>
+		<section id="footer-copyright-notice">
+Myers-Briggs®, MBTI®, and Myers-Briggs Type Indicator® are trademarks of <a rel="external nofollow" href="https://trademarks.corporationwiki.com/marks-owner/myers-briggs-foundation/169559544/" target="_blank">the Myers &amp; Briggs Foundation</a>.<br>
+Keirsey Temperament Sorter®, Keirsey®, Guardian®, Artisan®, and Rational® are trademarks of <a rel="external nofollow" href="https://trademarks.corporationwiki.com/marks-owner/prometheus-nemesis-book-company/40766872/" target="_blank">Prometheus Nemesis Book Company</a>.<br>
+TypeTango is not affiliated with either organization. © <time datetime="<?=$copyright_year?>"><?=$copyright_year?></time> <a rel="author external" href="https://www.kornea.com/resume" target="_blank" >Vlad Kornea</a>.
+All rights reserved. Logo by <a rel="external nofollow" href="https://www.easchweitzer.com/" target="_blank">Elise Schweitzer</a>.
+		</section>
 		<a rel="license" id="privacy-policy-page-footer-link" href="/privacy-policy">🔒 Cookies and Privacy Policy</a>
 	</footer></td></tr>
 </tfoot></table>
