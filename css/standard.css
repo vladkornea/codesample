@@ -16,6 +16,12 @@ table#page-structure
 #page-structure > tfoot
 	{font-size:11px; line-height:13px; color:white; background-color:#2a333b;}
 
+/* new */
+#page-structure > thead nav ul
+	{margin:0; padding:0;}
+#page-structure > thead nav li
+	{display:inline;}
+
 /* page structure table rows */
 #page-structure > thead > tr:first-child
 	{background-color:#0D7CC1; line-height:1px;}

@@ -70,20 +70,35 @@ HEREDOC;
 		$ob_content = ob_get_clean(); ?>
 <table id="page-structure" class="structural<?=Session::getUserId() ? ' logged_in' : ''?>"><thead>
 	<tr>
-		<td><nav><a id="home-link" href="/"><img src="/images/typetango-logo.gif" alt="TypeTango" width="150" height="80"></a><a id="keyword-suggestions-link" href="/keyword-suggestions">💡 Keyword Suggestions</a></nav></td>
-		<td><nav><a rel="help" href="/help">❓ Help</a> <?php
-			if ( Session::getUserId() ) {
-				?><a id="account-link" href="/account">🔑 My Account</a> <a id="logout-link" href="/logout">🚪 Log Out</a><?php
-			} else {
-				?><a id="account-link" href="/create-account"><!--📋-->📝 Create Account</a> <a id="login-link" href="/login">🚪 Log In</a><?php
+		<td><nav><ul>
+			<li><a id="home-link" href="/"><img src="/images/typetango-logo.gif" alt="TypeTango" width="150" height="80"></a></li>
+			<li><a id="keyword-suggestions-link" href="/keyword-suggestions">💡 Keyword Suggestions</a></li>
+		</ul></nav></td>
+		<td><nav><ul>
+			<li><a rel="help" href="/help">❓ Help</a></li>
+		<?php
+			if ( Session::getUserId() ) { ?>
+				<li><a id="account-link" href="/account">🔑 My Account</a></li>
+				<li><a id="logout-link" href="/logout">🚪 Log Out</a></li>
+			<?php
+			} else { ?>
+				<li><a id="account-link" href="/create-account"><!--📋-->📝 Create Account</a></li>
+				<li><a id="login-link" href="/login">🚪 Log In</a></li>
+			<?php
 			} ?>
-		</nav></td>
+		</ul></nav></td>
 	</tr><tr>
-		<td colspan="2"><nav><?php
-		if ( Session::getUserId() ) {
-			?><a id="edit-profile-link" href="/profile">✎ Edit Profile</a> <a id="view-profile-link" href="/profile?user_id=<?=Session::getUserId()?>">👀 View Profile</a> <a id="search-link" href="/search">🔍 Search</a> <a id="contacts-link" href="/contacts">✉ Contacts</a><?php
+		<td colspan="2"><?php
+		if ( Session::getUserId() ) { ?>
+			<nav><ul>
+				<li><a id="edit-profile-link" href="/profile">✎ Edit Profile</a></li>
+				<li><a id="view-profile-link" href="/profile?user_id=<?=Session::getUserId()?>">👀 View Profile</a></li>
+				<li><a id="search-link" href="/search">🔍 Search</a></li>
+				<li><a id="contacts-link" href="/contacts">✉ Contacts</a></li>
+			</ul></nav>
+		<?php
 		} ?>
-		</nav></td>
+		</td>
 	</tr>
 </thead><tbody>
 	<tr>
