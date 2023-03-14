@@ -111,12 +111,12 @@ function printHomePageInterface () {
 		var functionAliases = new Map([
 			['Ti', 'Clarity'],
 			['Te', 'Purpose'],
-			['Fi', 'Emotion'],
+			['Fi', 'Emotional Awareness'],
 			['Fe', 'Relationships'],
-			['Si', 'Memory'],
-			['Se', 'Physical Interaction'],
+			['Si', 'Memories'],
+			['Se', 'Physical Interactions'],
 			['Ne', 'Imagination'],
-			['Ni', 'Perspective']
+			['Ni', 'Perspectives']
 		])
 		var $typeDistributionChartBody = $('<tbody></tbody>')
 		for (var i = 0; i < mbtiTypes.length; i++) {
@@ -132,7 +132,6 @@ function printHomePageInterface () {
 				+ ' ' + typeWords.get( loopMbtiType.charAt(3) )
 				+ ' - Dominant ' + functionAliases.get( functionStack.substr(0, 2) )
 				+ ', Auxiliary ' + functionAliases.get( functionStack.substr(2, 2) )
-				+ ', Tertiary ' + functionAliases.get( functionStack.substr(4, 2) )
 				+ ', Inferior ' + functionAliases.get( functionStack.substr(6, 2) )
 			)
 			var $mbtiType = $('<abbr></abbr>').text(loopMbtiType)
