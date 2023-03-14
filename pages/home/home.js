@@ -80,26 +80,72 @@ function printHomePageInterface () {
 			return
 		}
 		var mbtiTypes = ['ISTJ','ISFJ','INFJ','INTJ','ISTP','ISFP','INFP','INTP','ESTP','ESFP','ENFP','ENTP','ESTJ','ESFJ','ENFJ','ENTJ']
-		var chartBackgroundColor = 'LemonChiffon'
-		var chartForegroundColor = 'RoyalBlue'
-		var $typeDistributionTable = $(
-			'<table id="type-distribution">'
-				// +'<thead><tr><th colspan="4">Type Distribution</th></tr></thead>'
-				+'<tbody></tbody>'
-			+'</table>'
-		)
-		var $typeDistributionChartBody = $typeDistributionTable.find('tbody')
+		var typeWords = new Map([
+			['I', 'Introverted'],
+			['E', 'Extroverted'],
+			['S', 'Sensing'],
+			['N', 'iNtuitive'],
+			['T', 'Thinking'],
+			['F', 'Feeling'],
+			['J', 'Judging'],
+			['P', 'Perceiving']
+		])
+		var functionStacksOfMbtiTypes = new Map([
+			['ISTJ', 'SiTeFiNe'],
+			['ISFJ', 'SiFeTiNe'],
+			['INFJ', 'NiFeTiSe'],
+			['INTJ', 'NiTeFiSe'],
+			['ISTP', 'TiSeNiFe'],
+			['ISFP', 'FiSeNiTe'],
+			['INFP', 'FiNeSeTe'],
+			['INTP', 'TiNeSiFe'],
+			['ESTP', 'SeTiFeNi'],
+			['ESFP', 'SeFiTeNi'],
+			['ENFP', 'NeFiTeSi'],
+			['ENTP', 'NeTiFeSi'],
+			['ESTJ', 'TeSiNeFi'],
+			['ESFJ', 'FeSiNeTi'],
+			['ENFJ', 'FeNiSeTi'],
+			['ENTJ', 'TeNiSeFi']
+		])
+		var functionAliases = new Map([
+			['Ti', 'Clarity'],
+			['Te', 'Purpose'],
+			['Fi', 'Emotion'],
+			['Fe', 'Relationships'],
+			['Si', 'Memory'],
+			['Se', 'Physical Interaction'],
+			['Ne', 'Imagination'],
+			['Ni', 'Perspective']
+		])
+		var $typeDistributionChartBody = $('<tbody></tbody>')
 		for (var i = 0; i < mbtiTypes.length; i++) {
 			var loopMbtiType = mbtiTypes[i]
 			if (i % 4 === 0) {
 				var $currentRowOfChart = $('<tr></tr>').appendTo($typeDistributionChartBody)
 			}
-			var totalUsersOfThisType = typeDistribution[loopMbtiType]
+			var functionStack = functionStacksOfMbtiTypes.get( loopMbtiType )
+			var typeDesc = (
+				typeWords.get( loopMbtiType.charAt(0) )
+				+ ' ' + typeWords.get( loopMbtiType.charAt(1) )
+				+ ' ' + typeWords.get( loopMbtiType.charAt(2) )
+				+ ' ' + typeWords.get( loopMbtiType.charAt(3) )
+				+ ' - Dominant ' + functionAliases.get( functionStack.substr(0, 2) )
+				+ ', Auxiliary ' + functionAliases.get( functionStack.substr(2, 2) )
+				+ ', Tertiary ' + functionAliases.get( functionStack.substr(4, 2) )
+				+ ', Inferior ' + functionAliases.get( functionStack.substr(6, 2) )
+			)
+			var $mbtiType = $('<abbr></abbr>').text(loopMbtiType)
+				.prop('title', typeDesc)
 			var typeDistributionPercentage = Math.round(100 * typeDistribution[loopMbtiType] / totalUsers)
-			var gradientCss = 'background:linear-gradient(to right, ' +chartForegroundColor +' ' +typeDistributionPercentage +'%, ' +chartBackgroundColor +' 0)'
-			$('<td style="'+gradientCss+'"></td>').html(loopMbtiType+'<br>'+totalUsersOfThisType).appendTo($currentRowOfChart)
+			var $percentage = $('<abbr></abbr>').text(typeDistribution[loopMbtiType])
+				.prop('title', typeDistributionPercentage+'%')
+			var gradientCss = 'linear-gradient(to right, RoyalBlue ' +typeDistributionPercentage +'%, LemonChiffon 0)'
+			$('<td></td>').css('background', gradientCss)
+				.append($mbtiType, '<br>', $percentage)
+				.appendTo($currentRowOfChart)
 		}
-		return $typeDistributionTable[0]
+		return $('<table id="type-distribution"></table>').append($typeDistributionChartBody).get(0)
 	} // getTypeDistributionTable
 } // printHomePageInterface
 
