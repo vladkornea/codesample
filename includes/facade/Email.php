@@ -194,11 +194,31 @@ class Email implements EmailInterface {
 	 */
 	public static function sendEmailToDeveloperViaSendmail (array $email_params): void {
 		try {
+			/*
+			 * The file Mail/mime.php from Mail_Mime does require_once 'Mail/mimePart.php', which fails unless Mail_Mime
+			 * is installed as a PEAR package because mimePart.php is in the same directory as mime.php rather than in
+			 * yet another subdirectory also called Mail. It seems that the developers have forgotten that this package
+			 * is supposed to be usable without PEAR, despite giving users the option to download it as an independent
+			 * library. Therefore we either need to include Mail/mimePart.php's parent directory in the include path so
+			 * that require_once in Mail/mime.php can find mimePart.php, or rely on the package being installed via PEAR.
+			 * Temporarily choosing the PEAR package as a dependency for the following reasons:
+			 * 1. The order in which PHP traverses the include path is presumably the order in which directories are
+			 *    defined, but this behavior is not documented and may therefore change, or even be non-deterministic.
+			 * 2. The other web sites on this server would need the same hack to be implemented before the Mail_Mime
+			 *    PEAR package can be uninstalled.
+			 * 3. I just upgraded and tested the PEAR package, and this note explains the problem, so if subsequent
+			 *    upgrades to the PEAR package cause problems (which is highly unlikely given the age of the package),
+			 *    Mail_Mime can be made independent of PEAR at that time.
+			 * Also FYI the Mail_Mime documentation on pear.php.net is broken above version 1.10.7 (current is 1.10.11),
+			 * so I'm leaving the links to the documentation below at the version originally coded (nothing has changed
+			 * at this time).
+			 */
+
 			// http://pear.php.net/package/Mail/docs/1.4.1/Mail/Mail_mail.html
-			require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail-1.4.1/Mail/mail.php';
+			require_once 'Mail/mail.php';
 
 			// https://pear.php.net/package/Mail_Mime/docs/1.10.4/Mail_Mime/_Mail_Mime-1.10.4---Mail---mime.php.html
-			require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/lib/Mail_Mime-1.10.4/Mail/mime.php';
+			require_once 'Mail/mime.php';
 
 			// http://pear.php.net/package/Mail_Mime/docs/1.10.1/Mail_Mime/Mail_mime.html#var$build_params
 			$build_params = [
