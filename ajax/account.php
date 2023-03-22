@@ -4,6 +4,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/includes/config.php';
 
 $pageShell = new AjaxPageShell;
 
+if ( empty( $_GET['action'] ) ) {
+	$pageShell->error("Empty action parameter.");
+}
+
 $action = $_GET['action'];
 switch ($action) {
 	case 'log_in':
